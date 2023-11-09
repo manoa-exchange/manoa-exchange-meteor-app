@@ -7,9 +7,9 @@ import PostItem from '../components/PostItem';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 /* Renders a table containing all of the Stuff documents. Use <PostItem.jsx> to render each row. */
-const ListStuff = () => {
+const ListPost = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, stuffs } = useTracker(() => {
+  const { ready, posts: posts } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
@@ -28,7 +28,7 @@ const ListStuff = () => {
       <Row className="justify-content-center">
         <Col md={7}>
           <Col className="text-center">
-            <h2>List Stuff</h2>
+            <h2>List Post</h2>
           </Col>
           <Table striped bordered hover>
             <thead>
@@ -41,7 +41,7 @@ const ListStuff = () => {
               </tr>
             </thead>
             <tbody>
-              {stuffs.map((stuff) => <PostItem key={stuff._id} post={stuff} />)}
+              {posts.map((post) => <PostItem key={post._id} post={post} />)}
             </tbody>
           </Table>
         </Col>
@@ -50,4 +50,4 @@ const ListStuff = () => {
   ) : <LoadingSpinner />);
 };
 
-export default ListStuff;
+export default ListPost;

@@ -5,30 +5,27 @@ import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import SimpleSchema from 'simpl-schema';
-import { Stuffs } from '../../api/stuff/Stuff';
+import { Posts } from '../../api/post/Post';
 
 // Create a schema to specify the structure of the data to appear in the form.
 const formSchema = new SimpleSchema({
   name: String,
   quantity: Number,
-  condition: {
-    type: String,
-    allowedValues: ['excellent', 'good', 'fair', 'poor'],
-    defaultValue: 'good',
-  },
+  image: String,
+  caption: String,
 });
 
 const bridge = new SimpleSchema2Bridge(formSchema);
 
-/* Renders the AddStuff page for adding a document. */
-const AddStuff = () => {
+/* Renders the AddPost page for adding a document. */
+const AddPost = () => {
 
   // On submit, insert the data.
   const submit = (data, formRef) => {
-    const { name, quantity, condition } = data;
+    const { name, quantity, image, caption } = data;
     const owner = Meteor.user().username;
-    Stuffs.collection.insert(
-      { name, quantity, condition, owner },
+    Posts.collection.insert(
+      { name, quantity, image, caption, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -46,13 +43,14 @@ const AddStuff = () => {
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col xs={5}>
-          <Col className="text-center"><h2>Add Stuff</h2></Col>
+          <Col className="text-center"><h2>Add Post</h2></Col>
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
                 <TextField name="name" />
                 <NumField name="quantity" decimal={null} />
-                <SelectField name="condition" />
+                <TextField name="image" />
+                <TextField name="caption" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
               </Card.Body>
@@ -64,4 +62,4 @@ const AddStuff = () => {
   );
 };
 
-export default AddStuff;
+export default AddPost;

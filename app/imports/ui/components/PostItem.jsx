@@ -3,25 +3,27 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 /** Renders a single row in the List Stuff table. See pages/ListStuff.jsx. */
-const StuffItem = ({ stuff }) => (
+const PostItem = ({ post }) => (
   <tr>
-    <td>{stuff.name}</td>
-    <td>{stuff.quantity}</td>
-    <td>{stuff.condition}</td>
+    <td>{post.name}</td>
+    <td>{post.quantity}</td>
+    <td>{post.image}</td>
+    <td>{post.caption}</td>
     <td>
-      <Link to={`/edit/${stuff._id}`}>Edit</Link>
+      <Link to={`/edit/${post._id}`}>Edit</Link>
     </td>
   </tr>
 );
 
 // Require a document to be passed to this component.
-StuffItem.propTypes = {
-  stuff: PropTypes.shape({
+PostItem.propTypes = {
+  post: PropTypes.shape({
     name: PropTypes.string,
     quantity: PropTypes.number,
-    condition: PropTypes.string,
+    image: PropTypes.string,
+    caption: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
 };
 
-export default StuffItem;
+export default PostItem;
