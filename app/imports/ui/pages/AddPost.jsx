@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useTracker } from 'meteor/react-meteor-data';
+import React, { useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, NumField, TextField, SubmitField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
@@ -9,20 +8,7 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { Posts } from '../../api/post/Post';
 
 const AddPost = () => {
-  const [initialValues, setInitialValues] = useState({});
-  const { userProfile } = useTracker(() => {
-    const user = Meteor.user();
-    const userProfile = user ? { firstname: user.profile.firstname, lastname: user.profile.lastname } : {};
-    return {
-      userProfile
-    };
-  }, []);
-
-  useEffect(() => {
-    if (userProfile.firstname && userProfile.lastname) {
-      setInitialValues({ name: `${userProfile.firstname} ${userProfile.lastname}` });
-    }
-  }, [userProfile]);
+  const [initialValues, setInitialValues] = useState({ name: "John" }); // Prefilled name
 
   const formSchema = new SimpleSchema({
     name: String,
@@ -33,7 +19,6 @@ const AddPost = () => {
 
   const bridge = new SimpleSchema2Bridge(formSchema);
 
-  // On submit, insert the data.
   const submit = (data, formRef) => {
     const { name, quantity, image, caption } = data;
     const owner = Meteor.user().username;
@@ -60,7 +45,7 @@ const AddPost = () => {
             <Card>
               <Card.Body>
                 <TextField name="name" readOnly />
-                <NumField name="quantity" decimal={null} />
+                <NumField name="quantity" decimal={false} />
                 <TextField name="image" />
                 <TextField name="caption" />
                 <SubmitField value="Submit" />
