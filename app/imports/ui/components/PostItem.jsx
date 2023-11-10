@@ -3,7 +3,6 @@ import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image } from 'react-bootstrap';
-import 'bootstrap-icons/font/bootstrap-icons.css'; // Include if not already globally imported
 
 /** Renders a post in a card layout, similar to an Instagram post. */
 const PostItem = ({ post }) => {
@@ -12,7 +11,7 @@ const PostItem = ({ post }) => {
   }), []);
 
   return (
-    <Card className="mb-3">
+    <Card className="mb-3 border border-secondary"> {/* Added border classes */}
       <Card.Header>
         Posted by <strong>{currentUser}</strong>
       </Card.Header>
@@ -21,11 +20,6 @@ const PostItem = ({ post }) => {
         <Card.Text>
           <strong>Caption:</strong> {post.caption}
         </Card.Text>
-        {/* Like and Comment icons */}
-        <div className="mt-2">
-          <i className="bi bi-heart" style={{ cursor: 'pointer', marginRight: '10px' }}></i>
-          <i className="bi bi-chat" style={{ cursor: 'pointer' }}></i>
-        </div>
       </Card.Body>
       <Card.Footer>
         <small className="text-muted">Quantity: {post.quantity}</small>
