@@ -32,8 +32,8 @@ const EditPost = () => {
   // console.log('EditPost', doc, ready);
   // On successful submit, insert the data.
   const submit = (data) => {
-    const { name, quantity, image, caption } = data;
-    Posts.collection.update(_id, { $set: { name, quantity, image, caption } }, (error) => (error ?
+    const { name, image, caption } = data;
+    Posts.collection.update(_id, { $set: { name, image, caption } }, (error) => (error ?
       swal('Error', error.message, 'error') :
       swal('Success', 'Item updated successfully', 'success')));
   };
@@ -47,7 +47,6 @@ const EditPost = () => {
             <Card>
               <Card.Body>
                 <TextField name="name" />
-                <NumField name="quantity" decimal={null} />
                 <TextField name="image" />
                 <TextField name="caption" />
                 <SubmitField value="Submit" />

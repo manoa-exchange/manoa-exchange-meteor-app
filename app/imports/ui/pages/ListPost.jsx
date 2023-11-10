@@ -34,7 +34,6 @@ const ListPost = () => {
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Quantity</th>
                 <th>Image</th>
                 <th>Caption</th>
                 <th>Edit</th>

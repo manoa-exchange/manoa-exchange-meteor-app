@@ -12,7 +12,6 @@ const AddPost = () => {
 
   const formSchema = new SimpleSchema({
     name: String,
-    quantity: Number,
     image: String,
     caption: String,
   });
@@ -23,7 +22,7 @@ const AddPost = () => {
     const { name, quantity, image, caption } = data;
     const owner = Meteor.user().username;
     Posts.collection.insert(
-      { name, quantity, image, caption, owner },
+      { name, image, caption, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -45,7 +44,6 @@ const AddPost = () => {
             <Card>
               <Card.Body>
                 <TextField name="name" readOnly />
-                <NumField name="quantity" decimal={false} />
                 <TextField name="image" />
                 <TextField name="caption" />
                 <SubmitField value="Submit" />
