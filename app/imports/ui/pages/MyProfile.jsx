@@ -105,34 +105,10 @@ const MyProfile = () => {
           </Card>
         </Col>
         <Col lg={8}>
+          <Card className="mb-4">
+            <Card.Header as="h3" className="text-center">Recent Posts</Card.Header>
+          </Card>
           <Card>
-            <Card.Header>Insert Post Topic</Card.Header>
-            <Card.Body>
-              <Card.Title>Insert Post Title</Card.Title>
-              <Card.Text>
-                Insert Post Text
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          <Card className="mt-4">
-            <Card.Header>Insert Post Topic</Card.Header>
-            <Card.Body>
-              <Card.Title>Insert Post Title</Card.Title>
-              <Card.Text>
-                Insert Post Text
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          <Card className="mt-4">
-            <Card.Header>Insert Post Topic</Card.Header>
-            <Card.Body>
-              <Card.Title>Insert Post Title</Card.Title>
-              <Card.Text>
-                Insert Post Text
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          <Card className="mt-4">
             <Card.Header>Insert Post Topic</Card.Header>
             <Card.Body>
               <Card.Title>Insert Post Title</Card.Title>
