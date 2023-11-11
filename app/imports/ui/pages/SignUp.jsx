@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
-import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Container,Image, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
@@ -17,6 +17,9 @@ const SignUp = ({ location }) => {
   const schema = new SimpleSchema({
     email: String,
     password: String,
+    firstName: String,
+    lastName: String,
+    idNumber: String,
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
@@ -40,23 +43,42 @@ const SignUp = ({ location }) => {
     return <Navigate to={from} />;
   }
   return (
-    <Container id="signup-page" className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={5}>
-          <Col className="text-center">
-            <h2>Register your account</h2>
-          </Col>
+    <Container fluid className="bg-light" id={PageIDs.signUpPage}>
+      <Row className="d-flex justify-content-center align-items-center h-100">
+        <Col>
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
-            <Card>
+            <Card className="my-4">
               <Card.Body>
-                <TextField name="email" placeholder="E-mail address" />
-                <TextField name="password" placeholder="Password" type="password" />
-                <ErrorsField />
-                <SubmitField />
+                <Row>
+                  <Col md={5} className="d-none d-md-block">
+                    <Image
+                      src="https://clt.manoa.hawaii.edu/wp-content/uploads/2016/08/Manoa-seal-297x300.png"
+                      alt="Sample photo"
+                      className="rounded-start"
+                      fluid
+                    />
+                  </Col>
+                  <Col md={6} className="g-0">
+                    <h2>Register your account</h2>
+                    <Row>
+                      <Col md={6}>
+                        <TextField wrap="mb-4" id={ComponentIDs.signInFormFirstName} name="firstName" placeholder="First Name" />
+                      </Col>
+                      <Col md={6}>
+                        <TextField wrap="mb-4" id={ComponentIDs.signInFormLastName} name="lastName" placeholder="Last Name" />
+                      </Col>
+                    </Row>
+                    <TextField id={ComponentIDs.signUpFormEmail} name="email" placeholder="UH E-mail address" />
+                    <TextField id={ComponentIDs.signUpFormPassword} name="password" placeholder="Password" type="password" />
+                    <TextField id={ComponentIDs.signInFormID} name="idNumber" placeholder="UH ID Number" type="id" />
+                    <ErrorsField />
+                    <SubmitField id={ComponentIDs.signUpFormSubmit} />
+                  </Col>
+                </Row>
               </Card.Body>
             </Card>
           </AutoForm>
-          <Alert variant="light">
+          <Alert variant="secondary">
             Already have an account? Login
             {' '}
             <Link to="/signin">here</Link>
