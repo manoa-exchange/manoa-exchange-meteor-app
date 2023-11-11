@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Image, Row } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
@@ -41,30 +41,42 @@ const SignIn = () => {
   }
   // Otherwise return the Login form.
   return (
-    <Container id="signin-page" className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={5}>
-          <Col className="text-center">
-            <h2>Login to your account</h2>
-          </Col>
+    <Container fluid className="bg-light text-center" id={PageIDs.signInPage}>
+      <Row className="d-flex justify-content-center align-items-center h-100">
+        <Col>
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
-            <Card>
+            <Card className="my-4">
               <Card.Body>
-                <TextField id="signin-form-email" name="email" placeholder="E-mail address" />
-                <TextField id="signin-form-password" name="password" placeholder="Password" type="password" />
-                <ErrorsField />
-                <SubmitField id="signin-form-submit" />
+                <Row>
+                  <Col md={5} className="d-none d-md-block">
+                    <Image
+                      src="https://clt.manoa.hawaii.edu/wp-content/uploads/2016/08/Manoa-seal-297x300.png"
+                      alt="Sample photo"
+                      className="rounded-start"
+                      fluid
+                    />
+                  </Col>
+                  <Col md={5} className="g-0">
+                    <h2>Welcome Back</h2>
+                    <TextField id={ComponentIDs.signInFormEmail} name="email" placeholder="UH E-mail address" label={false} />
+                    <TextField id={ComponentIDs.signInFormPassword} name="password" placeholder="Password" type="password" label={false} />
+                    <ErrorsField />
+                    <SubmitField id={ComponentIDs.signUpFormSubmit} />
+                  </Col>
+                </Row>
               </Card.Body>
             </Card>
           </AutoForm>
-          <Alert variant="light">
-            <Link to="/signup">Click here to Register</Link>
+          <Alert variant="secondary">
+            New to Manoa Exchange? Sign up
+            {' '}
+            <Link to="/signup">here</Link>
           </Alert>
           {error === '' ? (
             ''
           ) : (
             <Alert variant="danger">
-              <Alert.Heading>Login was not successful</Alert.Heading>
+              <Alert.Heading>Sign in was not successful</Alert.Heading>
               {error}
             </Alert>
           )}
