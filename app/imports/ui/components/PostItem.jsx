@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, Image, Container } from 'react-bootstrap';
+import { Card, Image, Container, Row, Col } from 'react-bootstrap';
+import '../css/PostItem.css';
 
 const PostItem = ({ post }) => {
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
@@ -47,25 +48,42 @@ const PostItem = ({ post }) => {
   };
 
   return (
-    <Card className="mb-3 border border-secondary" style={{ width: '350px' }}>
+    <Card className="post-card">
       <Card.Header>
-        Posted by <strong>{post.name}</strong>
+        <Row>
+          <Col xs="auto" className="profile-pic-col">
+            <div className="profile-pic">
+              <Image src="path_to_profile_picture.jpg" alt="Profile" className="profile-img" />
+            </div>
+          </Col>
+          <Col>
+            <strong>{post.name}</strong>
+          </Col>
+        </Row>
       </Card.Header>
-      <Container style={{ width: '100%', height: '300px', overflow: 'hidden' }}>
-        <Image src={post.image} alt="Post" fluid style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      <Container className="post-image-container">
+        <Image src={post.image} alt="Post" fluid />
       </Container>
       <Card.Body>
-        <div className="mb-2">
-          <i className={`bi ${liked ? 'bi-heart-fill' : 'bi-heart'}`} style={{ cursor: 'pointer', marginRight: '10px' }} onClick={toggleLike}></i>
+        <div className="interaction-icons">
+          <i className={`bi ${liked ? 'bi-heart-fill' : 'bi-heart'} like-icon`} onClick={toggleLike}></i>
           <span>{likeCount}</span> {/* Display the like count */}
-          <i className="bi bi-chat" style={{ cursor: 'pointer', marginLeft: '10px' }}></i>
+          <i className="bi bi-chat comment-icon"></i>
         </div>
-        <Card.Text style={{ cursor: 'pointer', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
-          <strong>Caption:</strong> {post.caption}
+        <Card.Text
+          style={{
+            cursor: 'pointer',
+            overflow: fullCaptionVisible ? 'visible' : 'hidden',
+            textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis',
+            whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap'
+          }}
+          onClick={toggleCaption}
+        >
+          {post.caption}
         </Card.Text>
       </Card.Body>
-      <Card.Footer>
-        <Link to={`/edit/${post._id}`} className="float-right">Edit</Link>
+      <Card.Footer className="post-footer">
+        <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
       </Card.Footer>
     </Card>
   );
@@ -73,7 +91,7 @@ const PostItem = ({ post }) => {
 
 PostItem.propTypes = {
   post: PropTypes.shape({
-    likeCount: PropTypes.number, // likeCount is now optional
+    likeCount: PropTypes.number,
     image: PropTypes.string.isRequired,
     caption: PropTypes.string.isRequired,
     _id: PropTypes.string.isRequired,

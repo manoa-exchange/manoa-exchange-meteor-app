@@ -1,52 +1,41 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post';
 import PostItem from '../components/PostItem';
+import CommentSection from '../components/CommentSection';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-/* Renders a table containing all of the Stuff documents. Use <PostItem.jsx> to render each row. */
 const ListPost = () => {
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, posts: posts } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Stuff documents.
+  const { ready, posts } = useTracker(() => {
     const subscription = Meteor.subscribe(Posts.userPublicationName);
-    // Determine if the subscription is ready
-    const rdy = subscription.ready();
-    // Get the Stuff documents
-    const postItems = Posts.collection.find({}).fetch();
     return {
-      posts: postItems,
-      ready: rdy,
+      posts: Posts.collection.find({}).fetch(),
+      ready: subscription.ready(),
     };
   }, []);
-  return (ready ? (
+
+  return ready ? (
     <Container className="py-3">
       <Row className="justify-content-center">
-        <Col md={7}>
-          <Col className="text-center">
-            <h2>List Post</h2>
-          </Col>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Caption</th>
-                <th>Edit</th>
-              </tr>
-            </thead>
-            <tbody>
-              {posts.map((post) => <PostItem key={post._id} post={post} />)}
-            </tbody>
-          </Table>
+        <Col md={12}>
+          {posts.map((post) => (
+            <div key={post._id} className="post-and-comments">
+              <Row>
+                <Col md={6}>
+                  <PostItem post={post} />
+                </Col>
+                <Col md={6}>
+                  <CommentSection postId={post._id} />
+                </Col>
+              </Row>
+            </div>
+          ))}
         </Col>
       </Row>
     </Container>
-  ) : <LoadingSpinner />);
+  ) : <LoadingSpinner />;
 };
 
 export default ListPost;
