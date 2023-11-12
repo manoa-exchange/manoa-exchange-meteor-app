@@ -41,37 +41,41 @@ const SignIn = () => {
   }
   // Otherwise return the Login form.
   return (
-    <Container fluid className="bg-light text-center" id={PageIDs.signInPage}>
+    <Container id="signInPage" fluid className="bg-light text-center" style={{ minHeight: '80vh' }}>
       <Row className="d-flex justify-content-center align-items-center h-100">
-        <Col>
+        <Col xs={14} md={9} lg={7}>
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
-            <Card className="my-4">
+            <Card className="my-4" style={{ minHeight: '500px' }}>
               <Card.Body>
                 <Row>
-                  <Col md={5} className="d-none d-md-block">
+                  <Col md={12} className="mb-3 text-center">
                     <Image
                       src="https://clt.manoa.hawaii.edu/wp-content/uploads/2016/08/Manoa-seal-297x300.png"
                       alt="Sample photo"
                       className="rounded-start"
                       fluid
+                      style={{ width: '150px', height: '150px' }}
                     />
                   </Col>
-                  <Col md={5} className="g-0">
-                    <h2>Welcome Back</h2>
-                    <TextField id={ComponentIDs.signInFormEmail} name="email" placeholder="UH E-mail address" label={false} />
-                    <TextField id={ComponentIDs.signInFormPassword} name="password" placeholder="Password" type="password" label={false} />
+                </Row>
+                <Row className="offset-md-4">
+                  <Col md={6} className="g-0 text-center">
+                    <h2> <strong> Welcome Back</strong></h2>
+                    <TextField name="email" placeholder="UH E-mail address" style={{ marginBottom: '15px' }} label={false} />
+                    <TextField name="password" placeholder="Password" type="password" style={{ marginBottom: '15px' }} label={false} />
                     <ErrorsField />
-                    <SubmitField id={ComponentIDs.signUpFormSubmit} />
+                    <p>Not a member?
+                      {' '}
+                      Register
+                      <Link to="/signup"> here</Link>
+                    </p>
+                    <SubmitField/>
                   </Col>
                 </Row>
               </Card.Body>
             </Card>
           </AutoForm>
-          <Alert variant="secondary">
-            New to Manoa Exchange? Sign up
-            {' '}
-            <Link to="/signup">here</Link>
-          </Alert>
+
           {error === '' ? (
             ''
           ) : (
