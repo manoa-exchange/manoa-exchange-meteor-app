@@ -1,12 +1,24 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col } from 'react-bootstrap';
+import { Col, Container, Row, Image } from 'react-bootstrap';
+import smilingHawaiians from 'smiling-hawaiians.png'; // Adjust the path as necessary
 
 /* After the user clicks the "SignOut" link in the NavBar, log them out and display this page. */
 const SignOut = () => {
   Meteor.logout();
   return (
-    <Col id="signout-page" className="text-center py-3"><h2>You are signed out.</h2></Col>
+    <Container>
+      <Row>
+        <Col>
+          <Container>
+            <Image src={smilingHawaiians} fluid />
+          </Container>
+        </Col>
+        <Col>
+          <Container />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
