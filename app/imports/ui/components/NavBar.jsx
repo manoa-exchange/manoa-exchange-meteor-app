@@ -13,8 +13,8 @@ const NavBar = () => {
   }), []);
 
   return (
-    <Navbar bg="light" expand="lg">
-      <Container>
+    <Navbar id="navbar" style={{ backgroundColor: '#357266' }} expand="lg">
+      <Container className="navbar-color">
         <Navbar.Brand as={NavLink} to="/" />
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
