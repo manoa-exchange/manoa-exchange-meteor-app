@@ -3,11 +3,15 @@
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
     { "email": "john@foo.com", "password": "changeme" }
   ],
+  "defaultProfiles": [
+    { "firstName": "Cao","lastName": "Cao","studentId": "11111111", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdES82k5UH3zxo8dkLjqgsOKZQd4ikYUwXPv9aZxq10RByoZ5lyibrT5hkoRH3Ou0qx6A&usqp=CAU" },
+    { "firstName": "Lu","lastName": "Bu","studentId": "21111112", "image": "https://storage.googleapis.com/pai-images/b2ba992cecf546c0aaff913199206f97.jpeg" }
+  ],
 
   "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+    { "name": "Basket", "owner": "john@foo.com", "image": "excellent", "caption": "", "likeCount": 0 },
+    { "name": "Bicycle", "owner": "john@foo.com", "image": "poor", "caption": "", "likeCount": 0 },
+    { "name": "Banana", "owner": "admin@foo.com", "image": "", "caption": "", "likeCount": 0 },
+    { "name": "Boogie Board", "owner": "admin@foo.com", "image": "excellent", "caption": "", "likeCount": 0 }
   ]
 }
