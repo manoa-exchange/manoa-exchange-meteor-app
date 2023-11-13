@@ -19,7 +19,7 @@ class PostsCollection {
       likeCount: {
         type: Number,
         optional: true, // Make likeCount optional
-        defaultValue: 0 // You can also set a default value
+        defaultValue: 0, // You can also set a default value
       },
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
