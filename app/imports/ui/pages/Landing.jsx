@@ -77,6 +77,8 @@ const Landing = () => (
       </Row>
       <Row className="pt-3 ps-5">
         <h1 id="landing-header">RESOURCES</h1>
+      </Row>
+      <Row className="pt-3 px-5">
         <DynamicCarousel />
       </Row>
     </Container>
