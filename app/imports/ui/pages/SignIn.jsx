@@ -47,6 +47,7 @@ const SignIn = () => {
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
             <Card className="my-4" style={{ minHeight: '500px' }}>
               <Card.Body>
+                <h2 className="text-center mb-4"><strong> Welcome Back</strong></h2>
                 <Row>
                   <Col md={12} className="mb-3 text-center">
                     <Image
@@ -60,7 +61,6 @@ const SignIn = () => {
                 </Row>
                 <Row className="offset-md-4">
                   <Col md={6} className="g-0 text-center">
-                    <h2> <strong> Welcome Back</strong></h2>
                     <TextField name="email" placeholder="UH E-mail address" style={{ marginBottom: '15px' }} label={false} />
                     <TextField name="password" placeholder="Password" type="password" style={{ marginBottom: '15px' }} label={false} />
                     <ErrorsField />
@@ -69,7 +69,9 @@ const SignIn = () => {
                       Register
                       <Link to="/signup"> here</Link>
                     </p>
-                    <SubmitField />
+                    <Col className="text-center">
+                      <SubmitField />
+                    </Col>
                   </Col>
                 </Row>
               </Card.Body>
