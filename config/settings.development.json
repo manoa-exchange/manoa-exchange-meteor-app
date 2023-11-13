@@ -4,11 +4,6 @@
     { "email": "john@foo.com", "password": "changeme" }
   ],
 
-  "defaultProfiles": [
-    { "firstName": "Cao","lastName": "Cao","studentId": "11111111", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdES82k5UH3zxo8dkLjqgsOKZQd4ikYUwXPv9aZxq10RByoZ5lyibrT5hkoRH3Ou0qx6A&usqp=CAU" },
-    { "firstName": "Lu","lastName": "Bu","studentId": "21111112", "image": "https://storage.googleapis.com/pai-images/b2ba992cecf546c0aaff913199206f97.jpeg" }
-  ],
-
   "defaultData": [
     { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
     { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
