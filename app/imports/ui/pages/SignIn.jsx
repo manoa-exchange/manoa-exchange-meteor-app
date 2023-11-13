@@ -69,7 +69,7 @@ const SignIn = () => {
                       Register
                       <Link to="/signup"> here</Link>
                     </p>
-                    <SubmitField/>
+                    <SubmitField />
                   </Col>
                 </Row>
               </Card.Body>
