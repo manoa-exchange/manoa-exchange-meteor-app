@@ -96,8 +96,8 @@ PostItemAdmin.propTypes = {
   post: PropTypes.shape({
     likeCount: PropTypes.number,
     image: PropTypes.string.isRequired,
-    caption: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
+    caption: PropTypes.string,
+    _id: PropTypes.string,
   }).isRequired,
 };
 
