@@ -13,11 +13,9 @@ const NavBar = () => {
   }), []);
 
   return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand as={NavLink} to="/">
-          <h2>meteor-application-template-react</h2>
-        </Navbar.Brand>
+    <Navbar id="navbar" style={{ backgroundColor: '#357266' }} expand="lg">
+      <Container className="navbar-color">
+        <Navbar.Brand as={NavLink} to="/" />
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
