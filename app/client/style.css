@@ -73,7 +73,7 @@ body {
   font-weight: 700;
 }
 
-/* Set the alert background on the signin and signup pages. */
+  /* Set the alert background on the signin and signup pages. */
 #signin-page .alert-light, #signup-page .alert-light {
   --bs-alert-bg: var(--matr-navbar-bg);
 }
