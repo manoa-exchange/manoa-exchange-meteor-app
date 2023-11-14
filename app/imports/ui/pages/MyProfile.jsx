@@ -118,7 +118,7 @@ const MyProfile = () => {
             </Card.Body>
           </Card>
           <Container className="mt-4">
-            {/* {profiles.map((profile) => (<Col key={contact._id}><Contact contact={contact} notes={notes.filter(note => (note.contactId === contact._id))}/> </Col>))} */}
+              {/* {profiles.map((profile) => (<Col key={contact._id}><Contact contact={contact} notes={notes.filter(note => (note.contactId === contact._id))}/> </Col>))} */}
           </Container>
         </Col>
       </Row>

@@ -25,8 +25,8 @@ const NavBar = () => {
             )}
             {currentUser && (
               <>
-                <Nav.Link as={NavLink} to="/add" key="add">Add Stuff</Nav.Link>
-                <Nav.Link as={NavLink} to="/list" key="list">List Stuff</Nav.Link>
+                <Nav.Link as={NavLink} to="/add" key="add">Add Posts</Nav.Link>
+                <Nav.Link as={NavLink} to="/list" key="list">List Posts</Nav.Link>
                 <Nav.Link as={NavLink} to="/posts" key="posts">Posts</Nav.Link>
                 <Nav.Link as={NavLink} to="/profile" key="profile">My Profile</Nav.Link>
               </>
