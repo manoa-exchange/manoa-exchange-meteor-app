@@ -116,7 +116,7 @@ client/
 
 imports/
   api/           # Define collections
-    stuff/       # The Posts collection definition
+    stuff/       # The Stuffs collection definition
   startup/       # Define code to run when system starts up (client-only, server-only, both)
     client/
     server/
@@ -141,9 +141,9 @@ This system adheres to the Meteor guideline of putting all application code in t
 
 ### Application functionality
 
-The application implements a simple CRUD application for managing "Post", which is a Mongo Collection consisting of a name (String), a quantity (Number), a condition (one of 'excellent', 'good', 'fair', or 'poor') and an owner.
+The application implements a simple CRUD application for managing "Stuff", which is a Mongo Collection consisting of a name (String), a quantity (Number), a condition (one of 'excellent', 'good', 'fair', or 'poor') and an owner.
 
-By default, each user only sees the Post that they have created.  However, the settings file enables you to define default accounts.  If you define a user with the role "admin", then that user gets access to a special page which lists all the Post defined by all users.
+By default, each user only sees the Stuff that they have created.  However, the settings file enables you to define default accounts.  If you define a user with the role "admin", then that user gets access to a special page which lists all the Stuff defined by all users.
 
 #### Landing page
 
@@ -172,23 +172,23 @@ Once you log in (either to an existing account or by creating a new one), the na
 
 ![](https://github.com/ics-software-engineering/meteor-application-template-react/raw/main/doc/landing-after-login-page.png)
 
-You can now add new Post documents, and list the Post you have created. Note you cannot see any Post created by other users.
+You can now add new Stuff documents, and list the Stuff you have created. Note you cannot see any Stuff created by other users.
 
-#### Add Post page
+#### Add Stuff page
 
-After logging in, here is the page that allows you to add new Post:
+After logging in, here is the page that allows you to add new Stuff:
 
 ![](https://github.com/ics-software-engineering/meteor-application-template-react/raw/main/doc/add-stuff-page.png)
 
-#### List Post page
+#### List Stuff page
 
-After logging in, here is the page that allows you to list all the Post you have created:
+After logging in, here is the page that allows you to list all the Stuff you have created:
 
 ![](https://github.com/ics-software-engineering/meteor-application-template-react/raw/main/doc/list-stuff-page.png)
 
-You click the "Edit" link to go to the Edit Post page, shown next.
+You click the "Edit" link to go to the Edit Stuff page, shown next.
 
-#### Edit Post page
+#### Edit Stuff page
 
 After clicking on the "Edit" link associated with an item, this page displays that allows you to change and save it:
 
@@ -202,7 +202,7 @@ You can define an "admin" user in the settings.json file. This user, after loggi
 
 #### Admin page (list all users stuff)
 
-To provide a simple example of a "super power" for Admin users, the Admin page lists all of the Post by all of the users:
+To provide a simple example of a "super power" for Admin users, the Admin page lists all of the Stuff by all of the users:
 
 ![](https://github.com/ics-software-engineering/meteor-application-template-react/raw/main/doc/admin-list-stuff-page.png)
 
@@ -210,11 +210,11 @@ Note that non-admin users cannot get to this page, even if they type in the URL 
 
 ### Collections
 
-The application implements a single Collection called "Posts". Each Posts document has the following fields: name, quantity, condition, and username.
+The application implements a single Collection called "Stuffs". Each Stuffs document has the following fields: name, quantity, condition, and username.
 
-The Posts collection is defined in [imports/api/stuff/stuff.js](https://github.com/ics-software-engineering/meteor-application-template-react/blob/main/app/imports/api/stuff/stuff.js).
+The Stuffs collection is defined in [imports/api/stuff/stuff.js](https://github.com/ics-software-engineering/meteor-application-template-react/blob/main/app/imports/api/stuff/stuff.js).
 
-The Posts collection is initialized in [imports/startup/server/Mongo.js](https://github.com/ics-software-engineering/meteor-application-template-react/blob/main/app/imports/startup/server/Mongo.js).
+The Stuffs collection is initialized in [imports/startup/server/Mongo.js](https://github.com/ics-software-engineering/meteor-application-template-react/blob/main/app/imports/startup/server/Mongo.js).
 
 ### CSS
 
@@ -254,7 +254,7 @@ The application allows users to register and create new accounts at any time.
 
 ### Authorization
 
-Only logged in users can manipulate Post documents (but any registered user can manipulate any Post document, even if they weren't the user that created it.)
+Only logged in users can manipulate Stuff documents (but any registered user can manipulate any Stuff document, even if they weren't the user that created it.)
 
 ### Configuration
 

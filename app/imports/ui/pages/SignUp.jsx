@@ -7,21 +7,23 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
 
+/**
+ * SignUp component is similar to signin component, but we create a new user instead.
+ */
 const SignUp = ({ location }) => {
   const [error, setError] = useState('');
   const [redirectToReferer, setRedirectToRef] = useState(false);
 
   const schema = new SimpleSchema({
-    firstname: String,
-    lastname: String,
     email: String,
     password: String,
   });
   const bridge = new SimpleSchema2Bridge(schema);
 
+  /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
-    const { firstname, lastname, email, password } = doc;
-    Accounts.createUser({ email, username: email, password, profile: { firstname, lastname } }, (err) => {
+    const { email, password } = doc;
+    Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
         setError(err.reason);
       } else {
@@ -31,32 +33,37 @@ const SignUp = ({ location }) => {
     });
   };
 
+  /* Display the signup form. Redirect to add page after successful registration and login. */
   const { from } = location?.state || { from: { pathname: '/add' } };
+  // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
     return <Navigate to={from} />;
   }
-
   return (
     <Container id="signup-page" className="py-3">
       <Row className="justify-content-center">
         <Col xs={5}>
-          <h2 className="text-center">Register your account</h2>
-          <AutoForm schema={bridge} onSubmit={submit}>
+          <Col className="text-center">
+            <h2>Register your account</h2>
+          </Col>
+          <AutoForm schema={bridge} onSubmit={data => submit(data)}>
             <Card>
               <Card.Body>
-                <TextField name="firstname" placeholder="First Name" label="First Name" />
-                <TextField name="lastname" placeholder="Last Name" label="Last Name" />
-                <TextField name="email" placeholder="E-mail address" label="Email" />
-                <TextField name="password" placeholder="Password" label="Password" type="password" />
+                <TextField name="email" placeholder="E-mail address" />
+                <TextField name="password" placeholder="Password" type="password" />
                 <ErrorsField />
                 <SubmitField />
               </Card.Body>
             </Card>
           </AutoForm>
           <Alert variant="light">
-            Already have an account? Login <Link to="/signin">here</Link>.
+            Already have an account? Login
+            {' '}
+            <Link to="/signin">here</Link>
           </Alert>
-          {error && (
+          {error === '' ? (
+            ''
+          ) : (
             <Alert variant="danger">
               <Alert.Heading>Registration was not successful</Alert.Heading>
               {error}
@@ -68,14 +75,15 @@ const SignUp = ({ location }) => {
   );
 };
 
+/* Ensure that the React Router location object is available in case we need to redirect. */
 SignUp.propTypes = {
   location: PropTypes.shape({
-    state: PropTypes.object,
+    state: PropTypes.string,
   }),
 };
 
 SignUp.defaultProps = {
-  location: { state: { from: { pathname: '/' } } },
+  location: { state: '' },
 };
 
 export default SignUp;
