@@ -41,30 +41,52 @@ const SignIn = () => {
   }
   // Otherwise return the Login form.
   return (
-    <Container id="signin-page" className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={5}>
-          <Col className="text-center">
-            <h2>Login to your account</h2>
-          </Col>
+
+    <Container fluid className="bg-light text-center" id={PageIDs.signUpPage}>
+      <Row className="d-flex justify-content-center align-items-center h-100">
+        <Col>
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
-            <Card>
+            <Card className="my-4">
               <Card.Body>
-                <TextField id="signin-form-email" name="email" placeholder="E-mail address" />
-                <TextField id="signin-form-password" name="password" placeholder="Password" type="password" />
-                <ErrorsField />
-                <SubmitField id="signin-form-submit" />
+                <Row>
+                  <Col md={5} className="d-none d-md-block">
+                    <Image
+                      src="https://clt.manoa.hawaii.edu/wp-content/uploads/2016/08/Manoa-seal-297x300.png"
+                      alt="Sample photo"
+                      className="rounded-start"
+                      fluid
+                    />
+                  </Col>
+                  <Col md={6} className="g-0">
+                    <h2>Register your account</h2>
+                    <Row>
+                      <Col md={6}>
+                        <TextField wrap="mb-4" id={ComponentIDs.signUpFormFirstName} name="firstName" placeholder="First Name" label={false} />
+                      </Col>
+                      <Col md={6}>
+                        <TextField wrap="mb-4" id={ComponentIDs.signUpFormLastName} name="lastName" placeholder="Last Name" label={false} />
+                      </Col>
+                    </Row>
+                    <TextField id={ComponentIDs.signUpFormEmail} name="email" placeholder="UH E-mail address" label={false} />
+                    <TextField id={ComponentIDs.signUpFormPassword} name="password" placeholder="Password" type="password" label={false} />
+                    <TextField id={ComponentIDs.signUpFormID} name="idNumber" placeholder="UH ID Number" type="id" label={false} />
+                    <ErrorsField />
+                    <SubmitField id={ComponentIDs.signUpFormSubmit} />
+                  </Col>
+                </Row>
               </Card.Body>
             </Card>
           </AutoForm>
-          <Alert variant="light">
-            <Link to="/signup">Click here to Register</Link>
+          <Alert variant="secondary">
+            Already have an account? Login
+            {' '}
+            <Link to="/signin">here</Link>
           </Alert>
           {error === '' ? (
             ''
           ) : (
             <Alert variant="danger">
-              <Alert.Heading>Login was not successful</Alert.Heading>
+              <Alert.Heading>Registration was not successful</Alert.Heading>
               {error}
             </Alert>
           )}
