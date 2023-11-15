@@ -1,0 +1,41 @@
+#signout{
+  background: url("./images/smiling-hawaiians2.png") no-repeat center center fixed;
+  background-size: cover;
+  margin: 0 0 0;
+  padding: 0 0 0 0;
+  height: 550px;
+  width: 100%;
+}
+
+#signout-text{
+  color: aliceblue;
+  padding-top: 20%;
+  padding-left: 10%;
+  padding-bottom: 0;
+  text-shadow: 2px 2px 4px #000000;
+}
+#signout-text2{
+  color: aliceblue;
+  padding-top: 0%;
+  padding-left: 10%;
+  padding-bottom: 0;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.strong-white-text {
+  color: white;
+  font-weight: bold;
+  font-size: 70px; /* Adjust the size as needed */
+}
+
+#left-column-sign-out{
+  width: 70%;
+}
+
+#right-column-sign-out{
+  width: 30%;
+}
+
+.no-pad{
+  padding: 0 0 0 0;
+}
