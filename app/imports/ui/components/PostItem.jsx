@@ -95,10 +95,10 @@ const PostItem = ({ post }) => {
 PostItem.propTypes = {
   post: PropTypes.shape({
     likeCount: PropTypes.number,
-    image: PropTypes.string.isRequired,
-    caption: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
-  }).isRequired,
+    image: PropTypes.string,
+    caption: PropTypes.string,
+    _id: PropTypes.string,
+  }),
 };
 
 export default PostItem;

@@ -95,10 +95,10 @@ const PostItemAdmin = ({ post }) => {
 PostItemAdmin.propTypes = {
   post: PropTypes.shape({
     likeCount: PropTypes.number,
-    image: PropTypes.string.isRequired,
+    image: PropTypes.string,
     caption: PropTypes.string,
     _id: PropTypes.string,
-  }).isRequired,
+  }),
 };
 
 export default PostItemAdmin;
