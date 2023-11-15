@@ -1,17 +1,36 @@
 {
-  "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
-    { "email": "john@foo.com", "password": "changeme" }
-  ],
-  "defaultProfiles": [
-    { "firstName": "Cao","lastName": "Cao","studentId": "11111111", "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdES82k5UH3zxo8dkLjqgsOKZQd4ikYUwXPv9aZxq10RByoZ5lyibrT5hkoRH3Ou0qx6A&usqp=CAU" },
-    { "firstName": "Lu","lastName": "Bu","studentId": "21111112", "image": "https://storage.googleapis.com/pai-images/b2ba992cecf546c0aaff913199206f97.jpeg" }
-  ],
-
-  "defaultData": [
-    { "name": "Basket", "owner": "john@foo.com", "image": "excellent", "caption": "", "likeCount": 0 },
-    { "name": "Bicycle", "owner": "john@foo.com", "image": "poor", "caption": "", "likeCount": 0 },
-    { "name": "Banana", "owner": "admin@foo.com", "image": "", "caption": "", "likeCount": 0 },
-    { "name": "Boogie Board", "owner": "admin@foo.com", "image": "excellent", "caption": "", "likeCount": 0 }
+  "defaultPosts": [
+    {
+      "_id": "post1",
+      "name": "Basket",
+      "owner": "john@foo.com",
+      "image": "url_to_basket_image.jpg",
+      "caption": "A beautiful basket",
+      "likeCount": 0
+    },
+    {
+      "_id": "post2",
+      "name": "Bicycle",
+      "owner": "john@foo.com",
+      "image": "url_to_bicycle_image.jpg",
+      "caption": "My new bicycle",
+      "likeCount": 0
+    },
+    {
+      "_id": "post3",
+      "name": "Banana",
+      "owner": "admin@foo.com",
+      "image": "url_to_banana_image.jpg",
+      "caption": "Fresh bananas",
+      "likeCount": 0
+    },
+    {
+      "_id": "post4",
+      "name": "Boogie Board",
+      "owner": "admin@foo.com",
+      "image": "url_to_boogie_board_image.jpg",
+      "caption": "Ready for the beach",
+      "likeCount": 0
+    }
   ]
 }
