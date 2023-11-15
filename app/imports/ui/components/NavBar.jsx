@@ -4,7 +4,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { NavLink } from 'react-router-dom';
 import { Roles } from 'meteor/alanning:roles';
 import { Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { BoxArrowRight, PersonFill, PersonCircle, PersonPlusFill } from 'react-bootstrap-icons';
+import { HouseDoorFill, ChatDots, BoxArrowRight, PersonFill, PersonCircle, PersonPlusFill, Compass, Heart } from 'react-bootstrap-icons';
 
 const NavBar = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -32,9 +32,18 @@ const NavBar = () => {
           </Nav>
           <Nav className="justify-content-end">
             {currentUser ? ([
-              <Nav.Link id="add-stuff-nav" as={NavLink} to="/add" key="add">Add Stuff</Nav.Link>,
-              <Nav.Link id="list-stuff-nav" as={NavLink} to="/list" key="list">List Stuff</Nav.Link>,
-              <Nav.Link id="posts-nav" as={NavLink} to="/posts" key="posts">Posts</Nav.Link>,
+              <Nav.Link id="Feed-nav" as={NavLink} to="/feed" key="feed">
+                <HouseDoorFill size={20} />
+              </Nav.Link>,
+              <Nav.Link id="Direct-Messages-nav" as={NavLink} to="/directMessages" key="directMessages">
+                <ChatDots size={20} />
+              </Nav.Link>,
+              <Nav.Link id="Explore-nav" as={NavLink} to="/explorePage" key="explorePage">
+                <Compass size={20} />
+              </Nav.Link>,
+              <Nav.Link id="Liked-Posts-nav" as={NavLink} to="/likedPostsPage" key="likedPostsPage">
+                <Heart size={20} />
+              </Nav.Link>,
             ]) : ''}
             {currentUser === '' ? (
               <NavDropdown id="login-dropdown" title="Sign In">
