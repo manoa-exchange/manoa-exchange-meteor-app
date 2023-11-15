@@ -26,3 +26,23 @@ body {
   padding-top: 10px;
   padding-bottom: 20px;
 }
+
+.footer-social-icons a {
+  padding: 2px;
+  margin: 4px;
+  color: #ECECEC;
+}
+
+.footer-content {
+  color: #D3D3D3 !important;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.footer-content.bg-light {
+  color: #333;
+}
+
+.footer-content.bg-dark.text-light .footer-link {
+  color: #ECECEC;
+}
