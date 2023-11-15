@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, NumField, TextField, SubmitField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
@@ -8,7 +8,7 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { Posts } from '../../api/post/Post';
 
 const AddPost = () => {
-  const [initialValues, setInitialValues] = useState({ name: "John" }); // Prefilled name
+  const initialValues = { name: 'John' }; // Prefilled name
 
   const formSchema = new SimpleSchema({
     name: String,
@@ -19,7 +19,7 @@ const AddPost = () => {
   const bridge = new SimpleSchema2Bridge(formSchema);
 
   const submit = (data, formRef) => {
-    const { name, quantity, image, caption } = data;
+    const { name, image, caption } = data;
     const owner = Meteor.user().username;
     Posts.collection.insert(
       { name, image, caption, owner },
