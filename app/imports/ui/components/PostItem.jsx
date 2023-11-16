@@ -7,7 +7,7 @@ import { Card, Image, Container, Row, Col } from 'react-bootstrap';
 import { BiHeart, BiChat } from 'react-icons/bi'; // Importing react-icons
 import '../css/PostItem.css';
 
-const PostItem = ({ post, firstName }) => {
+const PostItem = ({ post }) => {
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [fullCaptionVisible, setFullCaptionVisible] = useState(false);
   // eslint-disable-next-line no-unused-vars
