@@ -28,3 +28,5 @@ if (Meteor.users.find().count() === 0) {
     console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
   }
 }
+
+console.log(process.env.CLOUDINARY_API_KEY);
