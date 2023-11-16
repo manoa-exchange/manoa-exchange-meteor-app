@@ -4,6 +4,7 @@ import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image, Container, Row, Col } from 'react-bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import '../css/PostItem.css';
 
 const PostItem = ({ post }) => {
@@ -98,7 +99,7 @@ PostItem.propTypes = {
     image: PropTypes.string,
     caption: PropTypes.string,
     _id: PropTypes.string,
-  }),
+  }).isRequired,
 };
 
 export default PostItem;

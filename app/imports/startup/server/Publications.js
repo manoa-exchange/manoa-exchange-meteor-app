@@ -14,14 +14,6 @@ Meteor.publish(Posts.userPublicationName, function () {
   return this.ready();
 });
 
-Meteor.publish(Profiles.userPublicationName, function () {
-  if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
-    return Profiles.collection.find({ owner: username });
-  }
-  return this.ready();
-});
-
 // User level publication for Profile Collection
 Meteor.publish(Profiles.userPublicationName, function () {
   if (this.userId) {
@@ -36,13 +28,6 @@ Meteor.publish(Profiles.userPublicationName, function () {
 Meteor.publish(Posts.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Posts.collection.find();
-  }
-  return this.ready();
-});
-
-Meteor.publish(Profiles.adminPublicationName, function () {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return Profiles.collection.find();
   }
   return this.ready();
 });

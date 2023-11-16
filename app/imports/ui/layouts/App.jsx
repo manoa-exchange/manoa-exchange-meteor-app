@@ -8,7 +8,6 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import ListPost from '../pages/ListPost';
 import ListPostAdmin from '../pages/ListPostAdmin';
-import ListStuff from '../pages/ListStuff';
 import AddPost from '../pages/AddPost';
 import EditPost from '../pages/EditPost';
 import NotFound from '../pages/NotFound';
@@ -16,7 +15,6 @@ import SignUp from '../pages/SignUp';
 import SignOut from '../pages/SignOut';
 import NavBar from '../components/NavBar';
 import SignIn from '../pages/SignIn';
-import Home from '../pages/Home';
 import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MyProfile from '../pages/MyProfile';
@@ -29,18 +27,16 @@ const App = () => {
       ready: rdy,
     };
   });
-  const specialRender = window.location.pathname !== '/';
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
-        { specialRender && <NavBar /> }
+        <NavBar />
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
-          <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
-          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/home" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
           <Route path="/posts" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
