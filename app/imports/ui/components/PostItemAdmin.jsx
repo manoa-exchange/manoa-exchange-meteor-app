@@ -98,7 +98,7 @@ PostItemAdmin.propTypes = {
     image: PropTypes.string,
     caption: PropTypes.string,
     _id: PropTypes.string,
-  }),
+  }).isRequired,
 };
 
 export default PostItemAdmin;
