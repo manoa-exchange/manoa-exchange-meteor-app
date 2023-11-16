@@ -1,4 +1,4 @@
-/* Use Open Sans as the default sans serif font. */
+hi/* Use Open Sans as the default sans serif font. */
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Montserrat:300,400,500,700");
 
 /* Set up some CSS variables to theme the application. */
@@ -116,4 +116,7 @@ body {
 
 .footer-content.bg-dark.text-light .footer-link {
   color: #ECECEC;
+}
+.card_profile{
+  background-color: antiquewhite;
 }
