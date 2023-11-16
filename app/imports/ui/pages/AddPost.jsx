@@ -12,7 +12,7 @@ const AddPost = () => {
 
   const formSchema = new SimpleSchema({
     name: String,
-    image: String,
+    image: { type: String, optional: true },
     caption: String,
   });
 
