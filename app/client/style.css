@@ -27,7 +27,7 @@ body {
 
 #landing-page.container-fluid {
   --bs-gutter-x: 0;
-  background-image: url("../images/map.png");
+  background-image: url("../public/images/map.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position-y: 25px;
@@ -97,7 +97,25 @@ body {
   background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
   font-family: 'Montserrat', sans-serif;
 }
-
 .navbar-content {
   background-color: #847577 !important;
+}
+.footer-social-icons a {
+  padding: 2px;
+  margin: 4px;
+  color: #ECECEC;
+}
+
+.footer-content {
+  color: #D3D3D3 !important;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.footer-content.bg-light {
+  color: #333;
+}
+
+.footer-content.bg-dark.text-light .footer-link {
+  color: #ECECEC;
 }
