@@ -8,6 +8,7 @@ import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import ListPost from '../pages/ListPost';
 import ListPostAdmin from '../pages/ListPostAdmin';
+import ListStuff from '../pages/ListStuff';
 import AddPost from '../pages/AddPost';
 import EditPost from '../pages/EditPost';
 import NotFound from '../pages/NotFound';
@@ -38,7 +39,7 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
           <Route path="/list" element={<ProtectedRoute><ListStuff /></ProtectedRoute>} />
-          <Route path="/home" element={<ProtectedRoute><Landing /></ProtectedRoute>} />
+          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/posts" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
