@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { Alert, Card, Col, Container, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Row, Image } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
@@ -41,30 +41,48 @@ const SignIn = () => {
   }
   // Otherwise return the Login form.
   return (
-    <Container id="signin-page" className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={5}>
-          <Col className="text-center">
-            <h2>Login to your account</h2>
-          </Col>
+    <Container id="signInPage" fluid className="bg-light text-center" style={{ minHeight: '80vh' }}>
+      <Row className="d-flex justify-content-center align-items-center h-100">
+        <Col xs={14} md={9} lg={7}>
           <AutoForm schema={bridge} onSubmit={data => submit(data)}>
-            <Card>
+            <Card className="my-4" style={{ minHeight: '500px' }}>
               <Card.Body>
-                <TextField id="signin-form-email" name="email" placeholder="E-mail address" />
-                <TextField id="signin-form-password" name="password" placeholder="Password" type="password" />
-                <ErrorsField />
-                <SubmitField id="signin-form-submit" />
+                <h2 className="text-center mb-4"><strong> Welcome Back</strong></h2>
+                <Row>
+                  <Col md={12} className="mb-3 text-center">
+                    <Image
+                      src="https://clt.manoa.hawaii.edu/wp-content/uploads/2016/08/Manoa-seal-297x300.png"
+                      alt="Sample photo"
+                      className="rounded-start"
+                      fluid
+                      style={{ width: '150px', height: '150px' }}
+                    />
+                  </Col>
+                </Row>
+                <Row className="offset-md-4">
+                  <Col md={6} className="g-0 text-center">
+                    <TextField name="email" placeholder="UH E-mail address" style={{ marginBottom: '15px' }} label={false} />
+                    <TextField name="password" placeholder="Password" type="password" style={{ marginBottom: '15px' }} label={false} />
+                    <ErrorsField />
+                    <p>Not a member?
+                      {' '}
+                      Register
+                      <Link to="/signup"> here</Link>
+                    </p>
+                    <Col className="text-center">
+                      <SubmitField />
+                    </Col>
+                  </Col>
+                </Row>
               </Card.Body>
             </Card>
           </AutoForm>
-          <Alert variant="light">
-            <Link to="/signup">Click here to Register</Link>
-          </Alert>
+
           {error === '' ? (
             ''
           ) : (
             <Alert variant="danger">
-              <Alert.Heading>Login was not successful</Alert.Heading>
+              <Alert.Heading>Sign in was not successful</Alert.Heading>
               {error}
             </Alert>
           )}
