@@ -128,3 +128,7 @@ body {
 .footer-content.bg-dark.text-light .footer-link {
   color: #ECECEC;
 }
+
+.card_profile {
+  background-color: antique white;
+}
