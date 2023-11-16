@@ -69,10 +69,6 @@ const SignUp = ({ location }) => {
                       </Col>
                       <Col md={6}>
                         <TextField wrap="mb-4" id={ComponentIDs.signUpFormID} name="lastName" placeholder="Last Name" label={false} />
-                        <TextField wrap="mb-4" id={ComponentIDs.signInFormFirstName} name="firstName" placeholder="First Name" label={false} />
-                      </Col>
-                      <Col md={6}>
-                        <TextField wrap="mb-4" id={ComponentIDs.signInFormLastName} name="lastName" placeholder="Last Name" label={false} />
                       </Col>
                     </Row>
                     <TextField id={ComponentIDs.signUpFormEmail} name="email" placeholder="UH E-mail address" label={false} />
