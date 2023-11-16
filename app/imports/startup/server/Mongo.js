@@ -16,15 +16,15 @@ Meteor.methods({
   'posts.incrementLike'(postId) {
     check(postId, String);
     Posts.collection.update(postId, {
-      $inc: { likeCount: 1 }
+      $inc: { likeCount: 1 },
     });
   },
   'posts.decrementLike'(postId) {
     check(postId, String);
     Posts.collection.update(postId, {
-      $inc: { likeCount: -1 }
+      $inc: { likeCount: -1 },
     });
-  }
+  },
 });
 
 // Initialize the database with a default data document.

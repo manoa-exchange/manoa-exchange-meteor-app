@@ -16,31 +16,30 @@ const NavBar = () => {
     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand as={NavLink} to="/">
-          <h2>meteor-application-template-react</h2>
+          <h2>MĀNOA EXCHANGE</h2>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            {currentUser ? ([
-              <Nav.Link id="add-post-nav" as={NavLink} to="/add" key="add">Add Post</Nav.Link>,
-              <Nav.Link id="list-post-nav" as={NavLink} to="/list" key="list">List Post</Nav.Link>,
-            ]) : ''}
             {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
               <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>
             ) : ''}
           </Nav>
           <Nav className="justify-content-end">
+            {currentUser ? ([
+              <Nav.Link id="create-nav" as={NavLink} to="/create" key="create">Create</Nav.Link>,
+              <Nav.Link id="posts-nav" as={NavLink} to="/posts" key="posts">Posts</Nav.Link>,
+              <Nav.Link id="profile-nav" as={NavLink} to="/profile" key="profiles">Profile</Nav.Link>,
+            ]) : ''}
             {currentUser === '' ? (
-              <NavDropdown id="login-dropdown" title="Login">
+              <NavDropdown id="login-dropdown" title="Sign In">
                 <NavDropdown.Item id="login-dropdown-sign-in" as={NavLink} to="/signin">
                   <PersonFill />
-                  Sign
-                  in
+                  Sign in
                 </NavDropdown.Item>
                 <NavDropdown.Item id="login-dropdown-sign-up" as={NavLink} to="/signup">
                   <PersonPlusFill />
-                  Sign
-                  up
+                  Register
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
@@ -48,8 +47,7 @@ const NavBar = () => {
                 <NavDropdown.Item id="navbar-sign-out" as={NavLink} to="/signout">
                   <BoxArrowRight />
                   {' '}
-                  Sign
-                  out
+                  Sign out
                 </NavDropdown.Item>
               </NavDropdown>
             )}
