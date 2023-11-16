@@ -4,9 +4,10 @@ import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image, Container, Row, Col } from 'react-bootstrap';
+import { BiHeart, BiChat } from 'react-icons/bi'; // Importing react-icons
 import '../css/PostItem.css';
 
-const PostItem = ({ post }) => {
+const PostItem = ({ post, firstName }) => {
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [fullCaptionVisible, setFullCaptionVisible] = useState(false);
   // eslint-disable-next-line no-unused-vars
@@ -58,7 +59,6 @@ const PostItem = ({ post }) => {
             </div>
           </Col>
           <Col>
-            {/* eslint-disable-next-line react/prop-types */}
             <strong>{ post.name }</strong>
           </Col>
         </Row>
@@ -68,10 +68,13 @@ const PostItem = ({ post }) => {
       </Container>
       <Card.Body id="card-body">
         <div className="interaction-icons">
+          {/* Using BiHeart and BiChat from react-icons */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <i className={`bi ${liked ? 'bi-heart-fill' : 'bi-heart'} like-icon`} onClick={toggleLike} />
+          <span onClick={toggleLike}>
+            <BiHeart className={`like-icon ${liked ? 'heart-filled' : ''}`} />
+          </span>
           <span>{likeCount}</span> {/* Display the like count */}
-          <i className="bi bi-chat comment-icon" />
+          <BiChat className="comment-icon" />
         </div>
         <Card.Text
           style={{
@@ -94,11 +97,12 @@ const PostItem = ({ post }) => {
 
 PostItem.propTypes = {
   post: PropTypes.shape({
+    name: PropTypes.string,
     likeCount: PropTypes.number,
     image: PropTypes.string,
     caption: PropTypes.string,
     _id: PropTypes.string,
-  }),
+  }).isRequired,
 };
 
 export default PostItem;
