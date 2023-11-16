@@ -3,6 +3,7 @@ import { Roles } from 'meteor/alanning:roles';
 // import { Stuffs } from '../../api/stuff/Stuff.js';
 import { Posts } from '../../api/post/Post';
 import { Profiles } from '../../api/profile/Profile';
+import { ImageData } from '../../api/imagedata/imagedata.js';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise, publish nothing.
@@ -47,4 +48,8 @@ Meteor.publish(null, function () {
     return Meteor.roleAssignment.find({ 'user._id': this.userId });
   }
   return this.ready();
+});
+
+Meteor.publish('ImageData', function publishImageData() {
+  return ImageData.find();
 });
