@@ -25,7 +25,7 @@ const MyProfile = () => {
   return (ready ? (
     <Container className="mb-4">
       <Row className="mt-4">
-        <Col lg={4}>
+        <Col lg={4} class name='card_profile'>
           <Card className="mb-4 rounded border border-dark card_profile">
             <Card.Body className="text-center">
               <Card.Img
@@ -127,3 +127,4 @@ const MyProfile = () => {
 };
 
 export default MyProfile;
+
