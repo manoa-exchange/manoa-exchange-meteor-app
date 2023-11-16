@@ -32,7 +32,7 @@ const NavBar = () => {
           </Nav>
           <Nav className="justify-content-end">
             {currentUser ? ([
-              <Nav.Link id="Feed-nav" as={NavLink} to="/feed" key="feed">
+              <Nav.Link id="home-nav" as={NavLink} to="/home" key="home">
                 <HouseDoorFill size={20} />
               </Nav.Link>,
               <Nav.Link id="Direct-Messages-nav" as={NavLink} to="/directMessages" key="directMessages">
