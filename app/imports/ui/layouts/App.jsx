@@ -26,10 +26,11 @@ const App = () => {
       ready: rdy,
     };
   });
+  const specialRender = window.location.pathname !== '/';
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
-        <NavBar />
+        { specialRender && <NavBar /> }
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route path="/signin" element={<SignIn />} />
