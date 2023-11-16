@@ -47,7 +47,7 @@ const MyProfile = () => {
             <Card.Body>
               <Row>
                 <Col sm="3">
-                  <Card.Text>Full Name</Card.Text>
+                  <Card.Text>Name</Card.Text>
                 </Col>
                 <Col sm="9">
                   <Card.Text className="text-muted">Cao Cao</Card.Text>
