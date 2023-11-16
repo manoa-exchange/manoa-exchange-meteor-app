@@ -26,7 +26,7 @@ const MyProfile = () => {
     <Container className="mb-4">
       <Row className="mt-4">
         <Col lg={4}>
-          <Card className="mb-4 rounded border border-dark">
+          <Card className="mb-4 rounded border border-dark card_profile">
             <Card.Body className="text-center">
               <Card.Img
                 /* eslint-disable-next-line max-len */
@@ -43,7 +43,7 @@ const MyProfile = () => {
               </div>
             </Card.Body>
           </Card>
-          <Card className="mb-4 mt-4 border border-dark">
+          <Card className="mb-4 mt-4 border border-dark card_profile">
             <Card.Body>
               <Row>
                 <Col sm="3">
@@ -91,7 +91,7 @@ const MyProfile = () => {
               </Row>
             </Card.Body>
           </Card>
-          <Card className="mb-4 mb-lg-0 card border border-dark red">
+          <Card className="mb-4 mb-lg-0 card border border-dark card_profile">
             <Card.Body className="p-0 card1">
               <ListGroup flush className="rounded-3 red">
                 <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 red">
@@ -105,7 +105,7 @@ const MyProfile = () => {
           </Card>
         </Col>
         <Col lg={8}>
-          <Card className="mb-4 border border-black">
+          <Card className="mb-4 border border-black card_profile">
             <Card.Header as="h3" className="text-center">Recent Posts</Card.Header>
           </Card>
           <Card>
