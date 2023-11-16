@@ -1,13 +1,36 @@
 {
-  "defaultAccounts": [
-    { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
-    { "email": "john@foo.com", "password": "changeme" }
-  ],
-
-  "defaultData": [
-    { "name": "Basket", "quantity": 3, "owner": "john@foo.com", "condition": "excellent" },
-    { "name": "Bicycle", "quantity": 2, "owner": "john@foo.com", "condition": "poor" },
-    { "name": "Banana", "quantity": 2, "owner": "admin@foo.com", "condition": "good" },
-    { "name": "Boogie Board", "quantity": 2, "owner": "admin@foo.com", "condition": "excellent" }
+  "defaultPosts": [
+    {
+      "_id": "post1",
+      "name": "Basket",
+      "owner": "john@foo.com",
+      "image": "url_to_basket_image.jpg",
+      "caption": "A beautiful basket",
+      "likeCount": 0
+    },
+    {
+      "_id": "post2",
+      "name": "Bicycle",
+      "owner": "john@foo.com",
+      "image": "url_to_bicycle_image.jpg",
+      "caption": "My new bicycle",
+      "likeCount": 0
+    },
+    {
+      "_id": "post3",
+      "name": "Banana",
+      "owner": "admin@foo.com",
+      "image": "url_to_banana_image.jpg",
+      "caption": "Fresh bananas",
+      "likeCount": 0
+    },
+    {
+      "_id": "post4",
+      "name": "Boogie Board",
+      "owner": "admin@foo.com",
+      "image": "url_to_boogie_board_image.jpg",
+      "caption": "Ready for the beach",
+      "likeCount": 0
+    }
   ]
 }

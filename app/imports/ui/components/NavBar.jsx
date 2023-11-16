@@ -48,6 +48,9 @@ const NavBar = () => {
               <Nav.Link id="list-stuff-nav" as={NavLink} to="/list" key="list">List Stuff</Nav.Link>,
               <Nav.Link id="posts-nav" as={NavLink} to="/posts" key="posts">Posts</Nav.Link>,
               <Nav.Link id="profile-nav" as={NavLink} to="/profile" key="profile">My Profile</Nav.Link>,
+              <Nav.Link id="create-nav" as={NavLink} to="/create" key="create">Create</Nav.Link>,
+              <Nav.Link id="posts-nav" as={NavLink} to="/posts" key="posts">Posts</Nav.Link>,
+              <Nav.Link id="profile-nav" as={NavLink} to="/profile" key="profiles">Profile</Nav.Link>,
             ]) : ''}
             {currentUser === '' ? (
               <NavDropdown id="login-dropdown" title="Sign In">

@@ -7,6 +7,12 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { ComponentIDs, PageIDs } from '../utilities/ids';
+import { Alert, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import SimpleSchema from 'simpl-schema';
+import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import { ComponentIDs, PageIDs } from '../../utilities/ids';
+
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
  */
@@ -68,6 +74,10 @@ const SignUp = ({ location }) => {
                       </Col>
                       <Col md={6}>
                         <TextField wrap="mb-4" id={ComponentIDs.signUpFormID} name="lastName" placeholder="Last Name" label={false} />
+                        <TextField wrap="mb-4" id={ComponentIDs.signInFormFirstName} name="firstName" placeholder="First Name" label={false} />
+                      </Col>
+                      <Col md={6}>
+                        <TextField wrap="mb-4" id={ComponentIDs.signInFormLastName} name="lastName" placeholder="Last Name" label={false} />
                       </Col>
                     </Row>
                     <TextField id={ComponentIDs.signUpFormEmail} name="email" placeholder="UH E-mail address" label={false} />
