@@ -25,7 +25,7 @@ body {
   --bs-body-font-family: Montserrat;
 }
 
-#landing-page.container-fluid {
+#landing-page {
   --bs-gutter-x: 0;
   background-image: url("../images/map.png");
   background-size: cover;
