@@ -8,5 +8,5 @@ cloudinary.config({
 });
 
 function uploadImage () {
-  
+
 }
