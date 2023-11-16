@@ -12,7 +12,7 @@ const Landing = () => (
     <LandingNav />
     <Container className="justify-content-center align-items-center p-5">
       <Row>
-        <h3>JOIN NOW TO LEARN ABOUT</h3>
+        <h3 style={{ fontWeight: 600 }}>JOIN NOW TO LEARN ABOUT</h3>
       </Row>
       <Row>
         <Col md={8}>
