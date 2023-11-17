@@ -8,12 +8,20 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { Posts } from '../../api/post/Post';
 
 const AddPost = () => {
-  const [initialValues, setInitialValues] = useState({ name: 'John' }); // Prefilled name
+  const [initialValues] = useState({ name: 'John' }); // Prefilled name
 
   const formSchema = new SimpleSchema({
     name: String,
-    image: String,
-    caption: String,
+    image: {
+      type: String,
+      optional: true, // Make likeCount optional
+      defaultValue: '', // You can also set a default value
+    },
+    caption: {
+      type: String,
+      optional: true, // Make likeCount optional
+      defaultValue: '', // You can also set a default value
+    },
   });
 
   const bridge = new SimpleSchema2Bridge(formSchema);

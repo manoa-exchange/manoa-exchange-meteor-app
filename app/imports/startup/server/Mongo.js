@@ -35,7 +35,7 @@ const addData = (data) => {
 
 // Initialize the Posts collection if empty.
 if (Posts.collection.find().count() === 0) {
-  if (Meteor.settings.defaultData) {
+  if (Meteor.settings.defaultPosts) {
     console.log('Creating default data.');
     Meteor.settings.defaultData.forEach(data => addData(data));
   }
