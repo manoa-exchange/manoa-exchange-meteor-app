@@ -4,21 +4,26 @@ import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Profiles } from '../../api/profile/Profile';
-/** Renders a color-blocked static landing page. */
+import { Posts } from '../../api/post/Post';
+import PostItem from '../components/PostItem';
+import CommentSection from '../components/CommentSection';
 
 const MyProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready } = useTracker(() => {
+  const { ready, posts } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Profile documents.
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
+    const subscription2 = Meteor.subscribe(Posts.userPublicationName);
     // Determine if the subscription is ready
-    const rdy = subscription.ready();
+    const rdy = subscription.ready() && subscription2.ready();
     // Get the Profile documents
     const profileI = Profiles.collection.find({}).fetch();
+    const postArr = Posts.collection.find({}).fetch();
     return {
       profiles: profileI,
+      posts: postArr,
       ready: rdy,
     };
   }, []);
@@ -26,7 +31,7 @@ const MyProfile = () => {
     <Container className="mb-4">
       <Row className="mt-4">
         <Col lg={4}>
-          <Card className="mb-4 rounded border border-dark">
+          <Card className="mb-4 rounded border border-dark card_profile">
             <Card.Body className="text-center">
               <Card.Img
                 /* eslint-disable-next-line max-len */
@@ -108,17 +113,39 @@ const MyProfile = () => {
           <Card className="mb-4 border border-black">
             <Card.Header as="h3" className="text-center">Recent Posts</Card.Header>
           </Card>
-          <Card>
-            <Card.Header>Insert Post Topic</Card.Header>
-            <Card.Body>
-              <Card.Title>Insert Post Title</Card.Title>
-              <Card.Text>
-                Insert Post Text
-              </Card.Text>
-            </Card.Body>
-          </Card>
-          <Container className="mt-4">
-            {/* {profiles.map((profile) => (<Col key={contact._id}><Contact contact={contact} notes={notes.filter(note => (note.contactId === contact._id))}/> </Col>))} */}
+          <Container className="mt-4 d-column justify-content-center text-center">
+            {posts.map((post, index) => (
+              index % 2 === 0 && (
+                <Row key={index / 2} className="mb-4">
+                  <Col>
+                    <div className="post-and-comments mx-4">
+                      <Row>
+                        <Col>
+                          <PostItem post={post} />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <CommentSection postId={post._id} />
+                      </Row>
+                    </div>
+                  </Col>
+                  {index + 1 < posts.length && ( // Check if there's another post in the pair
+                    <Col>
+                      <div className="post-and-comments mx-4">
+                        <Row>
+                          <Col>
+                            <PostItem post={posts[index + 1]} />
+                          </Col>
+                        </Row>
+                        <Row>
+                          <CommentSection postId={posts[index + 1]._id} />
+                        </Row>
+                      </div>
+                    </Col>
+                  )}
+                </Row>
+              )
+            ))}
           </Container>
         </Col>
       </Row>
