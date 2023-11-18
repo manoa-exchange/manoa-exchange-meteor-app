@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, Image, Container, Row, Col } from 'react-bootstrap';
+import { Card, Image, Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/PostItem.css';
+import swal from 'sweetalert';
+import { SavedPosts } from '../../api/savepost/SavePost';
 
 const PostItem = ({ post }) => {
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
@@ -48,6 +50,24 @@ const PostItem = ({ post }) => {
     setFullCaptionVisible(!fullCaptionVisible);
   };
 
+  const submit = () => {
+    const owner = Meteor.user().username;
+    const postData = {
+      name: "",
+      image: post.image,
+      caption: post.caption,
+      owner,
+    };
+
+    SavedPosts.collection.insert(postData, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Item added successfully', 'success');
+      }
+    });
+  };
+
   return (
     <Card className="post-card">
       <Card.Header id="card-header" className="manoa-white">
@@ -87,6 +107,7 @@ const PostItem = ({ post }) => {
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
         <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
+        <Button type="button" onClick={submit}>Submit</Button>
       </Card.Footer>
     </Card>
   );
