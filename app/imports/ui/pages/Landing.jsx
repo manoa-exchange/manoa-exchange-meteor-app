@@ -12,7 +12,7 @@ const Landing = () => (
     <LandingNav />
     <Container className="justify-content-center align-items-center p-5">
       <Row>
-        <h3>JOIN NOW TO LEARN ABOUT</h3>
+        <h3 style={{ fontWeight: 600 }}>JOIN NOW TO LEARN ABOUT</h3>
       </Row>
       <Row>
         <Col md={8}>
@@ -75,8 +75,10 @@ const Landing = () => (
           <h1 id="landing-header">REGISTER NOW →</h1>
         </Link>
       </Row>
-      <Row className="pt-3 ps-5">
-        <h1 id="landing-header">RESOURCES</h1>
+    </Container>
+    <Container id="color-block" className="p-5" fluid>
+      <Row className="ps-5">
+        <h1 id="landing-header" style={{ color: '#242331' }}>RESOURCES</h1>
       </Row>
       <Row className="pt-3 px-5">
         <DynamicCarousel />

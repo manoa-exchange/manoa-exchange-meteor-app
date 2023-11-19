@@ -14,6 +14,7 @@ Meteor.publish(Posts.userPublicationName, function () {
   return this.ready();
 });
 
+// User level publication for Profile Collection
 Meteor.publish(Profiles.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
@@ -31,6 +32,7 @@ Meteor.publish(Posts.adminPublicationName, function () {
   return this.ready();
 });
 
+// Admin level publication for profile collection
 Meteor.publish(Profiles.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Profiles.collection.find();

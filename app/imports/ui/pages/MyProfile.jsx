@@ -105,7 +105,7 @@ const MyProfile = () => {
           </Card>
         </Col>
         <Col lg={8}>
-          <Card className="mb-4">
+          <Card className="mb-4 border border-black">
             <Card.Header as="h3" className="text-center">Recent Posts</Card.Header>
           </Card>
           <Card>

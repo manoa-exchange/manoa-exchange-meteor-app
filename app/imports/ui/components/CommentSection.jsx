@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const CommentSection = ({ postId }) => {
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -32,7 +33,7 @@ const CommentSection = ({ postId }) => {
       });
 
       setComments([...comments, newComment]);
-      setNewComment("");
+      setNewComment('');
     } catch (error) {
       console.error('Failed to post comment:', error);
     }
@@ -48,6 +49,7 @@ const CommentSection = ({ postId }) => {
           onChange={(e) => setNewComment(e.target.value)}
           placeholder="Write a comment..."
         />
+        {/* eslint-disable-next-line react/button-has-type */}
         <button onClick={handleCommentSubmit}>Post Comment</button>
         {comments.map((comment, index) => (
           <div key={index}>{comment}</div>
@@ -55,6 +57,10 @@ const CommentSection = ({ postId }) => {
       </div>
     </div>
   );
+};
+
+CommentSection.propTypes = {
+  postId: PropTypes.string.isRequired, // Assuming postId is a string and is required
 };
 
 export default CommentSection;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { Meteor } from 'meteor/meteor';
-import { Alert, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Row, Image } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
@@ -37,7 +37,7 @@ const SignIn = () => {
   // console.log('render', error, redirect);
   // if correct authentication, redirect to page instead of login screen
   if (redirect) {
-    return (<Navigate to="/" />);
+    return (<Navigate to="/home" />);
   }
   // Otherwise return the Login form.
   return (

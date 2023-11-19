@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Navigate } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
-import { Alert, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { Alert, Card, Col, Container, Row, Image } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
-import { ComponentIDs, PageIDs } from '../../utilities/ids';
+import { ComponentIDs, PageIDs } from '../utilities/ids';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -65,10 +65,10 @@ const SignUp = ({ location }) => {
                   <Col md={6} className="g-0">
                     <Row>
                       <Col md={6}>
-                        <TextField wrap="mb-4" id={ComponentIDs.signInFormFirstName} name="firstName" placeholder="First Name" label={false} />
+                        <TextField wrap="mb-4" id={ComponentIDs.signUpFormID} name="firstName" placeholder="First Name" label={false} />
                       </Col>
                       <Col md={6}>
-                        <TextField wrap="mb-4" id={ComponentIDs.signInFormLastName} name="lastName" placeholder="Last Name" label={false} />
+                        <TextField wrap="mb-4" id={ComponentIDs.signUpFormID} name="lastName" placeholder="Last Name" label={false} />
                       </Col>
                     </Row>
                     <TextField id={ComponentIDs.signUpFormEmail} name="email" placeholder="UH E-mail address" label={false} />

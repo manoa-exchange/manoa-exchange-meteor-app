@@ -12,16 +12,8 @@ const AddPost = () => {
 
   const formSchema = new SimpleSchema({
     name: String,
-    image: {
-      type: String,
-      optional: true, // Make likeCount optional
-      defaultValue: '', // You can also set a default value
-    },
-    caption: {
-      type: String,
-      optional: true, // Make likeCount optional
-      defaultValue: '', // You can also set a default value
-    },
+    image: { type: String, optional: true },
+    caption: String,
   });
 
   const bridge = new SimpleSchema2Bridge(formSchema);
