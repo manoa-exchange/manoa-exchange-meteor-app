@@ -3,9 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, Image, Container, Row, Col } from 'react-bootstrap';
-import { BiHeart, BiChat } from 'react-icons/bi'; // Importing react-icons
+import { Card, Image, Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/PostItem.css';
+import swal from 'sweetalert';
+import { SavedPosts } from '../../api/savepost/SavePost';
 
 const PostItem = ({ post }) => {
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
@@ -49,6 +50,24 @@ const PostItem = ({ post }) => {
     setFullCaptionVisible(!fullCaptionVisible);
   };
 
+  const submit = () => {
+    const owner = Meteor.user().username;
+    const postData = {
+      name: "",
+      image: post.image,
+      caption: post.caption,
+      owner,
+    };
+
+    SavedPosts.collection.insert(postData, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Item added successfully', 'success');
+      }
+    });
+  };
+
   return (
     <Card className="post-card">
       <Card.Header id="card-header" className="manoa-white">
@@ -59,6 +78,7 @@ const PostItem = ({ post }) => {
             </div>
           </Col>
           <Col>
+            {/* eslint-disable-next-line react/prop-types */}
             <strong>{ post.name }</strong>
           </Col>
         </Row>
@@ -68,13 +88,10 @@ const PostItem = ({ post }) => {
       </Container>
       <Card.Body id="card-body">
         <div className="interaction-icons">
-          {/* Using BiHeart and BiChat from react-icons */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <span onClick={toggleLike}>
-            <BiHeart className={`like-icon ${liked ? 'heart-filled' : ''}`} />
-          </span>
+          <i className={`bi ${liked ? 'bi-heart-fill' : 'bi-heart'} like-icon`} onClick={toggleLike} />
           <span>{likeCount}</span> {/* Display the like count */}
-          <BiChat className="comment-icon" />
+          <i className="bi bi-chat comment-icon" />
         </div>
         <Card.Text
           style={{
@@ -90,6 +107,7 @@ const PostItem = ({ post }) => {
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
         <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
+        <Button type="button" onClick={submit}>Submit</Button>
       </Card.Footer>
     </Card>
   );
@@ -97,7 +115,6 @@ const PostItem = ({ post }) => {
 
 PostItem.propTypes = {
   post: PropTypes.shape({
-    name: PropTypes.string,
     likeCount: PropTypes.number,
     image: PropTypes.string,
     caption: PropTypes.string,
