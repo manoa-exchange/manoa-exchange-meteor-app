@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 import { Card, Image, Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/PostItem.css';
 import swal from 'sweetalert';
+import { BiHeart, BiChat } from 'react-icons/bi'; // Importing react-icons
 import { SavedPosts } from '../../api/savepost/SavePost';
+import { Reports } from '../../api/report/Report';
 
 const PostItem = ({ post }) => {
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
@@ -50,16 +52,43 @@ const PostItem = ({ post }) => {
     setFullCaptionVisible(!fullCaptionVisible);
   };
 
-  const submit = () => {
+  const save = () => {
     const owner = Meteor.user().username;
     const postData = {
-      name: "",
+      name: '',
       image: post.image,
       caption: post.caption,
       owner,
     };
 
     SavedPosts.collection.insert(postData, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Item added successfully', 'success');
+      }
+    });
+  };
+  const report = () => {
+    const owner = Meteor.user().username;
+
+    // Check if the user has already reported this post
+    const existingReport = Reports.collection.findOne({ owner, postId: post._id });
+
+    if (existingReport) {
+      swal('Error', 'You have already reported this post', 'error');
+      return; // Exit the function to prevent duplicate reports
+    }
+
+    const postData = {
+      name: '',
+      image: post.image,
+      caption: post.caption,
+      owner,
+      postId: post._id, // Include postId to associate the report with the post
+    };
+
+    Reports.collection.insert(postData, (error) => {
       if (error) {
         swal('Error', error.message, 'error');
       } else {
@@ -88,10 +117,13 @@ const PostItem = ({ post }) => {
       </Container>
       <Card.Body id="card-body">
         <div className="interaction-icons">
+          {/* Using BiHeart and BiChat from react-icons */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <i className={`bi ${liked ? 'bi-heart-fill' : 'bi-heart'} like-icon`} onClick={toggleLike} />
+          <span onClick={toggleLike}>
+            <BiHeart className={`like-icon ${liked ? 'heart-filled' : ''}`} />
+          </span>
           <span>{likeCount}</span> {/* Display the like count */}
-          <i className="bi bi-chat comment-icon" />
+          <BiChat className="comment-icon" />
         </div>
         <Card.Text
           style={{
@@ -107,7 +139,8 @@ const PostItem = ({ post }) => {
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
         <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
-        <Button type="button" onClick={submit}>Submit</Button>
+        <Button type="button" onClick={report}>Report</Button>
+        <Button type="button" onClick={save}>Save</Button>
       </Card.Footer>
     </Card>
   );

@@ -19,6 +19,7 @@ import SignIn from '../pages/SignIn';
 import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MyProfile from '../pages/MyProfile';
+import ModerationPage from '../pages/ModerationPage';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
       ready: rdy,
     };
   });
+
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
@@ -41,6 +43,7 @@ const App = () => {
           <Route path="/posts" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
+          <Route path="/moderation" element={<ProtectedRoute><ModerationPage /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListPostAdmin /></AdminProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><MyProfile /></ProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />

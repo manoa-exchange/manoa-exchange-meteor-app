@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import swal from 'sweetalert';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Card, Col, Container, Row, Button } from 'react-bootstrap';
 import { AutoForm, ErrorsField, HiddenField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
@@ -11,32 +11,76 @@ import LoadingSpinner from '../components/LoadingSpinner';
 
 const bridge = new SimpleSchema2Bridge(Posts.schema);
 
-/* Renders the EditPost page for editing a single document. */
 const EditPost = () => {
-  // Get the documentID from the URL field. See imports/ui/layouts/App.jsx for the route containing :_id.
   const { _id } = useParams();
-  // console.log('EditPost', _id);
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+
   const { doc, ready } = useTracker(() => {
-    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Posts.userPublicationName);
-    // Determine if the subscription is ready
     const rdy = subscription.ready();
-    // Get the document
     const document = Posts.collection.findOne(_id);
     return {
       doc: document,
       ready: rdy,
     };
   }, [_id]);
-  // console.log('EditPost', doc, ready);
-  // On successful submit, insert the data.
+
   const submit = (data) => {
     const { name, image, caption } = data;
-    Posts.collection.update(_id, { $set: { name, image, caption } }, (error) => (error ?
-      swal('Error', error.message, 'error') :
+    Posts.collection.update(_id, { $set: { name, image, caption } }, (outerError) => (outerError ?
+      swal('Error', outerError.message, 'error') :
       swal('Success', 'Item updated successfully', 'success')));
   };
+
+  const handleDelete = () => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this post!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        Meteor.call('posts.delete', _id, (error) => {
+          if (error) {
+            swal('Error', error.message, 'error');
+          } else {
+            swal('Post deleted!', {
+              icon: 'success',
+            });
+
+            // Delete the post from MyProfilePage (if applicable)
+            const isOwner = doc && doc.owner === Meteor.user().username;
+            if (isOwner) {
+              // Remove the post from MyProfilePage
+              Meteor.call('posts.deleteFromProfile', _id, (profileError) => {
+                if (profileError) {
+                  console.error('Error deleting post from profile:', profileError.message);
+                } else {
+                  console.log('Post deleted from profile');
+                }
+              });
+            }
+
+            // Optionally, you can also update the ModerationPage here.
+            // Example of updating the ModerationPage:
+            Meteor.call('reports.refresh', (refreshError) => {
+              if (refreshError) {
+                console.error('Error refreshing reports:', refreshError.message);
+              } else {
+                console.log('Reports refreshed successfully');
+              }
+            });
+          }
+        });
+      }
+    });
+  };
+
+  useEffect(() => {
+    // Optionally, you can update the ModerationPage's state or data here
+    // Example: Fetch the updated list of reported posts and update the state in ModerationPage
+    // This is an additional step, and it's not included in this code.
+  }, [_id]);
 
   return ready ? (
     <Container className="py-3">
@@ -49,7 +93,11 @@ const EditPost = () => {
                 <TextField name="name" />
                 <TextField name="image" />
                 <TextField name="caption" />
-                <SubmitField value="Submit" />
+                <div className="d-flex justify-content-between">
+                  <SubmitField value="Submit" />
+                  {/* Delete Button */}
+                  <Button variant="danger" onClick={handleDelete}>Delete Post</Button>
+                </div>
                 <ErrorsField />
                 <HiddenField name="owner" />
               </Card.Body>

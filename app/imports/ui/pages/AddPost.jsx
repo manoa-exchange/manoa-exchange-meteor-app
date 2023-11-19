@@ -18,8 +18,8 @@ const AddPost = () => {
 
   const bridge = new SimpleSchema2Bridge(formSchema);
 
-  const submit = (data, formRef) => {
-    const { name, image, caption } = data;
+  const submit = (post, formRef) => {
+    const { name, image, caption } = post;
     const owner = Meteor.user().username;
     Posts.collection.insert(
       { name, image, caption, owner },
@@ -40,7 +40,7 @@ const AddPost = () => {
       <Row className="justify-content-center">
         <Col xs={5}>
           <h2 className="text-center">Add Post</h2>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} model={initialValues} onSubmit={data => submit(data, fRef)}>
+          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} model={initialValues} onSubmit={post => submit(post, fRef)}>
             <Card>
               <Card.Body>
                 <TextField name="name" readOnly />
