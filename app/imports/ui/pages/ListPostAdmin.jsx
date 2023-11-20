@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Col, Container, Row, Table } from 'react-bootstrap';
+import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import { Posts } from '../../api/post/Post';
 import PostItemAdmin from '../components/PostItemAdmin';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 /* Renders a table containing all of the Stuff documents. Use <PostItemAdmin.jsx> to render each row. */
 const ListPostAdmin = () => {
+  const [deleteAdmin, setDeleteAdmin] = useState(false);
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { stuffs, ready } = useTracker(() => {
+  const { posts, ready } = useTracker(() => {
     // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Posts.adminPublicationName);
     // Determine if the subscription is ready
@@ -21,23 +22,32 @@ const ListPostAdmin = () => {
       ready: rdy,
     };
   }, []);
+
+  const deletePost = (postId) => {
+    setDeleteAdmin(true);
+    Meteor.call('posts.remove', postId, (error) => {
+      setDeleteAdmin(false);
+      if (error) {
+        console.error('Error deleting post:', error);
+      }
+    });
+  };
   return (ready ? (
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col md={7}>
           <Col className="text-center"><h2>List Post (Admin)</h2></Col>
           <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Image</th>
-                <th>Caption</th>
-                <th>Owner</th>
-              </tr>
-            </thead>
             <tbody>
-              {stuffs.map((stuff) => <PostItemAdmin key={stuff._id} stuff={stuff} />)}
+              {posts.map((post) => (
+                <PostItemAdmin key={post._id} post={post}>
+                  <td>
+                    <Button variant="danger" onClick={() => deletePost(post._id)} disabled={deleteAdmin}>
+                      Delete
+                    </Button>
+                  </td>
+                </PostItemAdmin>
+              ))}
             </tbody>
           </Table>
         </Col>

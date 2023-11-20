@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
 
 const AddPost = () => {
@@ -16,10 +17,19 @@ const AddPost = () => {
     caption: String,
   });
 
+  const matcher = new RegExpMatcher({
+    ...englishDataset.build(),
+    ...englishRecommendedTransformers,
+  });
+
   const bridge = new SimpleSchema2Bridge(formSchema);
 
   const submit = (data, formRef) => {
     const { name, image, caption } = data;
+    if (matcher.hasMatch(caption)) {
+      swal('Error', 'Caption contains obscene content', 'error');
+      return; // Do not submit the form if caption is obscene
+    }
     const owner = Meteor.user().username;
     Posts.collection.insert(
       { name, image, caption, owner },
