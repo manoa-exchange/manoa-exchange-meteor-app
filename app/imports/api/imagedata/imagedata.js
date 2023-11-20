@@ -22,6 +22,6 @@ export const ImageDataSchema = new SimpleSchema({
     label: 'Thumbnail',
     type: String,
   },
-}, { tracker: Tracker });
+});
 
 ImageData.attachSchema(ImageDataSchema);
