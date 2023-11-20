@@ -15,7 +15,7 @@ const CloudinaryPage = () => {
   const myImage = cld.image('sample');
 
   // Resize to 250 x 250 pixels using the 'fill' crop mode.
-  myImage.resize(fill().width(250).height(250));
+  myImage.resize(fill().width(50).height(50));
 
   // Render the image in a React component.
   return (
