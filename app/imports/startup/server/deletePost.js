@@ -14,4 +14,5 @@ Meteor.methods({
     Posts.collection.remove(postId);
   },
 });
+
 export
