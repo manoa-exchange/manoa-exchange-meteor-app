@@ -7,27 +7,23 @@ import { Profiles } from '../../api/profile/Profile';
 import { Posts } from '../../api/post/Post';
 import PostItem from '../components/PostItem';
 import CommentSection from '../components/CommentSection';
-import { SavedPosts } from '../../api/savepost/SavePost';
 
 const MyProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, posts, savedposts } = useTracker(() => {
+  const { ready, posts } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Profile documents.
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     const subscription2 = Meteor.subscribe(Posts.userPublicationName);
-    const subscription3 = Meteor.subscribe(SavedPosts.userPublicationName);
     // Determine if the subscription is ready
-    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
+    const rdy = subscription.ready() && subscription2.ready();
     // Get the Profile documents
     const profileI = Profiles.collection.find({}).fetch();
     const postArr = Posts.collection.find({}).fetch();
-    const postArr2 = SavedPosts.collection.find({}).fetch();
     return {
       profiles: profileI,
       posts: postArr,
-      savedposts: postArr2,
       ready: rdy,
     };
   }, []);
@@ -113,7 +109,7 @@ const MyProfile = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col lg={4}>
+        <Col lg={8}>
           <Card className="mb-4 border border-black">
             <Card.Header as="h3" className="text-center">Recent Posts</Card.Header>
           </Card>
@@ -121,45 +117,6 @@ const MyProfile = () => {
             {posts.map((post, index) => (
               index % 2 === 0 && (
                 <Row key={index / 2} className="mb-4">
-                  <Col>
-                    <div className="post-and-comments mx-4">
-                      <Row>
-                        <Col>
-                          <PostItem post={post} />
-                        </Col>
-                      </Row>
-                      <Row>
-                        <CommentSection postId={post._id} />
-                      </Row>
-                    </div>
-                  </Col>
-                  {index + 1 < posts.length && ( // Check if there's another post in the pair
-                    <Col>
-                      <div className="post-and-comments mx-4">
-                        <Row>
-                          <Col>
-                            <PostItem post={posts[index + 1]} />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <CommentSection postId={posts[index + 1]._id} />
-                        </Row>
-                      </div>
-                    </Col>
-                  )}
-                </Row>
-              )
-            ))}
-          </Container>
-        </Col>
-        <Col lg={4}>
-          <Card className="mb-4 border border-black">
-            <Card.Header as="h3" className="text-center">Saved Posts</Card.Header>
-          </Card>
-          <Container>
-            {savedposts.map((post, index) => (
-              index % 2 === 0 && (
-                <Row key={index / 2} className="mb-4 text-center">
                   <Col>
                     <div className="post-and-comments mx-4">
                       <Row>

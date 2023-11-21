@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Card, Image, Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/PostItem.css';
 import swal from 'sweetalert';
+import { Heart } from 'react-bootstrap-icons';
 import { SavedPosts } from '../../api/savepost/SavePost';
 
 const PostItem = ({ post }) => {
@@ -53,7 +54,7 @@ const PostItem = ({ post }) => {
   const submit = () => {
     const owner = Meteor.user().username;
     const postData = {
-      name: "",
+      name: '',
       image: post.image,
       caption: post.caption,
       owner,
@@ -107,7 +108,7 @@ const PostItem = ({ post }) => {
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
         <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
-        <Button type="button" onClick={submit}>Submit</Button>
+        <Button type="button" onClick={submit}><Heart /></Button>
       </Card.Footer>
     </Card>
   );

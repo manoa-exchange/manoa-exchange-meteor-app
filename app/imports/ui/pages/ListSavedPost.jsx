@@ -1,13 +1,13 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Card, Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { SavedPosts } from '../../api/savepost/SavePost';
 import PostItem from '../components/PostItem';
 import CommentSection from '../components/CommentSection';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const ListPost = () => {
+const ListSavedPost = () => {
   const { ready, posts } = useTracker(() => {
     const subscription = Meteor.subscribe(SavedPosts.userPublicationName);
     return {
@@ -18,6 +18,13 @@ const ListPost = () => {
 
   return ready ? (
     <Container className="py-3">
+      <Row className="text-center">
+        <Col>
+          <Card className="mb-4 border border-black">
+            <Card.Header as="h3" className="text-center">Saved Posts</Card.Header>
+          </Card>
+        </Col>
+      </Row>
       <Row className="justify-content-center">
         <Col md={12}>
           {posts.map((post) => (
@@ -38,4 +45,4 @@ const ListPost = () => {
   ) : <LoadingSpinner />;
 };
 
-export default ListPost;
+export default ListSavedPost;
