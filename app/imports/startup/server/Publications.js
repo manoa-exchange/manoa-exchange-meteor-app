@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
-// import { Stuffs } from '../../api/stuff/Stuff.js';
+import { check } from 'meteor/check';
 import { Posts } from '../../api/post/Post';
 import { SavedPosts } from '../../api/savepost/SavePost';
 import { Profiles } from '../../api/profile/Profile';
@@ -48,6 +48,16 @@ Meteor.publish(Profiles.adminPublicationName, function () {
   return this.ready();
 });
 
+// deletes post on admin level
+Meteor.methods({
+  'posts.remove'(postId) {
+    check(postId, String);
+    if (!this.userId || !Roles.userIsInRole(this.userId, 'admin')) {
+      throw new Meteor.Error('admin function only.');
+    }
+    Posts.collection.remove(postId);
+  },
+});
 // alanning:roles publication
 // Recommended code to publish roles for each user.
 Meteor.publish(null, function () {
