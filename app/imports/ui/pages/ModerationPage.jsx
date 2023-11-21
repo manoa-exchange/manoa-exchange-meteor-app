@@ -29,20 +29,18 @@ const ModerationPage = () => {
             <Card className="mb-4 border border-black">
               <Card.Header as="h3" className="text-center">Reported Posts</Card.Header>
             </Card>
-            <Container>
-              <Row className="mb-4 text-center justify-content-between">
-                {reports.map((post) => (
-                  <Col key={post._id} lg={3} className="px-3">
-                    <div className="post-and-comments mx-4 py-3">
-                      <Row>
-                        <Col>
-                          <PostItem post={post} />
-                        </Col>
-                      </Row>
-                    </div>
-                  </Col>
-                ))}
-              </Row>
+            <Container className="mt-4 d-column justify-content-center text-center">
+              {reports.map((post) => (
+                <Col key={post._id} lg={3} className="px-3">
+                  <div className="post-and-comments mx-4 py-3">
+                    <Row>
+                      <Col>
+                        <PostItem post={post} />
+                      </Col>
+                    </Row>
+                  </div>
+                </Col>
+              ))}
             </Container>
           </Col>
         </Row>
