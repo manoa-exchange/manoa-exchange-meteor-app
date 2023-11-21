@@ -10,15 +10,25 @@ const DynamicCarousel = () => {
     infinite: true,
     speed: 1000,
     slidesToShow: 5,
-    slidesToScroll: 2,
+    slidesToScroll: 5,
   };
 
   const ResourceItems = [
-    { title: 'MIX', description: 'Manoa International Exchange', link: 'http://manoa.hawaii.edu/mix/', image: '' },
-    { title: 'SAC', description: 'Study Abroad Center', link: 'http://www.studyabroad.hawaii.edu/', image: '' },
-    { title: 'NSE', description: 'National Student Exchange', link: 'http://www.studyabroad.hawaii.edu/', image: '' },
-    { title: 'Study Abroad and Exchange', description: 'UHM overseas options for current students and post-graduates', link: 'https://manoa.hawaii.edu/global/study-abroad-and-exchange/', image: '' },
-    { title: 'NSE', description: 'National Student Exchange', link: 'https://manoa.hawaii.edu/global/study-abroad-and-exchange/', image: '' },
+    { title: 'Manoa International Exchange', link: 'http://manoa.hawaii.edu/mix/' },
+    { title: 'Study Abroad Center', link: 'https://www.studyabroad.hawaii.edu' },
+    { title: 'National Student Exchange', link: 'http://nse.org' },
+    { title: 'Money Matters & Resources', link: 'https://www.studyabroad.hawaii.edu/students/resources/' },
+    { title: 'Self-Designed Study Abroad', link: 'https://www.studyabroad.hawaii.edu/programs/independent/' },
+    { title: 'Study Abroad By Major', link: 'https://www.studyabroad.hawaii.edu/study-abroad-by-major/' },
+    { title: 'Summer Programs', link: 'https://www.studyabroad.hawaii.edu/programs/summer/' },
+    { title: 'Study In Japan', link: 'https://manoa.hawaii.edu/japanese-studies/academic-programs/study-in-japan/' },
+    { title: 'Study Abroad Applications', link: 'https://www.studyabroad.hawaii.edu/students/applications/' },
+    { title: 'College of Natural Sciences Opportunities', link: 'https://natsci.manoa.hawaii.edu/sasc/study-away/' },
+    { title: 'Shidler College of Business Opportunities', link: 'https://shidler.hawaii.edu/international-exchange' },
+    { title: 'College of Engineering Opportunities', link: 'https://coe.hawaii.edu/international/study-away/' },
+    { title: 'John A. Burns School of Medicine Opportunities', link: 'https://jabsom.hawaii.edu/education/global-health/index.html' },
+    { title: 'College of Social Sciences Opportunities', link: 'https://socialsciences.manoa.hawaii.edu/study-at-css/experiential-learning/study-abroad/' },
+    { title: 'Study Abroad Quick Facts', link: 'https://www.studyabroad.hawaii.edu/about/quick-facts/' },
   ];
 
   return (
