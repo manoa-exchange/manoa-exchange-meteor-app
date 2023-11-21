@@ -21,7 +21,7 @@ const DynamicCarousel = () => {
     { title: 'Self-Designed Study Abroad', link: 'https://www.studyabroad.hawaii.edu/programs/independent/' },
     { title: 'Study Abroad By Major', link: 'https://www.studyabroad.hawaii.edu/study-abroad-by-major/' },
     { title: 'Summer Programs', link: 'https://www.studyabroad.hawaii.edu/programs/summer/' },
-    { title: 'Study In Japan', link: 'https://manoa.hawaii.edu/japanese-studies/academic-programs/study-in-japan/' },
+    { title: 'Study Abroad In Japan', link: 'https://manoa.hawaii.edu/japanese-studies/academic-programs/study-in-japan/' },
     { title: 'Study Abroad Applications', link: 'https://www.studyabroad.hawaii.edu/students/applications/' },
     { title: 'College of Natural Sciences Opportunities', link: 'https://natsci.manoa.hawaii.edu/sasc/study-away/' },
     { title: 'Shidler College of Business Opportunities', link: 'https://shidler.hawaii.edu/international-exchange' },

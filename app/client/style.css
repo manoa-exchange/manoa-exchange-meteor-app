@@ -9,7 +9,7 @@
 }
 
 a {
-  text-decoration-color: #357266 !important;
+  text-decoration-color: white !important;
 }
 
 html body {
@@ -82,7 +82,7 @@ body {
 }
 
 #landing-header {
-  color: #357266;
+  color: white;
   font-weight: 700;
 }
 
@@ -95,14 +95,14 @@ body {
   font-size: 2em;
 }
 
-#color-block.container-fluid {
-  background-color: #357266;
+#color-block {
+  background-color: rgba(0, 0, 0, 0.49);
 }
 
 #landing-text {
   font-size: 5em;
   font-weight: bold;
-  color: #357266;
+  color: white;
 }
 
 #signInPage {
@@ -152,7 +152,7 @@ body {
 
 #listPostsPage {
   background: rgb(36, 35, 49);
-  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 60%);
   font-family: 'Montserrat', sans-serif;
 }
 

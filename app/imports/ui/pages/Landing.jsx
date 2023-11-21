@@ -70,16 +70,18 @@ const Landing = () => (
             </Container>
           </Col>
         </Row>
-        <Row className="p-5 text-center">
-          <h4>to access these features...</h4>
+      </Container>
+      <Container id="color-block" className="p-5" fluid>
+        <Row className="text-center">
+          <h4 style={{ color: 'white' }}>to access these features...</h4>
           <Link to="/signup">
             <h1 id="landing-header">REGISTER NOW →</h1>
           </Link>
         </Row>
       </Container>
-      <Container id="color-block" className="p-5" fluid>
+      <Container className="p-5" fluid>
         <Row className="ps-5">
-          <h1 id="landing-header" style={{ color: '#242331' }}>RESOURCES</h1>
+          <h1 id="landing-header">RESOURCES</h1>
         </Row>
         <Row className="pt-3 px-5">
           <DynamicCarousel />
