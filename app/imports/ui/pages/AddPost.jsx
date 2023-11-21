@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
 
 const AddPost = () => {
@@ -16,10 +17,19 @@ const AddPost = () => {
     caption: String,
   });
 
+  const matcher = new RegExpMatcher({
+    ...englishDataset.build(),
+    ...englishRecommendedTransformers,
+  });
+
   const bridge = new SimpleSchema2Bridge(formSchema);
 
-  const submit = (post, formRef) => {
-    const { name, image, caption } = post;
+  const submit = (data, formRef) => {
+    const { name, image, caption } = data;
+    if (matcher.hasMatch(caption)) {
+      swal('Error', 'Caption contains obscene content', 'error');
+      return; // Do not submit the form if caption is obscene
+    }
     const owner = Meteor.user().username;
     Posts.collection.insert(
       { name, image, caption, owner },
@@ -40,7 +50,7 @@ const AddPost = () => {
       <Row className="justify-content-center">
         <Col xs={5}>
           <h2 className="text-center">Add Post</h2>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} model={initialValues} onSubmit={post => submit(post, fRef)}>
+          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} model={initialValues} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
                 <TextField name="name" readOnly />
