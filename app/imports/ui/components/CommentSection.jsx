@@ -41,7 +41,7 @@ const CommentSection = ({ postId }) => {
 
   return (
     <div>
-      <h3>Comments</h3>
+      <h3 style={{ color: 'white', fontWeight: 'bold' }}>Comments</h3>
       <div>
         <input
           type="text"

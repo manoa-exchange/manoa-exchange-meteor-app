@@ -7,6 +7,7 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
+import { PageIDs } from '../utilities/ids';
 
 const AddPost = () => {
   const [initialValues] = useState({ name: 'John' }); // Prefilled name
@@ -46,24 +47,26 @@ const AddPost = () => {
 
   let fRef = null;
   return (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={5}>
-          <h2 className="text-center">Add Post</h2>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} model={initialValues} onSubmit={data => submit(data, fRef)}>
-            <Card>
-              <Card.Body>
-                <TextField name="name" readOnly />
-                <TextField name="image" />
-                <TextField name="caption" />
-                <SubmitField value="Submit" />
-                <ErrorsField />
-              </Card.Body>
-            </Card>
-          </AutoForm>
-        </Col>
-      </Row>
-    </Container>
+    <div id={PageIDs.addPostPage}>
+      <Container className="py-3">
+        <Row className="justify-content-center">
+          <Col xs={5}>
+            <h2 className="text-center" style={{ color: 'white', fontWeight: 'bold' }}>Add Post</h2>
+            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} model={initialValues} onSubmit={data => submit(data, fRef)}>
+              <Card>
+                <Card.Body>
+                  <TextField name="name" readOnly />
+                  <TextField name="image" />
+                  <TextField name="caption" />
+                  <SubmitField value="Submit" />
+                  <ErrorsField />
+                </Card.Body>
+              </Card>
+            </AutoForm>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

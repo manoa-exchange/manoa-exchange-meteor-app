@@ -36,7 +36,7 @@ export const ComponentIDs = {
 };
 
 export const PageIDs = {
-  addProjectPage: 'addProjectPage',
+  addPostPage: 'addPostPage',
   filterPage: 'filterPage',
   homePage: 'homePage',
   interestsPage: 'interestsPage',
@@ -49,4 +49,5 @@ export const PageIDs = {
   signOutPage: 'signOutPage',
   signUpPage: 'signUpPage',
   listPostsPage: 'listPostsPage',
+  myProfilePage: 'myProfilePage',
 };

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const ResourceCard = ({ title, link }) => (
   <Container>
-    <Card>
+    <Card style={{ height: '200px' }}>
       <Card.Header>
         <Card.Title>
           <Container className="d-flex align-items-center justify-content-center text-center pt-3">
