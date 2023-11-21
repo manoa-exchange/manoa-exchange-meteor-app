@@ -34,7 +34,13 @@ body {
 }
 
 .navbar-nav .nav-link {
-  color: #242331;
+  font-weight: bold;
+  color: #ECECEC;
+}
+
+#basic-navbar-nav {
+  color: black;
+  font-weight: bold;
 }
 
 .btn-outline-dark {
@@ -66,8 +72,9 @@ body {
   border: 2px solid #242331 !important;
   border-radius: 5px;
   height: 185px;
-  background-color: rgba(241, 238, 236, 0.37);
-}
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 15px;}
 
 #landing-header {
   color: #357266;
@@ -132,3 +139,27 @@ body {
 .card_profile {
   background-color: antique white;
 }
+
+#resource-card {
+  font-family: 'Montserrat', sans-serif;
+  font-size: large;
+}
+#listPostsPage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.nav-black {
+  color: black !important;
+}
+
+.basic-navbar-nav {
+  color: black;
+  font-weight: bold;
+}
+
+/* Add other styles as needed */
+
+
+  

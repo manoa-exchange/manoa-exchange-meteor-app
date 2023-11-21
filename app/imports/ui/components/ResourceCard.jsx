@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const ResourceCard = ({ title, description, link, image }) => (
-  <Container>
-    <Card>
+  <Container id="resource-card">
+    <Card style={{ height: '300px' }}>
       <Card.Header>
         <Card.Img src={image} />
         <Card.Title>
