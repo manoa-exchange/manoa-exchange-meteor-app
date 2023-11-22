@@ -41,7 +41,7 @@ const ListStuff = () => {
               </tr>
             </thead>
             <tbody>
-              {stuffs.map((stuff) => <PostItem key={stuff._id} post={stuff} />)}
+              {stuffs.map((stuff) => <PostItem key={stuff.uniqueId} post={stuff} />)}
             </tbody>
           </Table>
         </Col>

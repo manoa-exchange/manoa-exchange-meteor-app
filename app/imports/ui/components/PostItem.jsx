@@ -21,7 +21,7 @@ const PostItem = ({ post }) => {
   // Check local storage for like status
   const checkLikedStatus = () => {
     const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '{}');
-    return likedPosts[post._id] === true;
+    return likedPosts[post.uniqueId] === true;
   };
 
   const [liked, setLiked] = useState(checkLikedStatus());
@@ -32,7 +32,7 @@ const PostItem = ({ post }) => {
 
   const toggleLike = () => {
     const methodToCall = liked ? 'posts.decrementLike' : 'posts.incrementLike';
-    Meteor.call(methodToCall, post._id, (error) => {
+    Meteor.call(methodToCall, post.uniqueId, (error) => {
       if (error) {
         console.error('Error updating like count:', error);
       } else {
@@ -42,7 +42,7 @@ const PostItem = ({ post }) => {
 
         // Update local storage
         const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '{}');
-        likedPosts[post._id] = newLikedStatus;
+        likedPosts[post.uniqueId] = newLikedStatus;
         localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
       }
     });
@@ -131,7 +131,7 @@ const PostItem = ({ post }) => {
         </Card.Text>
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
-        <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
+        <Link to={`/edit/${post.uniqueId}`} className="edit-link">Edit</Link>
         <Button type="button" onClick={report}>Report</Button>
         <Button type="button" onClick={save}>Save</Button>
       </Card.Footer>
@@ -146,7 +146,6 @@ PostItem.propTypes = {
     likeCount: PropTypes.number,
     image: PropTypes.string,
     caption: PropTypes.string,
-    _id: PropTypes.string,
   }).isRequired,
 };
 

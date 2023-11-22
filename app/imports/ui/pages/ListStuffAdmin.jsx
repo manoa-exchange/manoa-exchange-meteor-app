@@ -36,7 +36,7 @@ const ListStuffAdmin = () => {
               </tr>
             </thead>
             <tbody>
-              {stuffs.map((stuff) => <PostItemAdmin key={stuff._id} stuff={stuff} />)}
+              {stuffs.map((stuff) => <PostItemAdmin key={stuff.uniqueId} stuff={stuff} />)}
             </tbody>
           </Table>
         </Col>

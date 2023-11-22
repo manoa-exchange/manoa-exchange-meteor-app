@@ -8,7 +8,7 @@ import { SavedPosts } from '../../api/savepost/SavePost';
 Meteor.methods({
   'posts.logLikeCount'(uniqueId) {
     check(uniqueId, String);
-    const post = Posts.collection.findOne({ _id: uniqueId });
+    const post = Posts.collection.findOne({ uniqueId: uniqueId });
     if (post) {
       console.log(`Like count for post ${uniqueId}:`, post.likeCount);
     } else {
@@ -29,17 +29,17 @@ Meteor.methods({
   },
   'posts.delete'(uniqueId) {
     check(uniqueId, String);
-
+    console.log('Post Deleted');
     Posts.collection.remove(uniqueId);
   },
-  'saveposts.delete'(uniqueId) {
+  'savePosts.delete'(uniqueId) {
     check(uniqueId, String);
-
+    console.log('Saved Post Deleted');
     SavedPosts.collection.remove(uniqueId);
   },
   'reports.delete'(uniqueId) {
     check(uniqueId, String);
-
+    console.log('Reported Post Deleted');
     Reports.collection.remove(uniqueId);
   },
   'reports.refresh'() {
