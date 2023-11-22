@@ -4,6 +4,7 @@ import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstra
 import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
+import { Random } from 'meteor/random';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
@@ -12,7 +13,8 @@ const AddPost = () => {
   const [initialValues] = useState({ name: 'John' }); // Prefilled name
 
   const formSchema = new SimpleSchema({
-    name: String,
+    uniqueId: { type: String, optional: true },
+    name: { type: String, optional: true },
     image: { type: String, optional: true },
     caption: String,
   });
@@ -31,8 +33,22 @@ const AddPost = () => {
       return; // Do not submit the form if caption is obscene
     }
     const owner = Meteor.user().username;
+
+    // Generate a random 8-digit unique ID
+    let uniqueId;
+    let attempts = 0;
+    do {
+      uniqueId = Random.id(8); // Generate an 8-character random ID
+      attempts++;
+    } while (Posts.collection.findOne({ uniqueId }) && attempts < 10); // Check if the ID already exists, limit attempts to avoid an infinite loop
+
+    if (attempts === 10) {
+      swal('Error', 'Failed to generate a unique ID. Please try again.', 'error');
+      return;
+    }
+
     Posts.collection.insert(
-      { name, image, caption, owner },
+      { uniqueId, name, image, caption, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -53,7 +69,7 @@ const AddPost = () => {
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} model={initialValues} onSubmit={data => submit(data, fRef)}>
             <Card>
               <Card.Body>
-                <TextField name="name" readOnly />
+                <TextField name="uniqueId" readOnly />
                 <TextField name="image" />
                 <TextField name="caption" />
                 <SubmitField value="Submit" />

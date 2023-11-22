@@ -1,7 +1,12 @@
 {
+  "defaultAccounts": [
+    { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
+    { "email": "john@foo.com", "password": "changeme" }
+  ],
+
   "defaultPosts": [
     {
-      "_id": "post1",
+      "uniqueId": "post1",
       "name": "Basket",
       "owner": "john@foo.com",
       "image": "http://www2.hawaii.edu/~scottpr/images/RobertsonThumb.jpg",
@@ -9,7 +14,7 @@
       "likeCount": 0
     },
     {
-      "_id": "post2",
+      "uniqueId": "267450990",
       "name": "Bicycle",
       "owner": "john@foo.com",
       "image": "http://www2.hawaii.edu/~scottpr/images/RobertsonThumb.jpg",
@@ -17,7 +22,7 @@
       "likeCount": 0
     },
     {
-      "_id": "post3",
+      "uniqueId": "09056473",
       "name": "Banana",
       "owner": "admin@foo.com",
       "image": "http://www2.hawaii.edu/~scottpr/images/RobertsonThumb.jpg",
@@ -25,7 +30,7 @@
       "likeCount": 0
     },
     {
-      "_id": "post4",
+      "uniqueId": "15472970",
       "name": "Boogie Board",
       "owner": "admin@foo.com",
       "image": "http://www2.hawaii.edu/~scottpr/images/RobertsonThumb.jpg",

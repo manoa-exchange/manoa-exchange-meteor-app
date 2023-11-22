@@ -40,37 +40,60 @@ const EditPost = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        Meteor.call('posts.delete', _id, (error) => {
-          if (error) {
-            swal('Error', error.message, 'error');
-          } else {
-            swal('Post deleted!', {
-              icon: 'success',
-            });
-
-            // Delete the post from MyProfilePage (if applicable)
-            const isOwner = doc && doc.owner === Meteor.user().username;
-            if (isOwner) {
-              // Remove the post from MyProfilePage
-              Meteor.call('posts.deleteFromProfile', _id, (profileError) => {
-                if (profileError) {
-                  console.error('Error deleting post from profile:', profileError.message);
-                } else {
-                  console.log('Post deleted from profile');
-                }
-              });
-            }
-
-            // Optionally, you can also update the ModerationPage here.
-            // Example of updating the ModerationPage:
-            Meteor.call('reports.refresh', (refreshError) => {
-              if (refreshError) {
-                console.error('Error refreshing reports:', refreshError.message);
+        // Use Promise.all to ensure all delete operations are completed before showing success message
+        Promise.all([
+          new Promise((resolve) => {
+            Meteor.call('posts.delete', _id, (error) => {
+              if (error) {
+                swal('Error', error.message, 'error');
               } else {
-                console.log('Reports refreshed successfully');
+                resolve();
+              }
+            });
+          }),
+          new Promise((resolve) => {
+            Meteor.call('saveposts.delete', _id, (error) => {
+              if (error) {
+                swal('Error', error.message, 'error');
+              } else {
+                resolve();
+              }
+            });
+          }),
+          new Promise((resolve) => {
+            Meteor.call('reports.delete', _id, (error) => {
+              if (error) {
+                swal('Error', error.message, 'error');
+              } else {
+                resolve();
+              }
+            });
+          }),
+        ]).then(() => {
+          // Delete the post from MyProfilePage (if applicable)
+          const isOwner = doc && doc.owner === Meteor.user().username;
+          if (isOwner) {
+            Meteor.call('posts.deleteFromProfile', _id, (profileError) => {
+              if (profileError) {
+                console.error('Error deleting post from profile:', profileError.message);
+              } else {
+                console.log('Post deleted from profile');
               }
             });
           }
+
+          Meteor.call('reports.refresh', (refreshError) => {
+            if (refreshError) {
+              console.error('Error refreshing reports:', refreshError.message);
+            } else {
+              console.log('Reports refreshed successfully');
+            }
+          });
+
+          // Show success message after all operations are completed
+          swal('Post deleted!', {
+            icon: 'success',
+          });
         });
       }
     });

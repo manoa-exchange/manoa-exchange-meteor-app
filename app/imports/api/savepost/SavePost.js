@@ -12,10 +12,27 @@ class SavePostsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      name: { type: String, optional: true },
+      uniqueId: {
+        type: String, // You can change the data type as needed
+        optional: true, // Make uniqueId optional
+        defaultValue: '', // You can also set a default value
+      },
+      name: {
+        type: String,
+        optional: true, // Make likeCount optional
+        defaultValue: '', // You can also set a default value
+      },
       owner: String,
-      image: String,
-      caption: String,
+      image: {
+        type: String,
+        optional: true, // Make likeCount optional
+        defaultValue: '', // You can also set a default value
+      },
+      caption: {
+        type: String,
+        optional: true, // Make likeCount optional
+        defaultValue: '', // You can also set a default value
+      },
       likeCount: {
         type: Number,
         optional: true, // Make likeCount optional

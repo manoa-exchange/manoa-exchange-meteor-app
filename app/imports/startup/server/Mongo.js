@@ -6,39 +6,44 @@ import { SavedPosts } from '../../api/savepost/SavePost';
 
 /* eslint-disable no-console */
 Meteor.methods({
-  'posts.logLikeCount'(postId) {
-    check(postId, String);
-    const post = Posts.collection.findOne({ _id: postId });
+  'posts.logLikeCount'(uniqueId) {
+    check(uniqueId, String);
+    const post = Posts.collection.findOne({ _id: uniqueId });
     if (post) {
-      console.log(`Like count for post ${postId}:`, post.likeCount);
+      console.log(`Like count for post ${uniqueId}:`, post.likeCount);
     } else {
       console.log('Post not found');
     }
   },
-  'posts.incrementLike'(postId) {
-    check(postId, String);
-    Posts.collection.update(postId, {
+  'posts.incrementLike'(uniqueId) {
+    check(uniqueId, String);
+    Posts.collection.update(uniqueId, {
       $inc: { likeCount: 1 },
     });
   },
-  'posts.decrementLike'(postId) {
-    check(postId, String);
-    Posts.collection.update(postId, {
+  'posts.decrementLike'(uniqueId) {
+    check(uniqueId, String);
+    Posts.collection.update(uniqueId, {
       $inc: { likeCount: -1 },
     });
   },
-  'posts.delete'(postId) {
-    check(postId, String);
+  'posts.delete'(uniqueId) {
+    check(uniqueId, String);
 
-    // Additional checks can be added here (like user permissions)
+    Posts.collection.remove(uniqueId);
+  },
+  'saveposts.delete'(uniqueId) {
+    check(uniqueId, String);
 
-    // Delete the post
-    Posts.collection.remove(postId);
-    Reports.collection.remove(postId);
-    SavedPosts.collection.remove(postId);
+    SavedPosts.collection.remove(uniqueId);
+  },
+  'reports.delete'(uniqueId) {
+    check(uniqueId, String);
+
+    Reports.collection.remove(uniqueId);
   },
   'reports.refresh'() {
-    // You can put any necessary logic here to refresh the reports data.
+    // You can put any necessary logic here to refresh the reports' data.
     // For example, you can fetch the updated reports data and return it.
     // Make sure to publish the reports data in your publication.
     // Example:

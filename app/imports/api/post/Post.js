@@ -12,6 +12,11 @@ class PostsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
+      uniqueId: {
+        type: String, // You can change the data type as needed
+        optional: true, // Make uniqueId optional
+        defaultValue: '', // You can also set a default value
+      },
       name: {
         type: String,
         optional: true, // Make likeCount optional

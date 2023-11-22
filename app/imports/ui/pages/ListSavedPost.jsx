@@ -2,16 +2,16 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Reports } from '../../api/report/Report';
+import { SavedPosts } from '../../api/savepost/SavePost';
 import PostItem from '../components/PostItem';
 import CommentSection from '../components/CommentSection';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const ListSavedPost = () => {
   const { ready, posts } = useTracker(() => {
-    const subscription = Meteor.subscribe(Reports.userPublicationName);
+    const subscription = Meteor.subscribe(SavedPosts.userPublicationName);
     return {
-      posts: Reports.collection.find({}).fetch(),
+      posts: SavedPosts.collection.find({}).fetch(),
       ready: subscription.ready(),
     };
   }, []);
@@ -28,13 +28,13 @@ const ListSavedPost = () => {
       <Row className="justify-content-center">
         <Col md={12}>
           {posts.map((post) => (
-            <div key={post.uniqueId} className="post-and-comments">
+            <div key={post._id} className="post-and-comments">
               <Row>
                 <Col md={6}>
                   <PostItem post={post} />
                 </Col>
                 <Col md={6}>
-                  <CommentSection postId={post.uniqueId} />
+                  <CommentSection postId={post._id} />
                 </Col>
               </Row>
             </div>

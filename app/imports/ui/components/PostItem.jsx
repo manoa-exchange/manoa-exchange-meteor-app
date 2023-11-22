@@ -55,7 +55,8 @@ const PostItem = ({ post }) => {
   const save = () => {
     const owner = Meteor.user().username;
     const postData = {
-      name: '',
+      uniqueId: post.uniqueId,
+      name: post.name,
       image: post.image,
       caption: post.caption,
       owner,
@@ -72,20 +73,12 @@ const PostItem = ({ post }) => {
   const report = () => {
     const owner = Meteor.user().username;
 
-    // Check if the user has already reported this post
-    const existingReport = Reports.collection.findOne({ owner, postId: post._id });
-
-    if (existingReport) {
-      swal('Error', 'You have already reported this post', 'error');
-      return; // Exit the function to prevent duplicate reports
-    }
-
     const postData = {
-      name: '',
+      uniqueId: post.uniqueId, // Include the uniqueId from the post
+      name: post.name,
       image: post.image,
       caption: post.caption,
       owner,
-      postId: post._id, // Include postId to associate the report with the post
     };
 
     Reports.collection.insert(postData, (error) => {
@@ -108,7 +101,7 @@ const PostItem = ({ post }) => {
           </Col>
           <Col>
             {/* eslint-disable-next-line react/prop-types */}
-            <strong>{ post.name }</strong>
+            <strong>{ post.uniqueId }</strong>
           </Col>
         </Row>
       </Card.Header>
@@ -148,6 +141,8 @@ const PostItem = ({ post }) => {
 
 PostItem.propTypes = {
   post: PropTypes.shape({
+    uniqueId: PropTypes.string,
+    name: PropTypes.string,
     likeCount: PropTypes.number,
     image: PropTypes.string,
     caption: PropTypes.string,
