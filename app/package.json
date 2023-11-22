@@ -13,6 +13,7 @@
     "graphql": "^16.8.1",
     "img": "^3.0.3",
     "meteor-node-stubs": "^1.2.5",
+    "obscenity": "^0.1.4",
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",

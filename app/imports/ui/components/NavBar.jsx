@@ -13,7 +13,7 @@ const NavBar = () => {
   }), []);
 
   return (
-    <Navbar bg="light" expand="lg" className="navbar-content">
+    <Navbar bg="light" expand="lg" className="navbar-content bg-dark text-light navbar-expand-md">
       <Container>
         <Navbar.Brand as={NavLink} to="/">
           <Image
@@ -41,7 +41,7 @@ const NavBar = () => {
               <Nav.Link id="Explore-nav" as={NavLink} to="/explorePage" key="explorePage">
                 <Compass size={20} />
               </Nav.Link>,
-              <Nav.Link id="Liked-Posts-nav" as={NavLink} to="/likedPostsPage" key="likedPostsPage">
+              <Nav.Link id="Liked-Posts-nav" as={NavLink} to="/savedposts" key="likedPostsPage">
                 <Heart size={20} />
               </Nav.Link>,
               <Nav.Link id="create-nav" as={NavLink} to="/create" key="create">Create</Nav.Link>,
