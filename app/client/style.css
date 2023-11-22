@@ -150,13 +150,20 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-.nav-black {
-  color: black !important;
-}
-
 .basic-navbar-nav {
   color: black;
   font-weight: bold;
 }
 
-/* Add other styles as needed */
+#myProfilePage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+#addPostPage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}/* Add other styles as needed */
+

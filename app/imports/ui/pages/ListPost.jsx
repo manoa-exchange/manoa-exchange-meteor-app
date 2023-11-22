@@ -18,8 +18,8 @@ const ListPost = () => {
   }, []);
 
   return ready ? (
-    <Container id={PageIDs.listPostsPage} className="py-3">
-      <Row className="justify-content-center">
+    <Row id={PageIDs.listPostsPage} className="justify-content-center">
+      <Container className="py-3">
         <Col md={12}>
           {posts.map((post) => (
             <div key={post._id} className="post-and-comments">
@@ -34,8 +34,8 @@ const ListPost = () => {
             </div>
           ))}
         </Col>
-      </Row>
-    </Container>
+      </Container>
+    </Row>
   ) : <LoadingSpinner />;
 };
 

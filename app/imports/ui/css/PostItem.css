@@ -43,9 +43,9 @@
   background-color: #357266!important;
 }
 
-/*.manoa-white{
+.manoa-white{
   background-color: #E5DCC5!important;
-}*/
+}
 
 #card-body{
   padding-top: 5px;
@@ -77,7 +77,7 @@
 
 .post-and-comments {
   margin-bottom: 20px; /* Adjust as needed */
-  /border-bottom: 1px solid #ccc; /* Optional separator */
+  border-bottom: 1px solid #ccc; /* Optional separator */
   padding-bottom: 20px; /* Spacing at the bottom */
 }
 
