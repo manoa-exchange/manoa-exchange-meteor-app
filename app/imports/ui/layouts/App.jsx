@@ -20,9 +20,7 @@ import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MyProfile from '../pages/MyProfile';
 import CloudinaryPage from '../pages/CloudinaryPage';
-import UploadWidget from '../components/UploadWidget';
 import ListSavedPost from '../pages/ListSavedPost';
-import CloudinaryPage from '../pages/CloudinaryPage';
 import UploadWidget from '../components/UploadWidget';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
