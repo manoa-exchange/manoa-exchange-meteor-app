@@ -21,13 +21,13 @@ const ListPost = () => {
       <Row className="justify-content-center">
         <Col md={12}>
           {posts.map((post) => (
-            <div key={post.uniqueId} className="post-and-comments">
+            <div key={post._id} className="post-and-comments">
               <Row>
                 <Col md={6}>
                   <PostItem post={post} />
                 </Col>
                 <Col md={6}>
-                  <CommentSection postId={post.uniqueId} />
+                  <CommentSection postId={post._id} />
                 </Col>
               </Row>
             </div>

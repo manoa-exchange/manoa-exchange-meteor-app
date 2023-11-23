@@ -18,7 +18,7 @@ const PostItemAdmin = ({ post }) => {
   // Check local storage for like status
   const checkLikedStatus = () => {
     const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '{}');
-    return likedPosts[post.uniqueId] === true;
+    return likedPosts[post._id] === true;
   };
 
   const [liked, setLiked] = useState(checkLikedStatus());
@@ -29,7 +29,7 @@ const PostItemAdmin = ({ post }) => {
 
   const toggleLike = () => {
     const methodToCall = liked ? 'posts.decrementLike' : 'posts.incrementLike';
-    Meteor.call(methodToCall, post.uniqueId, (error) => {
+    Meteor.call(methodToCall, post._id, (error) => {
       if (error) {
         console.error('Error updating like count:', error);
       } else {
@@ -39,7 +39,7 @@ const PostItemAdmin = ({ post }) => {
 
         // Update local storage
         const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '{}');
-        likedPosts[post.uniqueId] = newLikedStatus;
+        likedPosts[post._id] = newLikedStatus;
         localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
       }
     });
@@ -50,7 +50,7 @@ const PostItemAdmin = ({ post }) => {
   };
   const deletePost = () => {
     setDeleteAdmin(true);
-    Meteor.call('posts.remove', post.uniqueId, (error) => {
+    Meteor.call('posts.remove', post._id, (error) => {
       setDeleteAdmin(false);
       if (error) {
         console.error('Error deleting post:', error);
@@ -96,7 +96,7 @@ const PostItemAdmin = ({ post }) => {
         </Card.Text>
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
-        <Link to={`/edit/${post.uniqueId}`} className="edit-link">Edit</Link>
+        <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
         <Button variant="danger" onClick={deletePost} disabled={deleteAdmin}>
           Delete
         </Button>
@@ -110,7 +110,7 @@ PostItemAdmin.propTypes = {
     likeCount: PropTypes.number,
     image: PropTypes.string,
     caption: PropTypes.string,
-    uniqueId: PropTypes.string,
+    _id: PropTypes.string,
   }).isRequired,
 };
 

@@ -40,9 +40,9 @@ const ListPostAdmin = () => {
           <Table striped bordered hover>
             <tbody>
               {posts.map((post) => (
-                <PostItemAdmin key={post.uniqueId} post={post}>
+                <PostItemAdmin key={post._id} post={post}>
                   <td>
-                    <Button variant="danger" onClick={() => deletePost(post.uniqueId)} disabled={deleteAdmin}>
+                    <Button variant="danger" onClick={() => deletePost(post._id)} disabled={deleteAdmin}>
                       Delete
                     </Button>
                   </td>

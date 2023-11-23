@@ -129,7 +129,7 @@ const MyProfile = () => {
                         </Col>
                       </Row>
                       <Row>
-                        <CommentSection postId={post.uniqueId} />
+                        <CommentSection postId={post._id} />
                       </Row>
                     </div>
                   </Col>
@@ -142,7 +142,7 @@ const MyProfile = () => {
                           </Col>
                         </Row>
                         <Row>
-                          <CommentSection postId={posts[index + 1].uniqueId} />
+                          <CommentSection postId={posts[index + 1]._id} />
                         </Row>
                       </div>
                     </Col>
@@ -168,7 +168,7 @@ const MyProfile = () => {
                         </Col>
                       </Row>
                       <Row>
-                        <CommentSection postId={post.uniqueId} />
+                        <CommentSection postId={post._id} />
                       </Row>
                     </div>
                   </Col>
@@ -181,7 +181,7 @@ const MyProfile = () => {
                           </Col>
                         </Row>
                         <Row>
-                          <CommentSection postId={posts[index + 1].uniqueId} />
+                          <CommentSection postId={posts[index + 1]._id} />
                         </Row>
                       </div>
                     </Col>
