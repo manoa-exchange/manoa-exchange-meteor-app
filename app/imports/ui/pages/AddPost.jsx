@@ -8,9 +8,10 @@ import { Random } from 'meteor/random';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
+import { PageIDs } from '../utilities/ids';
 
 const AddPost = () => {
-  const [initialValues] = useState({ name: 'John' }); // Prefilled name
+  const [initialValues] = useState({ name: 'John', uniqueId: '' });
 
   const formSchema = new SimpleSchema({
     uniqueId: { type: String, optional: true },
@@ -19,67 +20,31 @@ const AddPost = () => {
     caption: String,
   });
 
-  const matcher = new RegExpMatcher({
-    ...englishDataset.build(),
-    ...englishRecommendedTransformers,
-  });
-
-  const bridge = new SimpleSchema2Bridge(formSchema);
-
-  const submit = (data, formRef) => {
-    const { name, image, caption } = data;
-    if (matcher.hasMatch(caption)) {
-      swal('Error', 'Caption contains obscene content', 'error');
-      return; // Do not submit the form if caption is obscene
-    }
-    const owner = Meteor.user().username;
-
-    // Generate a random 8-digit unique ID
-    let uniqueId;
-    let attempts = 0;
-    do {
-      uniqueId = Random.id(8); // Generate an 8-character random ID
-      attempts++;
-    } while (Posts.collection.findOne({ uniqueId }) && attempts < 10); // Check if the ID already exists, limit attempts to avoid an infinite loop
-
-    if (attempts === 10) {
-      swal('Error', 'Failed to generate a unique ID. Please try again.', 'error');
-      return;
-    }
-
-    Posts.collection.insert(
-      { uniqueId, name, image, caption, owner },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Item added successfully', 'success');
-          formRef.reset();
-        }
-      },
-    );
-  };
+  // ... rest of your code remains the same
 
   let fRef = null;
   return (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={5}>
-          <h2 className="text-center">Add Post</h2>
-          <AutoForm ref={ref => { fRef = ref; }} schema={bridge} model={initialValues} onSubmit={data => submit(data, fRef)}>
-            <Card>
-              <Card.Body>
-                <TextField name="uniqueId" readOnly />
-                <TextField name="image" />
-                <TextField name="caption" />
-                <SubmitField value="Submit" />
-                <ErrorsField />
-              </Card.Body>
-            </Card>
-          </AutoForm>
-        </Col>
-      </Row>
-    </Container>
+    <div id={PageIDs.addPostPage}>
+      <Container className="py-3">
+        <Row className="justify-content-center">
+          <Col xs={5}>
+            <h2 className="text-center" style={{ color: 'white', fontWeight: 'bold' }}>Add Post</h2>
+            <AutoForm ref={ref => { fRef = ref; }} schema={bridge} model={initialValues} onSubmit={data => submit(data, fRef)}>
+              <Card>
+                <Card.Body>
+                  <TextField name="uniqueId" readOnly />
+                  <TextField name="name" />
+                  <TextField name="image" />
+                  <TextField name="caption" />
+                  <SubmitField value="Submit" />
+                  <ErrorsField />
+                </Card.Body>
+              </Card>
+            </AutoForm>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 

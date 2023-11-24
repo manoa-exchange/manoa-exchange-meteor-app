@@ -7,6 +7,7 @@ import { Card, Image, Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/PostItem.css';
 import swal from 'sweetalert';
 import { BiHeart, BiChat } from 'react-icons/bi'; // Importing react-icons
+import { Heart } from 'react-bootstrap-icons';
 import { SavedPosts } from '../../api/savepost/SavePost';
 import { Reports } from '../../api/report/Report';
 
@@ -134,6 +135,7 @@ const PostItem = ({ post }) => {
         <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
         <Button type="button" onClick={report}>Report</Button>
         <Button type="button" onClick={save}>Save</Button>
+        <Button type="button" onClick={submit}><Heart /></Button>
       </Card.Footer>
     </Card>
   );

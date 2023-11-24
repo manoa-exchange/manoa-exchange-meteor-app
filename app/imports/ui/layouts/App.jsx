@@ -22,6 +22,7 @@ import MyProfile from '../pages/MyProfile';
 import ModerationPage from '../pages/ModerationPage';
 import CloudinaryPage from '../pages/CloudinaryPage';
 import UploadWidget from '../components/UploadWidget';
+import ListSavedPost from '../pages/ListSavedPost';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -32,10 +33,16 @@ const App = () => {
     };
   });
 
+  const currentPath = window.location.pathname;
+  const excludedPaths = ['/', '/signin', '/signup'];
+  let navbar = null;
+  if (!excludedPaths.includes(currentPath)) {
+    navbar = <NavBar />;
+  }
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
-        <NavBar />
+        {navbar}
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route path="/signin" element={<SignIn />} />
@@ -45,6 +52,7 @@ const App = () => {
           <Route path="/uploadwidget" element={<UploadWidget />} />
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/posts" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
+          <Route path="/savedposts" element={<ProtectedRoute><ListSavedPost /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
           <Route path="/moderation" element={<ProtectedRoute><ModerationPage /></ProtectedRoute>} />

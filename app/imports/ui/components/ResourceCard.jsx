@@ -3,20 +3,16 @@ import { Card, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const ResourceCard = ({ title, description, link, image }) => (
+const ResourceCard = ({ title, link }) => (
   <Container>
-    <Card>
+    <Card style={{ height: '200px' }}>
       <Card.Header>
-        <Card.Img src={image} />
         <Card.Title>
           <Container className="d-flex align-items-center justify-content-center text-center pt-3">
-            <h4>{title}</h4>
+            <h5>{title}</h5>
           </Container>
         </Card.Title>
       </Card.Header>
-      <Card.Body>
-        <p>{description}</p>
-      </Card.Body>
       <Card.Footer>
         <Link to={link}><p>Visit external site →</p></Link>
       </Card.Footer>
@@ -26,9 +22,7 @@ const ResourceCard = ({ title, description, link, image }) => (
 
 ResourceCard.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
 };
 
 export default ResourceCard;

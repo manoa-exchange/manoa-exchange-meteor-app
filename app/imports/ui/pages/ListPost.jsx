@@ -6,6 +6,7 @@ import { Posts } from '../../api/post/Post';
 import PostItem from '../components/PostItem';
 import CommentSection from '../components/CommentSection';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { PageIDs } from '../utilities/ids';
 
 const ListPost = () => {
   const { ready, posts } = useTracker(() => {
@@ -17,8 +18,8 @@ const ListPost = () => {
   }, []);
 
   return ready ? (
-    <Container className="py-3">
-      <Row className="justify-content-center">
+    <Row id={PageIDs.listPostsPage} className="justify-content-center">
+      <Container className="py-3">
         <Col md={12}>
           {posts.map((post) => (
             <div key={post._id} className="post-and-comments">
@@ -33,8 +34,8 @@ const ListPost = () => {
             </div>
           ))}
         </Col>
-      </Row>
-    </Container>
+      </Container>
+    </Row>
   ) : <LoadingSpinner />;
 };
 
