@@ -11,8 +11,9 @@ import { PageIDs } from '../utilities/ids';
 const ListPost = () => {
   const { ready, posts } = useTracker(() => {
     const subscription = Meteor.subscribe(Posts.userPublicationName);
+    // Sort posts by 'createdAt' field in descending order (newest first)
     return {
-      posts: Posts.collection.find({}).fetch(),
+      posts: Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch(),
       ready: subscription.ready(),
     };
   }, []);

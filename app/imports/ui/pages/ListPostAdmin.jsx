@@ -1,59 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Button, Col, Container, Row, Table } from 'react-bootstrap';
 import { Posts } from '../../api/post/Post';
-import PostItemAdmin from '../components/PostItemAdmin';
+import PostItem from '../components/PostItem';
+import CommentSection from '../components/CommentSection';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { PageIDs } from '../utilities/ids';
 
-/* Renders a table containing all of the Stuff documents. Use <PostItemAdmin.jsx> to render each row. */
 const ListPostAdmin = () => {
-  const [deleteAdmin, setDeleteAdmin] = useState(false);
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { posts, ready } = useTracker(() => {
-    // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Posts.adminPublicationName);
-    // Determine if the subscription is ready
-    const rdy = subscription.ready();
-    // Get the Stuff documents
-    const items = Posts.collection.find({}).fetch();
+  const { ready, posts } = useTracker(() => {
+    const subscription = Meteor.subscribe(Posts.userPublicationName);
+    const fetchedPosts = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
+
+    // Debug: Log the fetched posts to inspect the order
+    console.log('Fetched posts:', fetchedPosts);
+
     return {
-      posts: items,
-      ready: rdy,
+      posts: fetchedPosts,
+      ready: subscription.ready(),
     };
   }, []);
 
-  const deletePost = (postId) => {
-    setDeleteAdmin(true);
-    Meteor.call('posts.remove', postId, (error) => {
-      setDeleteAdmin(false);
-      if (error) {
-        console.error('Error deleting post:', error);
-      }
-    });
-  };
-  return (ready ? (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col md={7}>
-          <Col className="text-center"><h2>List Post (Admin)</h2></Col>
-          <Table striped bordered hover>
-            <tbody>
-              {posts.map((post) => (
-                <PostItemAdmin key={post._id} post={post}>
-                  <td>
-                    <Button variant="danger" onClick={() => deletePost(post._id)} disabled={deleteAdmin}>
-                      Delete
-                    </Button>
-                  </td>
-                </PostItemAdmin>
-              ))}
-            </tbody>
-          </Table>
+  return ready ? (
+    <Row id={PageIDs.listPostsPage} className="justify-content-center">
+      <Container className="py-3">
+        <Col md={12}>
+          {posts.map((post) => (
+            <div key={post._id} className="post-and-comments">
+              <Row>
+                <Col md={6}>
+                  <PostItem post={post} />
+                </Col>
+                <Col md={6}>
+                  <CommentSection postId={post._id} />
+                </Col>
+              </Row>
+            </div>
+          ))}
         </Col>
-      </Row>
-    </Container>
-  ) : <LoadingSpinner />);
+      </Container>
+    </Row>
+  ) : <LoadingSpinner />;
 };
 
 export default ListPostAdmin;

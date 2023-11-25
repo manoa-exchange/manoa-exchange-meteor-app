@@ -7,11 +7,12 @@ import PostItem from '../components/PostItem';
 import CommentSection from '../components/CommentSection';
 import LoadingSpinner from '../components/LoadingSpinner';
 
-const ListSavedPost = () => {
+const ModerationPage = () => {
   const { ready, posts } = useTracker(() => {
     const subscription = Meteor.subscribe(Reports.userPublicationName);
+    // Sort the posts by createdAt in descending order
     return {
-      posts: Reports.collection.find({}).fetch(),
+      posts: Reports.collection.find({}, { sort: { createdAt: -1 } }).fetch(),
       ready: subscription.ready(),
     };
   }, []);
@@ -21,20 +22,20 @@ const ListSavedPost = () => {
       <Row className="text-center">
         <Col>
           <Card className="mb-4 border border-black">
-            <Card.Header as="h3" className="text-center">Saved Posts</Card.Header>
+            <Card.Header as="h3" className="text-center">Reported Posts</Card.Header>
           </Card>
         </Col>
       </Row>
       <Row className="justify-content-center">
         <Col md={12}>
           {posts.map((post) => (
-            <div key={post.uniqueId} className="post-and-comments">
+            <div key={post._id} className="post-and-comments">
               <Row>
                 <Col md={6}>
                   <PostItem post={post} />
                 </Col>
                 <Col md={6}>
-                  <CommentSection postId={post.uniqueId} />
+                  <CommentSection postId={post._id} />
                 </Col>
               </Row>
             </div>
@@ -45,4 +46,4 @@ const ListSavedPost = () => {
   ) : <LoadingSpinner />;
 };
 
-export default ListSavedPost;
+export default ModerationPage;

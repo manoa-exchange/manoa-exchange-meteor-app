@@ -10,8 +10,9 @@ import LoadingSpinner from '../components/LoadingSpinner';
 const ListSavedPost = () => {
   const { ready, posts } = useTracker(() => {
     const subscription = Meteor.subscribe(SavedPosts.userPublicationName);
+    // Sort the posts by createdAt in descending order
     return {
-      posts: SavedPosts.collection.find({}).fetch(),
+      posts: SavedPosts.collection.find({}, { sort: { createdAt: -1 } }).fetch(),
       ready: subscription.ready(),
     };
   }, []);

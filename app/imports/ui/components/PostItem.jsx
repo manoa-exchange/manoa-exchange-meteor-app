@@ -134,8 +134,7 @@ const PostItem = ({ post }) => {
       <Card.Footer className="post-footer manoa-white">
         <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
         <Button type="button" onClick={report}>Report</Button>
-        <Button type="button" onClick={save}>Save</Button>
-        <Button type="button" onClick={submit}><Heart /></Button>
+        <Button type="button" onClick={save}><Heart /></Button>
       </Card.Footer>
     </Card>
   );
