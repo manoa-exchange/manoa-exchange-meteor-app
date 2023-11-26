@@ -4,7 +4,7 @@ import { Card, Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Reports } from '../../api/report/Report';
 import PostItem from '../components/PostItem';
-import CommentSection from '../components/CommentSection';
+import AddComment from '../components/AddComment';
 import LoadingSpinner from '../components/LoadingSpinner';
 
 const ModerationPage = () => {
@@ -35,7 +35,7 @@ const ModerationPage = () => {
                   <PostItem post={post} />
                 </Col>
                 <Col md={6}>
-                  <CommentSection postId={post._id} />
+                  <AddComment postId={post._id} />
                 </Col>
               </Row>
             </div>

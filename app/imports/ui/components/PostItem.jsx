@@ -72,14 +72,13 @@ const PostItem = ({ post }) => {
     });
   };
   const report = () => {
-    const owner = Meteor.user().username;
 
     const postData = {
       uniqueId: post.uniqueId, // Include the uniqueId from the post
       name: post.name,
       image: post.image,
       caption: post.caption,
-      owner,
+      owner: post.owner,
     };
 
     Reports.collection.insert(postData, (error) => {
@@ -132,9 +131,11 @@ const PostItem = ({ post }) => {
         </Card.Text>
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
-        <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
-        <Button type="button" onClick={report}>Report</Button>
-        <Button type="button" onClick={save}><Heart /></Button>
+        <Row>
+          <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
+          <Button type="button" onClick={report}>Report</Button>
+          <Button type="button" onClick={save}><Heart /></Button>
+        </Row>
       </Card.Footer>
     </Card>
   );
@@ -142,12 +143,13 @@ const PostItem = ({ post }) => {
 
 PostItem.propTypes = {
   post: PropTypes.shape({
-    uniqueId: PropTypes.string,
-    name: PropTypes.string,
-    likeCount: PropTypes.number,
-    image: PropTypes.string,
-    caption: PropTypes.string,
-    _id: PropTypes.string,
+    uniqueId: PropTypes.string, // Assuming uniqueId is not undefined
+    name: PropTypes.string, // Assuming name is not undefined
+    likeCount: PropTypes.number, // Assuming likeCount is not undefined
+    image: PropTypes.string, // Assuming image is not undefined
+    caption: PropTypes.string, // Assuming caption is not undefined
+    owner: PropTypes.string, // Assuming owner is not undefined
+    _id: PropTypes.string, // Assuming _id is not undefined
   }).isRequired,
 };
 

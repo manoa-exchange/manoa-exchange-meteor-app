@@ -3,8 +3,9 @@ import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post';
+import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
-import CommentSection from '../components/CommentSection';
+import AddComment from '../components/AddComment';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { PageIDs } from '../utilities/ids';
 
@@ -12,9 +13,15 @@ const ListPost = () => {
   const { ready, posts } = useTracker(() => {
     const subscription = Meteor.subscribe(Posts.userPublicationName);
     // Sort posts by 'createdAt' field in descending order (newest first)
+    const rdy = subscription.ready();
+
+    const postItems = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
+
+    const commentItems = Comments.collection.find({}).fetch();
     return {
-      posts: Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch(),
-      ready: subscription.ready(),
+      posts: postItems,
+      comments: commentItems,
+      ready: rdy,
     };
   }, []);
 
@@ -29,7 +36,9 @@ const ListPost = () => {
                   <PostItem post={post} />
                 </Col>
                 <Col md={6}>
-                  <CommentSection postId={post._id} />
+                  <Col key={post._id}>
+                    <AddComment owner={post.owner} uniqueId={post.uniqueId} />
+                  </Col>
                 </Col>
               </Row>
             </div>

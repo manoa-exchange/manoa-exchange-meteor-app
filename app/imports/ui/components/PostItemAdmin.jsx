@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image, Container, Row, Col, Button } from 'react-bootstrap';
 import '../css/PostItem.css';
+import swal from 'sweetalert';
+import { BiHeart, BiChat } from 'react-icons/bi'; // Importing react-icons
+import { Heart } from 'react-bootstrap-icons';
+import { SavedPosts } from '../../api/savepost/SavePost';
+import { Reports } from '../../api/report/Report';
 
 const PostItemAdmin = ({ post }) => {
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
@@ -13,7 +18,6 @@ const PostItemAdmin = ({ post }) => {
   const { currentUser } = useTracker(() => ({
     currentUser: Meteor.user() ? Meteor.user().username : '',
   }), []);
-  const [deleteAdmin, setDeleteAdmin] = useState(false);
 
   // Check local storage for like status
   const checkLikedStatus = () => {
@@ -48,12 +52,40 @@ const PostItemAdmin = ({ post }) => {
   const toggleCaption = () => {
     setFullCaptionVisible(!fullCaptionVisible);
   };
-  const deletePost = () => {
-    setDeleteAdmin(true);
-    Meteor.call('posts.remove', post._id, (error) => {
-      setDeleteAdmin(false);
+
+  const save = () => {
+    const owner = Meteor.user().username;
+    const postData = {
+      uniqueId: post.uniqueId,
+      name: post.name,
+      image: post.image,
+      caption: post.caption,
+      owner,
+    };
+
+    SavedPosts.collection.insert(postData, (error) => {
       if (error) {
-        console.error('Error deleting post:', error);
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Item added successfully', 'success');
+      }
+    });
+  };
+  const report = () => {
+
+    const postData = {
+      uniqueId: post.uniqueId, // Include the uniqueId from the post
+      name: post.name,
+      image: post.image,
+      caption: post.caption,
+      owner: post.owner,
+    };
+
+    Reports.collection.insert(postData, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Item added successfully', 'success');
       }
     });
   };
@@ -69,7 +101,7 @@ const PostItemAdmin = ({ post }) => {
           </Col>
           <Col>
             {/* eslint-disable-next-line react/prop-types */}
-            <strong>{ post.name }</strong>
+            <strong>{ post.uniqueId }</strong>
           </Col>
         </Row>
       </Card.Header>
@@ -78,10 +110,13 @@ const PostItemAdmin = ({ post }) => {
       </Container>
       <Card.Body id="card-body">
         <div className="interaction-icons">
+          {/* Using BiHeart and BiChat from react-icons */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <i className={`bi ${liked ? 'bi-heart-fill' : 'bi-heart'} like-icon`} onClick={toggleLike} />
+          <span onClick={toggleLike}>
+            <BiHeart className={`like-icon ${liked ? 'heart-filled' : ''}`} />
+          </span>
           <span>{likeCount}</span> {/* Display the like count */}
-          <i className="bi bi-chat comment-icon" />
+          <BiChat className="comment-icon" />
         </div>
         <Card.Text
           style={{
@@ -96,10 +131,11 @@ const PostItemAdmin = ({ post }) => {
         </Card.Text>
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
-        <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
-        <Button variant="danger" onClick={deletePost} disabled={deleteAdmin}>
-          Delete
-        </Button>
+        <Row>
+          <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
+          <Button type="button" onClick={report}>Report</Button>
+          <Button type="button" onClick={save}><Heart /></Button>
+        </Row>
       </Card.Footer>
     </Card>
   );
@@ -107,10 +143,13 @@ const PostItemAdmin = ({ post }) => {
 
 PostItemAdmin.propTypes = {
   post: PropTypes.shape({
-    likeCount: PropTypes.number,
-    image: PropTypes.string,
-    caption: PropTypes.string,
-    _id: PropTypes.string,
+    uniqueId: PropTypes.string, // Assuming uniqueId is not undefined
+    name: PropTypes.string, // Assuming name is not undefined
+    likeCount: PropTypes.number, // Assuming likeCount is not undefined
+    image: PropTypes.string, // Assuming image is not undefined
+    caption: PropTypes.string, // Assuming caption is not undefined
+    owner: PropTypes.string, // Assuming owner is not undefined
+    _id: PropTypes.string, // Assuming _id is not undefined
   }).isRequired,
 };
 

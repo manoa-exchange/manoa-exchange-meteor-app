@@ -8,7 +8,7 @@ import { PageIDs } from '../utilities/ids';
 /** Renders a color-blocked static landing page. */
 import { Posts } from '../../api/post/Post';
 import PostItem from '../components/PostItem';
-import CommentSection from '../components/CommentSection';
+import AddComment from '../components/AddComment';
 
 const MyProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -29,6 +29,8 @@ const MyProfile = () => {
       ready: rdy,
     };
   }, []);
+  console.log('Posts array:', posts);
+
   return (ready ? (
     <div id={PageIDs.myProfilePage}>
       <Container className="mb-4">
@@ -229,11 +231,11 @@ const MyProfile = () => {
                           </Col>
                         </Row>
                         <Row>
-                          <CommentSection postId={post._id} />
+                          {post && <AddComment postId={post._id} owner={post.owner} uniqueId={post.uniqueId} />}
                         </Row>
                       </div>
                     </Col>
-                    {index + 1 < posts.length && ( // Check if there's another post in the pair
+                    {index + 1 < posts.length && (
                       <Col>
                         <div className="post-and-comments mx-4">
                           <Row>
@@ -242,7 +244,7 @@ const MyProfile = () => {
                             </Col>
                           </Row>
                           <Row>
-                            <CommentSection postId={posts[index + 1]._id} />
+                            {posts[index + 1] && <AddComment postId={posts[index + 1]._id} owner={posts[index + 1].owner} uniqueId={posts[index + 1].uniqueId} />}
                           </Row>
                         </div>
                       </Col>

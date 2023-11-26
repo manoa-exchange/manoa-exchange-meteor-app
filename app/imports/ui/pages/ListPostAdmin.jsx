@@ -3,22 +3,25 @@ import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post';
+import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
-import CommentSection from '../components/CommentSection';
+import AddComment from '../components/AddComment';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { PageIDs } from '../utilities/ids';
 
 const ListPostAdmin = () => {
   const { ready, posts } = useTracker(() => {
     const subscription = Meteor.subscribe(Posts.userPublicationName);
-    const fetchedPosts = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
+    // Sort posts by 'createdAt' field in descending order (newest first)
+    const rdy = subscription.ready();
 
-    // Debug: Log the fetched posts to inspect the order
-    console.log('Fetched posts:', fetchedPosts);
+    const postItems = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
 
+    const commentItems = Comments.collection.find({}).fetch();
     return {
-      posts: fetchedPosts,
-      ready: subscription.ready(),
+      posts: postItems,
+      comments: commentItems,
+      ready: rdy,
     };
   }, []);
 
@@ -33,7 +36,9 @@ const ListPostAdmin = () => {
                   <PostItem post={post} />
                 </Col>
                 <Col md={6}>
-                  <CommentSection postId={post._id} />
+                  <Col key={post._id}>
+                    <AddComment owner={post.owner} uniqueId={post.uniqueId} />
+                  </Col>
                 </Col>
               </Row>
             </div>
