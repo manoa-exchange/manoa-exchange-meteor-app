@@ -7,6 +7,7 @@ import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
+import UploadWidget from '../components/UploadWidget';
 
 const AddPost = () => {
   const [initialValues] = useState({ name: 'John' }); // Prefilled name
@@ -54,7 +55,10 @@ const AddPost = () => {
             <Card>
               <Card.Body>
                 <TextField name="name" readOnly />
-                <TextField name="image" />
+                <div>
+                  <TextField name="image" />
+                  <UploadWidget /> {/* Integrated UploadWidget */}
+                </div>
                 <TextField name="caption" />
                 <SubmitField value="Submit" />
                 <ErrorsField />
