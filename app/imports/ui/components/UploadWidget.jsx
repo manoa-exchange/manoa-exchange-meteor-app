@@ -8,8 +8,8 @@ const UploadWidget = ({ setUrl }) => {
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget({
-      cloudName: 'dvnpvpx0z',
-      uploadPreset: 'wun0rd4y',
+      cloudName: Meteor.settings.public.cloudinary.cloud_name,
+      uploadPreset: Meteor.settings.public.cloudinary.upload_preset,
     }, function (error, result) {
       if (!error && result && result.event === 'success') {
         console.log('Done! Here is the image info: ', result.info);
