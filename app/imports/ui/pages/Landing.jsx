@@ -80,7 +80,7 @@ const Landing = () => (
         </Row>
       </Container>
       <Container className="p-5" fluid>
-        <Row className="ps-5">
+        <Row className="ps-5" id="resources">
           <h1 id="landing-header">RESOURCES</h1>
         </Row>
         <Row className="pt-3 px-5">

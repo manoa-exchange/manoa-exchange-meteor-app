@@ -1,5 +1,5 @@
 import { Button, Container, Image, Nav, Navbar } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import React from 'react';
 
 const LandingNav = () => (
@@ -11,7 +11,7 @@ const LandingNav = () => (
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ms-auto">
-          <Nav.Link className="ps-3" as={NavLink} to="#resources" key="resources">Resources</Nav.Link>
+          <Nav.Link className="ps-3" as={Link} to="/#resources" key="resources">Resources</Nav.Link>
           <Nav.Link className="ps-3" as={NavLink} to="/signin" key="signin">Sign In</Nav.Link>
           <Nav.Item className="ps-3">
             <Button href="/signup" className="outline-light">Register</Button>
