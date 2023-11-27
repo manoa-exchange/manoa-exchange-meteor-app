@@ -1,15 +1,23 @@
 import React, { useEffect, useRef } from 'react';
+import Meteor from 'meteor';
 
-const UploadWidget = () => {
+// eslint-disable-next-line react/prop-types
+const UploadWidget = ({ setUrl }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
+    console.log(
+      Meteor.settings.public.cloudinary.cloud_name,
+      Meteor.settings.public.cloudinary.upload_preset,
+    );
     widgetRef.current = cloudinaryRef.current.createUploadWidget({
-      cloudName: 'dlqixfg1f',
-      uploadPreset: 'rudaqi8t',
+      cloudName: Meteor.settings.public.cloudinary.cloud_name,
+      uploadPreset: Meteor.settings.public.cloudinary.upload_preset,
     }, function (error, result) {
-      console.log(result);
+      console.log(error);
+      console.log('cloudinary result: ', result);
+      // setUrl(result);
     });
   }, []);
   return (
