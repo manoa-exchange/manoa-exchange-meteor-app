@@ -7,6 +7,7 @@ const ResourceCard = ({ title, link }) => (
   <Container>
     <Card>
       <Card.Body>
+    <Card style={{ height: '200px' }}>
         <Card.Title>
           <Container className="d-flex align-items-center justify-content-center text-center pt-3">
             <h5>{title}</h5>

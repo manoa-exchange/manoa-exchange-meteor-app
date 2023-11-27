@@ -3,10 +3,13 @@
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.22.6",
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.13.0",
     "animate.css": "^4.1.1",
     "bootstrap": "^5.3.0",
     "bootstrap-icons": "^1.11.1",
     "classnames": "^2.3.2",
+    "cloudinary": "^1.41.0",
     "core-js": "^3.31.1",
     "graphql": "^16.8.1",
     "img": "^3.0.3",

@@ -162,6 +162,10 @@ body {
 
 .outline-light.btn-primary.btn {
   color: white;
+}
+
+.basic-navbar-nav {
+  color: black;
   font-weight: bold;
   background-color: transparent;
   border: 2px solid white;
@@ -172,4 +176,14 @@ body {
   background-color: white;
 }
 
-/* Add other styles as needed */
+#myProfilePage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+#addPostPage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
