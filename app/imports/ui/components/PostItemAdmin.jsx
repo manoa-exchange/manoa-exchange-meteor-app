@@ -1,25 +1,20 @@
-import { Meteor } from 'meteor/meteor';
 import React, { useState, useEffect } from 'react';
-import { useTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Card, Image, Container, Row, Col, Button } from 'react-bootstrap';
+import { Card, Image, Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
 import '../css/PostItem.css';
 import swal from 'sweetalert';
-import { BiHeart, BiChat } from 'react-icons/bi'; // Importing react-icons
+import { BiHeart, BiChat } from 'react-icons/bi';
 import { Heart } from 'react-bootstrap-icons';
 import { SavedPosts } from '../../api/savepost/SavePost';
 import { Reports } from '../../api/report/Report';
+import Comment from './Comment';
+import AddComment from './AddComment';
 
-const PostItemAdmin = ({ post }) => {
+const PostItemAdmin = ({ post, comments }) => {
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [fullCaptionVisible, setFullCaptionVisible] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const { currentUser } = useTracker(() => ({
-    currentUser: Meteor.user() ? Meteor.user().username : '',
-  }), []);
-
-  // Check local storage for like status
   const checkLikedStatus = () => {
     const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '{}');
     return likedPosts[post._id] === true;
@@ -41,7 +36,6 @@ const PostItemAdmin = ({ post }) => {
         setLiked(newLikedStatus);
         setLikeCount(prevCount => (newLikedStatus ? prevCount + 1 : prevCount - 1));
 
-        // Update local storage
         const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '{}');
         likedPosts[post._id] = newLikedStatus;
         localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
@@ -71,10 +65,10 @@ const PostItemAdmin = ({ post }) => {
       }
     });
   };
-  const report = () => {
 
+  const report = () => {
     const postData = {
-      uniqueId: post.uniqueId, // Include the uniqueId from the post
+      uniqueId: post.uniqueId,
       name: post.name,
       image: post.image,
       caption: post.caption,
@@ -100,7 +94,6 @@ const PostItemAdmin = ({ post }) => {
             </div>
           </Col>
           <Col>
-            {/* eslint-disable-next-line react/prop-types */}
             <strong>{ post.uniqueId }</strong>
           </Col>
         </Row>
@@ -110,31 +103,36 @@ const PostItemAdmin = ({ post }) => {
       </Container>
       <Card.Body id="card-body">
         <div className="interaction-icons">
-          {/* Using BiHeart and BiChat from react-icons */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
           <span onClick={toggleLike}>
             <BiHeart className={`like-icon ${liked ? 'heart-filled' : ''}`} />
           </span>
-          <span>{likeCount}</span> {/* Display the like count */}
+          <span>{likeCount}</span>
           <BiChat className="comment-icon" />
         </div>
-        <Card.Text
-          style={{
-            cursor: 'pointer',
-            overflow: fullCaptionVisible ? 'visible' : 'hidden',
-            textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis',
-            whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap',
-          }}
-          onClick={toggleCaption}
-        >
+        <Card.Text style={{ cursor: 'pointer', overflow: fullCaptionVisible ? 'visible' : 'hidden', textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
           {post.caption}
         </Card.Text>
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
+        <Container>
+          <Row>
+            <Col>
+              <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
+            </Col>
+            <Col>
+              <Button type="button" onClick={report}>Report</Button>
+            </Col>
+            <Col>
+              <Button type="button" onClick={save}><Heart /></Button>
+            </Col>
+          </Row>
+        </Container>
         <Row>
-          <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
-          <Button type="button" onClick={report}>Report</Button>
-          <Button type="button" onClick={save}><Heart /></Button>
+          <AddComment owner={post.owner} uniqueId={post._id} />
+          <ListGroup variant="flush">
+            {comments.map((comment) => <Comment key={comment._id} comment={comment} />)}
+          </ListGroup>
         </Row>
       </Card.Footer>
     </Card>
@@ -143,14 +141,21 @@ const PostItemAdmin = ({ post }) => {
 
 PostItemAdmin.propTypes = {
   post: PropTypes.shape({
-    uniqueId: PropTypes.string, // Assuming uniqueId is not undefined
-    name: PropTypes.string, // Assuming name is not undefined
-    likeCount: PropTypes.number, // Assuming likeCount is not undefined
-    image: PropTypes.string, // Assuming image is not undefined
-    caption: PropTypes.string, // Assuming caption is not undefined
-    owner: PropTypes.string, // Assuming owner is not undefined
-    _id: PropTypes.string, // Assuming _id is not undefined
+    uniqueId: PropTypes.string,
+    name: PropTypes.string,
+    likeCount: PropTypes.number,
+    image: PropTypes.string,
+    caption: PropTypes.string,
+    owner: PropTypes.string,
+    _id: PropTypes.string,
   }).isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape({
+    comment: PropTypes.string,
+    uniqueId: PropTypes.string,
+    owner: PropTypes.string,
+    createdAt: PropTypes.instanceOf(Date),
+    _id: PropTypes.string,
+  })).isRequired,
 };
 
 export default PostItemAdmin;

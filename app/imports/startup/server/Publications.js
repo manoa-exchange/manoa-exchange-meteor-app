@@ -5,6 +5,7 @@ import { Posts } from '../../api/post/Post';
 import { SavedPosts } from '../../api/savepost/SavePost';
 import { Profiles } from '../../api/profile/Profile';
 import { Reports } from '../../api/report/Report';
+import { Comments } from '../../api/comment/Comment.js';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise, publish nothing.
@@ -44,6 +45,14 @@ Meteor.publish(Reports.userPublicationName, function () {
   return this.ready();
 });
 
+Meteor.publish(Comments.userPublicationName, function () {
+  if (this.userId) { // <-- Fixed this line, changed from this.userID to this.userId
+    const username = Meteor.users.findOne(this.userId).username;
+    return Comments.collection.find({ owner: username });
+  }
+  return this.ready();
+});
+
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise, publish nothing.
 Meteor.publish(Posts.adminPublicationName, function () {
@@ -64,6 +73,13 @@ Meteor.publish(Profiles.adminPublicationName, function () {
 Meteor.publish(Reports.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Reports.collection.find();
+  }
+  return this.ready();
+});
+
+Meteor.publish(Comments.adminPublicationName, function () {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+    return Comments.collection.find();
   }
   return this.ready();
 });

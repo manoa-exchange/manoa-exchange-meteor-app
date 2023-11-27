@@ -8,11 +8,10 @@ import { PageIDs } from '../utilities/ids';
 /** Renders a color-blocked static landing page. */
 import { Posts } from '../../api/post/Post';
 import PostItem from '../components/PostItem';
-import AddComment from '../components/AddComment';
 
 const MyProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, posts } = useTracker(() => {
+  const { ready, posts, comments } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Profile documents.
@@ -219,39 +218,28 @@ const MyProfile = () => {
             <Card className="mb-4 border border-black">
               <Card.Header as="h3" className="text-center">Recent Posts</Card.Header>
             </Card>
-            <Container className="mt-4 d-column justify-content-center text-center">
-              {posts.map((post, index) => (
-                index % 2 === 0 && (
-                  <Row key={index / 2} className="mb-4">
-                    <Col>
-                      <div className="post-and-comments mx-4">
-                        <Row>
-                          <Col>
-                            <PostItem post={post} />
-                          </Col>
-                        </Row>
-                        <Row>
-                          {post && <AddComment postId={post._id} owner={post.owner} uniqueId={post.uniqueId} />}
-                        </Row>
-                      </div>
-                    </Col>
-                    {index + 1 < posts.length && (
-                      <Col>
-                        <div className="post-and-comments mx-4">
-                          <Row>
-                            <Col>
-                              <PostItem post={posts[index + 1]} />
-                            </Col>
-                          </Row>
-                          <Row>
-                            {posts[index + 1] && <AddComment postId={posts[index + 1]._id} owner={posts[index + 1].owner} uniqueId={posts[index + 1].uniqueId} />}
-                          </Row>
-                        </div>
+            <Container className="py-3">
+              <Row className="justify-content-center">
+                <Col>
+                  <Col className="text-center">
+                    <Container className="py-3">
+                      <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+                        {posts.map((post) => {
+                          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+                          return (
+                            <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+                              <PostItem
+                                post={post}
+                                comments={relatedComments || []} // Pass an empty array if comments are not available
+                              />
+                            </div>
+                          );
+                        })}
                       </Col>
-                    )}
-                  </Row>
-                )
-              ))}
+                    </Container>
+                  </Col>
+                </Col>
+              </Row>
             </Container>
           </Col>
         </Row>

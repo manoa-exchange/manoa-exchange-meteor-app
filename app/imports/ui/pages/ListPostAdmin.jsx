@@ -2,21 +2,25 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Posts } from '../../api/post/Post';
-import { Comments } from '../../api/comment/Comment';
-import PostItem from '../components/PostItem';
-import AddComment from '../components/AddComment';
+import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { PageIDs } from '../utilities/ids';
+import PostItem from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
+import { Comments } from '../../api/comment/Comment';
 
-const ListPostAdmin = () => {
-  const { ready, posts } = useTracker(() => {
+/* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
+const ListPostsAdmin = () => {
+  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+  const { ready, posts, comments } = useTracker(() => {
+    // Note that this subscription will get cleaned up
+    // when your component is unmounted or deps change.
+    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Posts.userPublicationName);
-    // Sort posts by 'createdAt' field in descending order (newest first)
-    const rdy = subscription.ready();
-
-    const postItems = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
-
+    const subscription2 = Meteor.subscribe(Comments.userPublicationName);
+    // Determine if the subscription is ready
+    const rdy = subscription.ready() && subscription2.ready();
+    // Get the Contact documents
+    const postItems = Posts.collection.find({}).fetch();
+    // Get the Note documents
     const commentItems = Comments.collection.find({}).fetch();
     return {
       posts: postItems,
@@ -26,27 +30,19 @@ const ListPostAdmin = () => {
   }, []);
 
   return ready ? (
-    <Row id={PageIDs.listPostsPage} className="justify-content-center">
-      <Container className="py-3">
-        <Col md={12}>
-          {posts.map((post) => (
-            <div key={post._id} className="post-and-comments">
-              <Row>
-                <Col md={6}>
-                  <PostItem post={post} />
-                </Col>
-                <Col md={6}>
-                  <Col key={post._id}>
-                    <AddComment owner={post.owner} uniqueId={post.uniqueId} />
-                  </Col>
-                </Col>
-              </Row>
-            </div>
-          ))}
+    <Container className="py-3">
+      <Row className="justify-content-center">
+        <Col>
+          <Col className="text-center">
+            <h2>List Contacts</h2>
+          </Col>
+          <Row xs={1} md={2} lg={3} className="g-4">
+            {posts.map((post) => (<Col key={post._id}><PostItem post={post} comments={comments.filter(comment => (comment.uniqueId === post._id))} /></Col>))}
+          </Row>
         </Col>
-      </Container>
-    </Row>
+      </Row>
+    </Container>
   ) : <LoadingSpinner />;
 };
 
-export default ListPostAdmin;
+export default ListPostsAdmin;

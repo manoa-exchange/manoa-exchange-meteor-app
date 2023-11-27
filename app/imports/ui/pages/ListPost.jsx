@@ -1,22 +1,26 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Posts } from '../../api/post/Post';
-import { Comments } from '../../api/comment/Comment';
-import PostItem from '../components/PostItem';
-import AddComment from '../components/AddComment';
+import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { PageIDs } from '../utilities/ids';
+import PostItem from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
+import { Comments } from '../../api/comment/Comment';
 
-const ListPost = () => {
-  const { ready, posts } = useTracker(() => {
+/* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
+const ListPosts = () => {
+  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+  const { ready, posts, comments } = useTracker(() => {
+    // Note that this subscription will get cleaned up
+    // when your component is unmounted or deps change.
+    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Posts.userPublicationName);
-    // Sort posts by 'createdAt' field in descending order (newest first)
-    const rdy = subscription.ready();
-
-    const postItems = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
-
+    const subscription2 = Meteor.subscribe(Comments.userPublicationName);
+    // Determine if the subscription is ready
+    const rdy = subscription.ready() && subscription2.ready();
+    // Get the Contact documents
+    const postItems = Posts.collection.find({}).fetch();
+    // Get the Note documents
     const commentItems = Comments.collection.find({}).fetch();
     return {
       posts: postItems,
@@ -26,27 +30,22 @@ const ListPost = () => {
   }, []);
 
   return ready ? (
-    <Row id={PageIDs.listPostsPage} className="justify-content-center">
-      <Container className="py-3">
-        <Col md={12}>
-          {posts.map((post) => (
-            <div key={post._id} className="post-and-comments">
-              <Row>
-                <Col md={6}>
-                  <PostItem post={post} />
-                </Col>
-                <Col md={6}>
-                  <Col key={post._id}>
-                    <AddComment owner={post.owner} uniqueId={post.uniqueId} />
-                  </Col>
-                </Col>
-              </Row>
+    <Container className="py-3">
+      <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+        {posts.map((post) => {
+          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+          return (
+            <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+              <PostItem
+                post={post}
+                comments={relatedComments || []} // Pass an empty array if comments are not available
+              />
             </div>
-          ))}
-        </Col>
-      </Container>
-    </Row>
+          );
+        })}
+      </Col>
+    </Container>
   ) : <LoadingSpinner />;
 };
 
-export default ListPost;
+export default ListPosts;
