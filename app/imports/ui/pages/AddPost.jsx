@@ -11,7 +11,7 @@ import UploadWidget from '../components/UploadWidget';
 
 const AddPost = () => {
   const [initialValues] = useState({ name: 'John' }); // Prefilled name
-
+  const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const formSchema = new SimpleSchema({
     name: String,
     image: { type: String, optional: true },
@@ -27,13 +27,17 @@ const AddPost = () => {
 
   const submit = (data, formRef) => {
     const { name, image, caption } = data;
+    let imageUrl = image;
+    if (cloudinaryUrl !== '') {
+      imageUrl = cloudinaryUrl;
+    }
     if (matcher.hasMatch(caption)) {
       swal('Error', 'Caption contains obscene content', 'error');
       return; // Do not submit the form if caption is obscene
     }
     const owner = Meteor.user().username;
     Posts.collection.insert(
-      { name, image, caption, owner },
+      { name, image: imageUrl, caption, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -57,7 +61,7 @@ const AddPost = () => {
                 <TextField name="name" readOnly />
                 <div>
                   <TextField name="image" />
-                  <UploadWidget /> {/* Integrated UploadWidget */}
+                  <UploadWidget setUrl={setCloudinaryUrl} /> {/* Integrated UploadWidget */}
                 </div>
                 <TextField name="caption" />
                 <SubmitField value="Submit" />

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
-const UploadWidget = () => {
+// eslint-disable-next-line react/prop-types
+const UploadWidget = ({ setUrl }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
   useEffect(() => {
@@ -10,6 +11,7 @@ const UploadWidget = () => {
       uploadPreset: 'wun0rd4y',
     }, function (error, result) {
       console.log(result);
+      setUrl(result);
     });
   }, []);
   return (
