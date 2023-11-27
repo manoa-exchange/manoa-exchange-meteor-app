@@ -36,6 +36,7 @@ const AddPost = () => {
       return; // Do not submit the form if caption is obscene
     }
     const owner = Meteor.user().username;
+    console.log(imageUrl);
     Posts.collection.insert(
       { name, image: imageUrl, caption, owner },
       (error) => {
