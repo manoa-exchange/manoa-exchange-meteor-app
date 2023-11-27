@@ -58,11 +58,10 @@ const PostItem = ({ post }) => {
   const submit = () => {
     const owner = Meteor.user().username;
     const postData = {
-      name: post.name,
+      name: '',
       image: post.image,
       caption: post.caption,
       owner,
-      id: post.id,
     };
 
     SavedPosts.collection.insert(postData, (error) => {
@@ -85,8 +84,7 @@ const PostItem = ({ post }) => {
           </Col>
           <Col>
             {/* eslint-disable-next-line react/prop-types */}
-            <strong>{ post.name }    </strong>
-            <strong>{ post.id }</strong>
+            <strong>{ post.name }</strong>
           </Col>
         </Row>
       </Card.Header>
@@ -127,7 +125,6 @@ PostItem.propTypes = {
     image: PropTypes.string,
     caption: PropTypes.string,
     _id: PropTypes.string,
-    id: PropTypes.string,
   }).isRequired,
 };
 
