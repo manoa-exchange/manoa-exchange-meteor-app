@@ -29,7 +29,10 @@ const AddPost = () => {
     uniqueId: String,
     name: String,
     image: String,
-    caption: String,
+    caption: {
+      type: String,
+      optional: true, // This makes the caption field optional
+    },
   });
 
   // Create an instance of RegExpMatcher for obscenity check

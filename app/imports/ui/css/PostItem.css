@@ -54,9 +54,14 @@
   margin-bottom: .5rem;
 }
 
-.like-icon, .comment-icon {
+.like-icon {
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 5px;
+}
+
+.comment-icon {
+  cursor: pointer;
+  margin-left: 5px;
 }
 
 .post-caption {

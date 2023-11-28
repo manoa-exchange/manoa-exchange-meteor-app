@@ -21,8 +21,8 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import MyProfile from '../pages/MyProfile';
 import ModerationPage from '../pages/ModerationPage';
 import CloudinaryPage from '../pages/CloudinaryPage';
-import UploadWidget from '../components/UploadWidget';
 import ListSavedPost from '../pages/ListSavedPost';
+import UploadWidget from '../components/UploadWidget';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {

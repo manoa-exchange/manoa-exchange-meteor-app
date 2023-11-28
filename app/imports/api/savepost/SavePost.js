@@ -17,11 +17,7 @@ class SavePostsCollection {
         optional: true,
         defaultValue: '',
       },
-      name: {
-        type: String,
-        optional: true,
-        defaultValue: '',
-      },
+      name: { type: String, optional: true },
       owner: String,
       image: {
         type: String,
