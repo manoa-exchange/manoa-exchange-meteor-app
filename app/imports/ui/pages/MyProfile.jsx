@@ -7,28 +7,29 @@ import { Profiles } from '../../api/profile/Profile';
 import { PageIDs } from '../utilities/ids';
 /** Renders a color-blocked static landing page. */
 import { Posts } from '../../api/post/Post';
+import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
-import CommentSection from '../components/CommentSection';
 
 const MyProfile = () => {
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, posts } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Profile documents.
+  const { ready, posts, comments } = useTracker(() => {
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     const subscription2 = Meteor.subscribe(Posts.userPublicationName);
-    // Determine if the subscription is ready
-    const rdy = subscription.ready() && subscription2.ready();
-    // Get the Profile documents
-    const profileI = Profiles.collection.find({}).fetch();
-    const postArr = Posts.collection.find({}).fetch();
+    const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
+
+    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
+    const profileData = Profiles.collection.find({}).fetch();
+    const postData = Posts.collection.find({}).fetch();
+    const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
+
     return {
-      profiles: profileI,
-      posts: postArr,
+      profiles: profileData,
+      posts: postData,
+      comments: commentData,
       ready: rdy,
     };
   }, []);
+  console.log('Posts array:', posts);
+
   return (ready ? (
     <div id={PageIDs.myProfilePage}>
       <Container className="mb-4">
@@ -116,39 +117,25 @@ const MyProfile = () => {
             <Card className="mb-4 border border-black">
               <Card.Header as="h3" className="text-center">Recent Posts</Card.Header>
             </Card>
-            <Container className="mt-4 d-column justify-content-center text-center">
-              {posts.map((post, index) => (
-                index % 2 === 0 && (
-                  <Row key={index / 2} className="mb-4">
-                    <Col>
-                      <div className="post-and-comments mx-4">
-                        <Row>
-                          <Col>
-                            <PostItem post={post} />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <CommentSection postId={post._id} />
-                        </Row>
-                      </div>
-                    </Col>
-                    {index + 1 < posts.length && ( // Check if there's another post in the pair
-                      <Col>
-                        <div className="post-and-comments mx-4">
-                          <Row>
-                            <Col>
-                              <PostItem post={posts[index + 1]} />
-                            </Col>
-                          </Row>
-                          <Row>
-                            <CommentSection postId={posts[index + 1]._id} />
-                          </Row>
-                        </div>
+            <Container className="py-3">
+              <Row className="justify-content-center">
+                <Col>
+                  <Col className="text-center">
+                    <Container className="py-3">
+                      <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+                        {posts.map((post) => {
+                          const relatedComments = comments.filter(comment => comment.uniqueId === post._id);
+                          return (
+                            <div key={post._id} className="mb-4">
+                              <PostItem post={post} comments={relatedComments} />
+                            </div>
+                          );
+                        })}
                       </Col>
-                    )}
-                  </Row>
-                )
-              ))}
+                    </Container>
+                  </Col>
+                </Col>
+              </Row>
             </Container>
           </Col>
         </Row>

@@ -8,11 +8,11 @@ const CloudinaryPage = () => {
   // Create a Cloudinary instance and set your cloud name.
   const cld = new Cloudinary({
     cloud: {
-      cloudName: 'demo',
+      cloudName: 'dlqixfg1f',
     },
   });
   // Instantiate a CloudinaryImage object for the image with the public ID, 'docs/models'.
-  const myImage = cld.image('sample');
+  const myImage = cld.image('nzf0rlc8dyod33gscsut');
 
   // Resize to 250 x 250 pixels using the 'fill' crop mode.
   myImage.resize(fill().width(50).height(50));
