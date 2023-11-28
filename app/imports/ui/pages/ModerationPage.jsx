@@ -3,17 +3,30 @@ import { Meteor } from 'meteor/meteor';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Reports } from '../../api/report/Report';
-import PostItem from '../components/PostItem';
-import AddComment from '../components/AddComment';
+import PostItemAdmin from '../components/PostItemAdmin';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { Posts } from '../../api/post/Post';
+import { Comments } from '../../api/comment/Comment';
+import { Profiles } from '../../api/profile/Profile';
 
 const ModerationPage = () => {
-  const { ready, posts } = useTracker(() => {
-    const subscription = Meteor.subscribe(Reports.userPublicationName);
-    // Sort the posts by createdAt in descending order
+  const { ready, posts, comments } = useTracker(() => {
+    const subscription = Meteor.subscribe(Posts.userPublicationName);
+    const subscription2 = Meteor.subscribe(Reports.userPublicationName);
+    const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
+
+    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
+    const profileData = Profiles.collection.find({}).fetch();
+    const reportData = Reports.collection.find({}).fetch();
+    const postData = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
+    const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
+
     return {
-      posts: Reports.collection.find({}, { sort: { createdAt: -1 } }).fetch(),
-      ready: subscription.ready(),
+      profiles: profileData,
+      reports: reportData,
+      posts: postData,
+      comments: commentData,
+      ready: rdy,
     };
   }, []);
 
@@ -26,22 +39,21 @@ const ModerationPage = () => {
           </Card>
         </Col>
       </Row>
-      <Row className="justify-content-center">
-        <Col md={12}>
-          {posts.map((post) => (
-            <div key={post._id} className="post-and-comments">
-              <Row>
-                <Col md={6}>
-                  <PostItem post={post} />
-                </Col>
-                <Col md={6}>
-                  <AddComment postId={post._id} />
-                </Col>
-              </Row>
-            </div>
-          ))}
+      <Container className="py-3">
+        <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+          {posts.map((post) => {
+            const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+            return (
+              <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+                <PostItemAdmin
+                  post={post}
+                  comments={relatedComments || []} // Pass an empty array if comments are not available
+                />
+              </div>
+            );
+          })}
         </Col>
-      </Row>
+      </Container>
     </Container>
   ) : <LoadingSpinner />;
 };
