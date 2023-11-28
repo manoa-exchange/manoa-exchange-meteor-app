@@ -50,8 +50,8 @@ const App = () => {
           <Route path="/signout" element={<SignOut />} />
           <Route path="/cloudinarypage" element={<CloudinaryPage />} />
           <Route path="/uploadwidget" element={<UploadWidget />} />
-          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/posts" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
+          <Route path="/home" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
+          <Route path="/post" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
           <Route path="/savedposts" element={<ProtectedRoute><ListSavedPost /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
