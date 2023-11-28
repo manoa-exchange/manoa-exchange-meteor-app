@@ -6,14 +6,15 @@ class PostsCollection {
     this.name = 'PostsCollection';
     this.collection = new Mongo.Collection(this.name);
     this.schema = new SimpleSchema({
-      name: {
+      name: String,
+      id: {
         type: String,
         // eslint-disable-next-line consistent-return
         custom() {
           // eslint-disable-next-line no-use-before-define
-          const existingPost = Posts.collection.findOne({ name: this.value });
+          const existingPost = Posts.collection.findOne({ id: this.value });
           if (existingPost) {
-            return 'uniqueName';
+            return 'uniqueId';
           }
         },
       },
