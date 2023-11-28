@@ -12,7 +12,18 @@ class SavePostsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      name: { type: String, optional: true },
+      name: String,
+      id: {
+        type: String,
+        // eslint-disable-next-line consistent-return
+        custom() {
+          // eslint-disable-next-line no-use-before-define
+          const existingPost = SavedPosts.collection.findOne({ id: this.value, owner: Meteor.user().username });
+          if (existingPost) {
+            return 'uniqueId';
+          }
+        },
+      },
       owner: String,
       image: String,
       caption: String,
