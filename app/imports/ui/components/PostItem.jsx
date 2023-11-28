@@ -95,7 +95,7 @@ const PostItem = ({ post, comments }) => {
             </div>
           </Col>
           <Col>
-            <strong>{ post.uniqueId }</strong>
+            <strong>{ post.name }</strong>
           </Col>
         </Row>
       </Card.Header>

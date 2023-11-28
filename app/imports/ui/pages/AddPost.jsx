@@ -12,7 +12,7 @@ import { PageIDs } from '../utilities/ids';
 import UploadWidget from '../components/UploadWidget'; // Assuming this is the correct import for UploadWidget
 
 const AddPost = () => {
-  const [initialValues, setInitialValues] = useState({ name: 'John', image: 'Image Filler' }); // Initial values for the form
+  const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' }); // Initial values for the form
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const fRef = useRef(null); // Reference to the form
@@ -86,8 +86,6 @@ const AddPost = () => {
             <AutoForm ref={fRef} schema={bridge} model={initialValues} onSubmit={data => submit(data)}>
               <Card>
                 <Card.Body>
-                  <TextField name="uniqueId" readOnly />
-                  <TextField name="name" />
                   <UploadWidget setUrl={handleCloudinaryUrlUpdate} name="image" />
                   <TextField name="caption" />
                   <SubmitField value="Submit" />
