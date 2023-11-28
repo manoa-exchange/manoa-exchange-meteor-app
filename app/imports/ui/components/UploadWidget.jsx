@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Meteor } from 'meteor/meteor';
 
 // eslint-disable-next-line react/prop-types
 const UploadWidget = ({ setUrl }) => {
@@ -7,8 +8,8 @@ const UploadWidget = ({ setUrl }) => {
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget({
-      cloudName: 'dlqixfg1f',
-      uploadPreset: 'rudaqi8t',
+      cloudName: Meteor.settings.public.cloudinary.cloud_name,
+      uploadPreset: Meteor.settings.public.cloudinary.upload_preset,
     }, function (error, result) {
       if (!error && result && result.event === 'success') {
         console.log('Done! Here is the image info: ', result.info);

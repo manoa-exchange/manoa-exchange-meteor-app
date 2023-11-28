@@ -63,6 +63,7 @@ const AddPost = () => {
     }
 
     const owner = Meteor.user().username;
+    console.log(imageUrl);
     const uniqueId = Random.id(8);
 
     // Insert the post into the collection
