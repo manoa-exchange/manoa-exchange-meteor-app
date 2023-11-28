@@ -10,7 +10,6 @@ import { Heart } from 'react-bootstrap-icons';
 import { SavedPosts } from '../../api/savepost/SavePost';
 
 const PostItem = ({ post }) => {
-  const [submitting, setSubmitting] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [fullCaptionVisible, setFullCaptionVisible] = useState(false);
   // eslint-disable-next-line no-unused-vars
@@ -52,35 +51,27 @@ const PostItem = ({ post }) => {
     setFullCaptionVisible(!fullCaptionVisible);
   };
 
+  const UnsavePost = () => {
+    SavedPosts.collection.remove(post._id);
+  };
+
   const submit = () => {
-    setSubmitting(true);
-    console.log('Before insertion:', post);
-    const currentUser = Meteor.user();
-    const owner = currentUser ? currentUser.username : 'Anonymous';
+    const owner = Meteor.user().username;
+    const postData = {
+      name: post.name,
+      image: post.image,
+      caption: post.caption,
+      owner,
+      id: post.id,
+    };
 
-    // Check if all required fields have values
-    if (post.name && post.image && post.caption && post.id) {
-      const postData = {
-        name: post.name,
-        image: post.image,
-        caption: post.caption,
-        owner,
-        id: post.id,
-      };
-
-      SavedPosts.collection.insert(postData, (error) => {
-        setSubmitting(false);
-
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Item added successfully', 'success');
-        }
-      });
-    } else {
-      setSubmitting(false);
-      swal('Error', 'All required fields must have values', 'error');
-    }
+    SavedPosts.collection.insert(postData, (error) => {
+      if (error) {
+        swal('Error', error.message, 'error');
+      } else {
+        swal('Success', 'Item added successfully', 'success');
+      }
+    });
   };
 
   return (
@@ -124,6 +115,7 @@ const PostItem = ({ post }) => {
       <Card.Footer className="post-footer manoa-white">
         <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
         <Button type="button" onClick={submit}><Heart /></Button>
+        <Button variant="danger" onClick={UnsavePost}>Unsave</Button>
       </Card.Footer>
     </Card>
   );
