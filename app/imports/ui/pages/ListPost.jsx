@@ -10,7 +10,7 @@ import { PageIDs } from '../utilities/ids';
 
 const ListPost = () => {
   const { ready, posts } = useTracker(() => {
-    const subscription = Meteor.subscribe(Posts.userPublicationName);
+    const subscription = Meteor.subscribe(Posts.adminPublicationName);
     return {
       posts: Posts.collection.find({}).fetch(),
       ready: subscription.ready(),

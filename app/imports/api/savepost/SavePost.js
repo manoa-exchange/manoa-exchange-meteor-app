@@ -12,14 +12,25 @@ class SavePostsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      name: { type: String, optional: true },
+      name: String,
+      id: {
+        type: String,
+        // eslint-disable-next-line consistent-return
+        custom() {
+          // eslint-disable-next-line no-use-before-define
+          const existingPost = SavedPosts.collection.findOne({ id: this.value, owner: Meteor.user().username });
+          if (existingPost) {
+            return 'uniqueId';
+          }
+        },
+      },
       owner: String,
       image: String,
       caption: String,
       likeCount: {
         type: Number,
-        optional: true, // Make likeCount optional
-        defaultValue: 0, // You can also set a default value
+        optional: true,
+        defaultValue: 0,
       },
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
@@ -31,7 +42,7 @@ class SavePostsCollection {
 }
 
 /**
- * The singleton instance of the PostsCollection.
+ * The singleton instance of the SavePostsCollection.
  * @type {SavePostsCollection}
  */
 export const SavedPosts = new SavePostsCollection();
