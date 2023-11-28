@@ -57,6 +57,7 @@ const PostItem = ({ post }) => {
   const submit = () => {
     setSubmitting(true);
     console.log('Before insertion:', post);
+    // eslint-disable-next-line no-shadow
     const currentUser = Meteor.user();
     const owner = currentUser ? currentUser.username : 'Anonymous';
 
@@ -134,6 +135,7 @@ const PostItem = ({ post }) => {
 
 PostItem.propTypes = {
   post: PropTypes.shape({
+    name: PropTypes.string,
     likeCount: PropTypes.number,
     image: PropTypes.string,
     caption: PropTypes.string,

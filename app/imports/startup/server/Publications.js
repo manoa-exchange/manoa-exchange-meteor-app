@@ -25,7 +25,8 @@ Meteor.publish(SavedPosts.userPublicationName, function () {
 // User level publication for Profile Collection
 Meteor.publish(Profiles.userPublicationName, function () {
   if (this.userId) {
-    const username = Meteor.users.findOne(this.userId).username;
+    const user = Meteor.users.findOne(this.userId);
+    const username = user && user.username;
     return Profiles.collection.find({ owner: username });
   }
   return this.ready();

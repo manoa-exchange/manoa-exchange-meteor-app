@@ -12,7 +12,7 @@ import CommentSection from '../components/CommentSection';
 
 const MyProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, posts } = useTracker(() => {
+  const { ready, posts, profiles } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Profile documents.
@@ -29,6 +29,7 @@ const MyProfile = () => {
       ready: rdy,
     };
   }, []);
+  const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
   return (ready ? (
     <div id={PageIDs.myProfilePage}>
       <Container className="mb-4">
@@ -44,7 +45,7 @@ const MyProfile = () => {
                   style={{ width: '150px', height: '150px' }}
                   fluid
                 />
-                <h3 className="mb-1 mt-3">Insert User Name</h3>
+                <h3 className="mb-1 mt-3">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</h3>
                 <p className="text-muted mb-4">Insert Campus/Location</p>
                 <div className="d-flex justify-content-center mb-2">
                   <Button>Follow</Button>

@@ -17,7 +17,7 @@ class SavePostsCollection {
         type: String,
         // eslint-disable-next-line consistent-return
         custom() {
-          // eslint-disable-next-line no-use-before-define
+          // eslint-disable-next-line no-use-before-define,no-undef
           const existingPost = SavedPosts.collection.findOne({ id: this.value, owner: Meteor.user().username });
           if (existingPost) {
             return 'uniqueId';
