@@ -45,7 +45,7 @@ const PostItem = ({ post, comments }) => {
   };
 
   const UnsavePost = () => {
-    SavedPosts.collection.remove(post._id);
+    SavedPosts.collection.remove(post.uniqueId);
   };
 
   const [showComments, setShowComments] = useState(false);

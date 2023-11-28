@@ -18,17 +18,6 @@ class SavePostsCollection {
         defaultValue: '',
       },
       name: { type: String, optional: true },
-      id: {
-        type: String,
-        // eslint-disable-next-line consistent-return
-        custom() {
-          // eslint-disable-next-line no-use-before-define
-          const existingPost = SavedPosts.collection.findOne({ id: this.value, owner: Meteor.user().username });
-          if (existingPost) {
-            return 'uniqueId';
-          }
-        },
-      },
       owner: String,
       image: {
         type: String,
