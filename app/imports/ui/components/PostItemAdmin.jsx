@@ -44,6 +44,10 @@ const PostItemAdmin = ({ post, comments }) => {
     });
   };
 
+  const UnsavePost = () => {
+    SavedPosts.collection.remove(post.uniqueId);
+  };
+
   const [showComments, setShowComments] = useState(false);
 
   // Function to toggle comment section visibility
@@ -135,6 +139,9 @@ const PostItemAdmin = ({ post, comments }) => {
             </Col>
             <Col className="text-end">
               <Button type="button" onClick={save}><Heart /></Button>
+            </Col>
+            <Col>
+              <Button variant="danger" onClick={UnsavePost}>Unsave</Button>
             </Col>
           </Row>
         </Container>
