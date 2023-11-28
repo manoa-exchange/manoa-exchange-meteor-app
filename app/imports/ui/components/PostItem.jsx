@@ -51,7 +51,9 @@ const PostItem = ({ post }) => {
   const toggleCaption = () => {
     setFullCaptionVisible(!fullCaptionVisible);
   };
-
+  const UnsavePost = () => {
+    SavedPosts.collection.remove(post._id);
+  };
   const submit = () => {
     setSubmitting(true);
     console.log('Before insertion:', post);
@@ -124,6 +126,7 @@ const PostItem = ({ post }) => {
       <Card.Footer className="post-footer manoa-white">
         <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
         <Button type="button" onClick={submit}><Heart /></Button>
+        <Button variant="danger" onClick={UnsavePost}>Unsave</Button>
       </Card.Footer>
     </Card>
   );
