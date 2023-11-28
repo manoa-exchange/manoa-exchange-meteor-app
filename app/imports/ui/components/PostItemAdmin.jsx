@@ -44,6 +44,13 @@ const PostItemAdmin = ({ post, comments }) => {
     });
   };
 
+  const [showComments, setShowComments] = useState(false);
+
+  // Function to toggle comment section visibility
+  const toggleComments = () => {
+    setShowComments(!showComments);
+  };
+
   const toggleCaption = () => {
     setFullCaptionVisible(!fullCaptionVisible);
   };
@@ -95,7 +102,7 @@ const PostItemAdmin = ({ post, comments }) => {
             </div>
           </Col>
           <Col>
-            <strong>{ post.uniqueId }</strong>
+            <strong>{ post.name }</strong>
           </Col>
         </Row>
       </Card.Header>
@@ -109,7 +116,7 @@ const PostItemAdmin = ({ post, comments }) => {
             <BiHeart className={`like-icon ${liked ? 'heart-filled' : ''}`} />
           </span>
           <span>{likeCount}</span>
-          <BiChat className="comment-icon" />
+          <BiChat className="comment-icon" onClick={toggleComments} />
         </div>
         <Card.Text style={{ cursor: 'pointer', overflow: fullCaptionVisible ? 'visible' : 'hidden', textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
           {post.caption}
@@ -131,15 +138,16 @@ const PostItemAdmin = ({ post, comments }) => {
             </Col>
           </Row>
         </Container>
-        <Row>
-          <AddComment owner={post.owner} uniqueId={post._id} />
-          <div className="scrollable-comments">
-            <ListGroup variant="flush">
-              {comments.map((comment) => <Comment key={comment._id} comment={comment} />)}
-            </ListGroup>
-          </div>
-
-        </Row>
+        {showComments && (
+          <Row>
+            <AddComment owner={post.owner} uniqueId={post._id} />
+            <div className="scrollable-comments">
+              <ListGroup variant="flush">
+                {comments.map((comment) => <Comment key={comment._id} comment={comment} />)}
+              </ListGroup>
+            </div>
+          </Row>
+        )}
       </Card.Footer>
     </Card>
   );
