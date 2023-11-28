@@ -14,7 +14,6 @@ const AddPost = () => {
 
   const formSchema = new SimpleSchema({
     name: String,
-    id: String,
     image: { type: String, optional: true },
     caption: String,
   });
@@ -27,14 +26,14 @@ const AddPost = () => {
   const bridge = new SimpleSchema2Bridge(formSchema);
 
   const submit = (data, formRef) => {
-    const { name, image, caption, id } = data;
+    const { name, image, caption } = data;
     if (matcher.hasMatch(caption)) {
       swal('Error', 'Caption contains obscene content', 'error');
       return; // Do not submit the form if caption is obscene
     }
     const owner = Meteor.user().username;
     Posts.collection.insert(
-      { name, image, caption, owner, id },
+      { name, image, caption, owner },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
@@ -59,7 +58,6 @@ const AddPost = () => {
                   <TextField name="name" readOnly />
                   <TextField name="image" />
                   <TextField name="caption" />
-                  <TextField name="id" />
                   <SubmitField value="Submit" />
                   <ErrorsField />
                 </Card.Body>

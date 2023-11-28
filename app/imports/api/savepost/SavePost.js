@@ -12,7 +12,7 @@ class SavePostsCollection {
     this.collection = new Mongo.Collection(this.name);
     // Define the structure of each document in the collection.
     this.schema = new SimpleSchema({
-      name: { type: String, optional: true },
+      name: { type: String, optional: true, },
       owner: String,
       image: String,
       caption: String,
