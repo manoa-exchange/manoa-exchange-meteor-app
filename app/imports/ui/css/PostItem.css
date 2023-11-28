@@ -54,9 +54,14 @@
   margin-bottom: .5rem;
 }
 
-.like-icon, .comment-icon {
+.like-icon {
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 5px;
+}
+
+.comment-icon {
+  cursor: pointer;
+  margin-left: 5px;
 }
 
 .post-caption {
@@ -68,6 +73,7 @@
 
 .post-footer {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
@@ -81,4 +87,21 @@
   padding-bottom: 20px; /* Spacing at the bottom */
 }
 
+.heart-filled {
+  color: red; /* or any color you prefer */
+}
 
+.post-footer .row > * {
+}
+
+.edit-link, .report-button, .save-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px; /* Adjust the height as needed */
+}
+
+.scrollable-comments {
+  max-height: 300px; /* Set the maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}

@@ -1,15 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 
-const UploadWidget = () => {
+// eslint-disable-next-line react/prop-types
+const UploadWidget = ({ setUrl }) => {
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
   useEffect(() => {
     cloudinaryRef.current = window.cloudinary;
     widgetRef.current = cloudinaryRef.current.createUploadWidget({
-      cloudName: 'dvnpvpx0z',
-      uploadPreset: 'wun0rd4y',
+      cloudName: 'dlqixfg1f',
+      uploadPreset: 'rudaqi8t',
     }, function (error, result) {
-      console.log(result);
+      if (!error && result && result.event === 'success') {
+        console.log('Done! Here is the image info: ', result.info);
+        setUrl(result.info.secure_url);
+      }
     });
   }, []);
   return (
