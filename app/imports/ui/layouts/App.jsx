@@ -19,9 +19,10 @@ import SignIn from '../pages/SignIn';
 import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MyProfile from '../pages/MyProfile';
+import ModerationPage from '../pages/ModerationPage';
 import CloudinaryPage from '../pages/CloudinaryPage';
-import UploadWidget from '../components/UploadWidget';
 import ListSavedPost from '../pages/ListSavedPost';
+import UploadWidget from '../components/UploadWidget';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -31,6 +32,7 @@ const App = () => {
       ready: rdy,
     };
   });
+
   const currentPath = window.location.pathname;
   const excludedPaths = ['/', '/signin', '/signup'];
   let navbar = null;
@@ -53,6 +55,7 @@ const App = () => {
           <Route path="/savedposts" element={<ProtectedRoute><ListSavedPost /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
+          <Route path="/moderation" element={<ProtectedRoute><ModerationPage /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListPostAdmin /></AdminProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><MyProfile /></ProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
