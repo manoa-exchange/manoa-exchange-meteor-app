@@ -17,7 +17,7 @@
       "_id": "post2",
       "name": "Bicycle",
       "owner": "john@foo.com",
-      "image": "http:000000000000//www2.hawaii.edu/~scottpr/images/RobertsonThumb.jpg",
+      "image": "http://www2.hawaii.edu/~scottpr/images/RobertsonThumb.jpg",
       "caption": "My new bicycle",
       "likeCount": 0
     },
