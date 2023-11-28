@@ -1,42 +1,51 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Col, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Posts } from '../../api/post/Post';
-import PostItem from '../components/PostItem';
-import CommentSection from '../components/CommentSection';
+import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { PageIDs } from '../utilities/ids';
+import PostItem from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
+import { Comments } from '../../api/comment/Comment';
 
-const ListPost = () => {
-  const { ready, posts } = useTracker(() => {
+/* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
+const ListPosts = () => {
+  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+  const { ready, posts, comments } = useTracker(() => {
+    // Note that this subscription will get cleaned up
+    // when your component is unmounted or deps change.
+    // Get access to Stuff documents.
     const subscription = Meteor.subscribe(Posts.userPublicationName);
+    const subscription2 = Meteor.subscribe(Comments.userPublicationName);
+    // Determine if the subscription is ready
+    const rdy = subscription.ready() && subscription2.ready();
+    // Get the Contact documents
+    const postItems = Posts.collection.find({}).fetch();
+    // Get the Note documents
+    const commentItems = Comments.collection.find({}).fetch();
     return {
-      posts: Posts.collection.find({}).fetch(),
-      ready: subscription.ready(),
+      posts: postItems,
+      comments: commentItems,
+      ready: rdy,
     };
   }, []);
 
   return ready ? (
-    <Container id={PageIDs.listPostsPage} className="py-3">
-      <Row className="justify-content-center">
-        <Col md={12}>
-          {posts.map((post) => (
-            <div key={post._id} className="post-and-comments">
-              <Row>
-                <Col md={6}>
-                  <PostItem post={post} />
-                </Col>
-                <Col md={6}>
-                  <CommentSection postId={post._id} />
-                </Col>
-              </Row>
+    <Container className="py-3">
+      <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+        {posts.map((post) => {
+          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+          return (
+            <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+              <PostItem
+                post={post}
+                comments={relatedComments || []} // Pass an empty array if comments are not available
+              />
             </div>
-          ))}
-        </Col>
-      </Row>
+          );
+        })}
+      </Col>
     </Container>
   ) : <LoadingSpinner />;
 };
 
-export default ListPost;
+export default ListPosts;

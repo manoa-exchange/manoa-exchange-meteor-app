@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Roles } from 'meteor/alanning:roles';
-import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Landing from '../pages/Landing';
 import ListPost from '../pages/ListPost';
@@ -48,8 +48,8 @@ const App = () => {
           <Route path="/signout" element={<SignOut />} />
           <Route path="/cloudinarypage" element={<CloudinaryPage />} />
           <Route path="/uploadwidget" element={<UploadWidget />} />
-          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/posts" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
+          <Route path="/home" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
+          <Route path="/post" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
           <Route path="/savedposts" element={<ProtectedRoute><ListSavedPost /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />

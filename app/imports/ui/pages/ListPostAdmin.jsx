@@ -1,59 +1,51 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Meteor } from 'meteor/meteor';
+import { Col, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { Button, Col, Container, Row, Table } from 'react-bootstrap';
-import { Posts } from '../../api/post/Post';
-import PostItemAdmin from '../components/PostItemAdmin';
+import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
+import PostItemAdmin from '../components/PostItemAdmin'; // Import the Contact component here (make sure the path is correct)
+import { Comments } from '../../api/comment/Comment';
 
-/* Renders a table containing all of the Stuff documents. Use <PostItemAdmin.jsx> to render each row. */
-const ListPostAdmin = () => {
-  const [deleteAdmin, setDeleteAdmin] = useState(false);
+/* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
+const ListPostsAdmin = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { posts, ready } = useTracker(() => {
+  const { ready, posts, comments } = useTracker(() => {
+    // Note that this subscription will get cleaned up
+    // when your component is unmounted or deps change.
     // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Posts.adminPublicationName);
+    const subscription = Meteor.subscribe(Posts.userPublicationName);
+    const subscription2 = Meteor.subscribe(Comments.userPublicationName);
     // Determine if the subscription is ready
-    const rdy = subscription.ready();
-    // Get the Stuff documents
-    const items = Posts.collection.find({}).fetch();
+    const rdy = subscription.ready() && subscription2.ready();
+    // Get the Contact documents
+    const postItems = Posts.collection.find({}).fetch();
+    // Get the Note documents
+    const commentItems = Comments.collection.find({}).fetch();
     return {
-      posts: items,
+      posts: postItems,
+      comments: commentItems,
       ready: rdy,
     };
   }, []);
 
-  const deletePost = (postId) => {
-    setDeleteAdmin(true);
-    Meteor.call('posts.remove', postId, (error) => {
-      setDeleteAdmin(false);
-      if (error) {
-        console.error('Error deleting post:', error);
-      }
-    });
-  };
-  return (ready ? (
+  return ready ? (
     <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col md={7}>
-          <Col className="text-center"><h2>List Post (Admin)</h2></Col>
-          <Table striped bordered hover>
-            <tbody>
-              {posts.map((post) => (
-                <PostItemAdmin key={post._id} post={post}>
-                  <td>
-                    <Button variant="danger" onClick={() => deletePost(post._id)} disabled={deleteAdmin}>
-                      Delete
-                    </Button>
-                  </td>
-                </PostItemAdmin>
-              ))}
-            </tbody>
-          </Table>
-        </Col>
-      </Row>
+      <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+        {posts.map((post) => {
+          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+          return (
+            <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+              <PostItemAdmin
+                post={post}
+                comments={relatedComments || []} // Pass an empty array if comments are not available
+              />
+            </div>
+          );
+        })}
+      </Col>
     </Container>
-  ) : <LoadingSpinner />);
+  ) : <LoadingSpinner />;
 };
 
-export default ListPostAdmin;
+export default ListPostsAdmin;
