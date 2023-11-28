@@ -6,6 +6,7 @@ import { Card, Image, Container, Row, Col, Button, ListGroup } from 'react-boots
 import '../css/PostItem.css';
 import swal from 'sweetalert';
 import { BiHeart, BiChat } from 'react-icons/bi';
+import { FaFlag } from 'react-icons/fa';
 import { Heart } from 'react-bootstrap-icons';
 import { SavedPosts } from '../../api/savepost/SavePost';
 import { Reports } from '../../api/report/Report';
@@ -115,24 +116,29 @@ const PostItem = ({ post, comments }) => {
         </Card.Text>
       </Card.Body>
       <Card.Footer className="post-footer manoa-white">
-        <Container>
-          <Row>
+        <Container fluid> {/* Adding fluid attribute */}
+          <Row className="justify-content-around align-items-center">
             <Col>
               <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
             </Col>
-            <Col>
-              <Button type="button" onClick={report}>Report</Button>
+            <Col className="text-center">
+              <Button variant="link" onClick={report}>
+                <FaFlag /> {/* Flag icon for reporting */}
+              </Button>
             </Col>
-            <Col>
+            <Col className="text-end">
               <Button type="button" onClick={save}><Heart /></Button>
             </Col>
           </Row>
         </Container>
         <Row>
           <AddComment owner={post.owner} uniqueId={post._id} />
-          <ListGroup variant="flush">
-            {comments.map((comment) => <Comment key={comment._id} comment={comment} />)}
-          </ListGroup>
+          <div className="scrollable-comments">
+            <ListGroup variant="flush">
+              {comments.map((comment) => <Comment key={comment._id} comment={comment} />)}
+            </ListGroup>
+          </div>
+
         </Row>
       </Card.Footer>
     </Card>

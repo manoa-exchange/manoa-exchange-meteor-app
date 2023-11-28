@@ -68,6 +68,7 @@
 
 .post-footer {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
 }
 
@@ -85,3 +86,17 @@
   color: red; /* or any color you prefer */
 }
 
+.post-footer .row > * {
+}
+
+.edit-link, .report-button, .save-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 20px; /* Adjust the height as needed */
+}
+
+.scrollable-comments {
+  max-height: 300px; /* Set the maximum height */
+  overflow-y: auto; /* Enable vertical scrolling */
+}

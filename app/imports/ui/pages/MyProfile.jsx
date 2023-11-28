@@ -7,24 +7,24 @@ import { Profiles } from '../../api/profile/Profile';
 import { PageIDs } from '../utilities/ids';
 /** Renders a color-blocked static landing page. */
 import { Posts } from '../../api/post/Post';
+import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
 
 const MyProfile = () => {
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, posts, comments } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Profile documents.
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     const subscription2 = Meteor.subscribe(Posts.userPublicationName);
-    // Determine if the subscription is ready
-    const rdy = subscription.ready() && subscription2.ready();
-    // Get the Profile documents
-    const profileI = Profiles.collection.find({}).fetch();
-    const postArr = Posts.collection.find({}).fetch();
+    const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
+
+    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
+    const profileData = Profiles.collection.find({}).fetch();
+    const postData = Posts.collection.find({}).fetch();
+    const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
+
     return {
-      profiles: profileI,
-      posts: postArr,
+      profiles: profileData,
+      posts: postData,
+      comments: commentData,
       ready: rdy,
     };
   }, []);
@@ -225,13 +225,10 @@ const MyProfile = () => {
                     <Container className="py-3">
                       <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
                         {posts.map((post) => {
-                          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+                          const relatedComments = comments.filter(comment => comment.uniqueId === post._id);
                           return (
-                            <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
-                              <PostItem
-                                post={post}
-                                comments={relatedComments || []} // Pass an empty array if comments are not available
-                              />
+                            <div key={post._id} className="mb-4">
+                              <PostItem post={post} comments={relatedComments} />
                             </div>
                           );
                         })}

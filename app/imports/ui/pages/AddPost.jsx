@@ -9,11 +9,12 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
 import { PageIDs } from '../utilities/ids';
-import UploadWidget from './UploadWidget'; // Assuming this is the correct import for UploadWidget
+import UploadWidget from '../components/UploadWidget'; // Assuming this is the correct import for UploadWidget
 
 const AddPost = () => {
-  const [initialValues, setInitialValues] = useState({ name: 'John' }); // Initial values for the form
-  const [cloudinaryUrl, setCloudinaryUrl] = useState(''); // State for cloudinary URL
+  const [initialValues, setInitialValues] = useState({ name: 'John', image: 'Image Filler' }); // Initial values for the form
+  const [cloudinaryUrl, setCloudinaryUrl] = useState('');
+  const [isImageUploaded, setIsImageUploaded] = useState(false);
   const fRef = useRef(null); // Reference to the form
 
   useEffect(() => {
@@ -39,9 +40,19 @@ const AddPost = () => {
 
   const bridge = new SimpleSchema2Bridge(formSchema);
 
+  const handleCloudinaryUrlUpdate = (url) => {
+    setCloudinaryUrl(url); // Correct: This updates the cloudinaryUrl state
+    setIsImageUploaded(!!url); // Sets isImageUploaded based on whether the URL is non-empty
+  };
+
   const submit = (data) => {
     const { name, image, caption } = data;
     const imageUrl = cloudinaryUrl || image; // Use cloudinaryUrl if available
+
+    if (!isImageUploaded) {
+      swal('Error', 'Please upload an image before submitting', 'error');
+      return;
+    }
 
     if (matcher.hasMatch(caption)) {
       swal('Error', 'Caption contains obscene content', 'error');
@@ -60,6 +71,7 @@ const AddPost = () => {
         } else {
           swal('Success', 'Post added successfully', 'success');
           fRef.current?.reset(); // Reset the form
+          setIsImageUploaded(false); // Reset the image upload state
         }
       },
     );
@@ -76,8 +88,7 @@ const AddPost = () => {
                 <Card.Body>
                   <TextField name="uniqueId" readOnly />
                   <TextField name="name" />
-                  <TextField name="image" />
-                  <UploadWidget setUrl={setCloudinaryUrl} /> {/* Integrated UploadWidget */}
+                  <UploadWidget setUrl={handleCloudinaryUrlUpdate} name="image" />
                   <TextField name="caption" />
                   <SubmitField value="Submit" />
                   <ErrorsField />
