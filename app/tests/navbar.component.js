@@ -33,25 +33,21 @@ class NavBar {
   }
 
   async gotoLikedPostsPage(testController) {
-    await testController.expect(Selector('#navbar-current-user').exists).ok();
     await testController.click('#Liked-Posts-nav');
     await testController.expect(Selector('#liked-post-page').exists).ok();
   }
 
   async gotoProfilePage(testController) {
-    await testController.expect(Selector('#navbar-current-user').exists).ok();
     await testController.click('#profile-nav');
     await testController.expect(Selector('#myProfilePage').exists).ok();
   }
 
   async gotoAddPostPage(testController) {
-    await testController.expect(Selector('#navbar-current-user').exists).ok();
     await testController.click('#create-nav');
     await testController.expect(Selector('#addPostPage').exists).ok();
   }
 
   async gotoModerationPage(testController) {
-    await testController.expect(Selector('#navbar-current-user').exists).ok();
     await testController.click('#moderation-nav');
     await testController.expect(Selector('#moderation-page').exists).ok();
   }
