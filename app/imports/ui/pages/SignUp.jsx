@@ -38,7 +38,7 @@ const SignUp = ({ location }) => {
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
-  const { from } = location?.state || { from: { pathname: '/add' } };
+  const { from } = location?.state || { from: { pathname: '/home' } };
   // if correct authentication, redirect to from: page instead of signup screen
   if (redirectToReferer) {
     return <Navigate to={from} />;
@@ -65,22 +65,24 @@ const SignUp = ({ location }) => {
                   <Col md={6} className="g-0">
                     <Row>
                       <Col md={6}>
-                        <TextField wrap="mb-4" id={ComponentIDs.signUpFormID} name="firstName" placeholder="First Name" label={false} />
+                        <TextField wrap="mb-4" id={ComponentIDs.signUpFormFirstName} name="firstName" placeholder="First Name" label={false} />
                       </Col>
                       <Col md={6}>
-                        <TextField wrap="mb-4" id={ComponentIDs.signUpFormID} name="lastName" placeholder="Last Name" label={false} />
+                        <TextField wrap="mb-4" id={ComponentIDs.signUpFormLastName} name="lastName" placeholder="Last Name" label={false} />
                       </Col>
                     </Row>
                     <TextField id={ComponentIDs.signUpFormEmail} name="email" placeholder="UH E-mail address" label={false} />
                     <TextField id={ComponentIDs.signUpFormPassword} name="password" placeholder="Password" type="password" label={false} />
-                    <TextField name="idNumber" placeholder="UH ID Number" type="id" label={false} />
+                    <TextField id={ComponentIDs.signUpFormID} name="idNumber" placeholder="UH ID Number" type="id" label={false} />
                     <ErrorsField />
                     <p>Already have an account? Login
                       {' '}
 
                       <Link to="/signin">here</Link>
                     </p>
-                    <SubmitField id={ComponentIDs.signUpFormSubmit} />
+                    <Col id='signUpFormSubmit' className="text-center">
+                      <SubmitField />
+                    </Col>
                   </Col>
                 </Row>
               </Card.Body>

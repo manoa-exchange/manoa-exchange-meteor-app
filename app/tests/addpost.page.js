@@ -1,0 +1,22 @@
+import { Selector } from 'testcafe';
+
+class AddpostPage {
+  constructor() {
+    this.pageId = '#addPostPage';
+    this.pageSelector = Selector(this.pageId);
+  }
+
+  /** Checks that this page is currently displayed. */
+  async isDisplayed(testController) {
+    await testController.expect(this.pageSelector.exists).ok();
+  }
+
+  /** Fills out and submits the form to signin, then checks to see that login was successful. */
+  async addpost(testController, caption) {
+    await this.isDisplayed(testController);
+    await testController.typeText('#caption-field', caption);
+    await testController.click('#submit-post input.btn.btn-primary');
+  }
+}
+
+export const addpostPage = new AddpostPage();

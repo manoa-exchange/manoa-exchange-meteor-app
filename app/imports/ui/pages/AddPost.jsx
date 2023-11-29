@@ -9,6 +9,7 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
 import { PageIDs } from '../utilities/ids';
+import NavBar from '../components/NavBar';
 import UploadWidget from '../components/UploadWidget'; // Assuming this is the correct import for UploadWidget
 
 const AddPost = () => {
@@ -83,6 +84,7 @@ const AddPost = () => {
 
   return (
     <div id={PageIDs.addPostPage}>
+      <NavBar />
       <Container className="py-3">
         <Row className="justify-content-center">
           <Col xs={5}>
@@ -91,8 +93,8 @@ const AddPost = () => {
               <Card>
                 <Card.Body>
                   <UploadWidget setUrl={handleCloudinaryUrlUpdate} name="image" />
-                  <TextField name="caption" />
-                  <SubmitField value="Submit" />
+                  <TextField id="caption-field" name="caption" />
+                  <SubmitField id="submit-post" value="Submit" />
                   <ErrorsField />
                 </Card.Body>
               </Card>
