@@ -72,7 +72,9 @@ Meteor.publish(Profiles.adminPublicationName, function () {
 
 Meteor.publish(Reports.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    return Reports.collection.find();
+    // Assuming Reports collection contains reported post IDs
+    const reportedPostsIds = Reports.collection.find({}, { fields: { uniqueId: 1 } }).fetch().map(report => report.uniqueId);
+    return Posts.collection.find({ uniqueId: { $in: reportedPostsIds } });
   }
   return this.ready();
 });

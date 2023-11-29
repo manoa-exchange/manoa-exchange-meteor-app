@@ -80,11 +80,11 @@ const PostItem = ({ post, comments }) => {
 
   const report = () => {
     const postData = {
-      uniqueId: post.uniqueId,
-      name: post.name,
-      image: post.image,
-      caption: post.caption,
       owner: post.owner,
+      image: post.image,
+      name: post.name,
+      caption: post.caption,
+      uniqueId: post.uniqueId,
     };
 
     Reports.collection.insert(postData, (error) => {
