@@ -80,7 +80,7 @@ const SignUp = ({ location }) => {
 
                       <Link to="/signin">here</Link>
                     </p>
-                    <Col id='signUpFormSubmit' className="text-center">
+                    <Col id="signUpFormSubmit" className="text-center">
                       <SubmitField />
                     </Col>
                   </Col>
