@@ -53,13 +53,12 @@ test('Test that profile page shows up', async (testController) => {
   await navBar.gotoProfilePage(testController);
 });
 
-/* test('Test that add post works', async (testController) => {
+test('Test that add post works', async (testController) => {
   await navBar.gotoAddPostPage(testController);
   // I need to figure out how to close the upload picture pop-up
-  // await addPost.addpost(testController, post.caption);
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
-}); */
+});
 
 test('Test that moderation page works', async (testController) => {
   await landingNav.gotoSignInPage(testController);
