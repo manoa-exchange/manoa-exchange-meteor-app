@@ -5,8 +5,6 @@ import { navBar } from './navbar.component';
 import { landingNav } from './landingnav.component';
 // eslint-disable-next-line no-unused-vars
 import { signupPage } from './signup.page';
-// eslint-disable-next-line no-unused-vars
-import addPost from '../imports/ui/pages/AddPost';
 
 /* global fixture:false, test:false */
 
