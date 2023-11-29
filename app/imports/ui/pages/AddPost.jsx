@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstrap5';
@@ -14,8 +13,7 @@ import UploadWidget from '../components/UploadWidget'; // Assuming this is the c
 
 const AddPost = () => {
   const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' }); // Initial values for the form
-  const [cloudinaryUrl, setCloudinaryUrl] = useState('');
-  const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const [cloudinaryUrl, setCloudinaryUrl] = useState('');  const [isImageUploaded, setIsImageUploaded] = useState(false);
   const fRef = useRef(null); // Reference to the form
 
   useEffect(() => {
