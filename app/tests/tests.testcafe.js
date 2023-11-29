@@ -48,10 +48,16 @@ test('Test that liked post page shows up', async (testController) => {
 });
 
 test('Test that profile page shows up', async (testController) => {
+  await landingNav.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await landingNav.isLoggedIn(testController, credentials.username);
   await navBar.gotoProfilePage(testController);
 });
 
 test('Test that add post works', async (testController) => {
+  await landingNav.gotoSignInPage(testController);
+  await signinPage.signin(testController, credentials.username, credentials.password);
+  await landingNav.isLoggedIn(testController, credentials.username);
   await navBar.gotoAddPostPage(testController);
   // I need to figure out how to close the upload picture pop-up
   await navBar.logout(testController);
