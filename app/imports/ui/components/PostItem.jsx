@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image, Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
@@ -12,8 +13,25 @@ import { SavedPosts } from '../../api/savepost/SavePost';
 import { Reports } from '../../api/report/Report';
 import Comment from './Comment';
 import AddComment from './AddComment';
+import { Profiles } from '../../api/profile/Profile';
+import LoadingSpinner from './LoadingSpinner';
 
 const PostItem = ({ post, comments }) => {
+  const { ready, profiles } = useTracker(() => {
+    // Note that this subscription will get cleaned up
+    // when your component is unmounted or deps change.
+    // Get access to Profile documents.
+    const subscription = Meteor.subscribe(Profiles.userPublicationName);
+    // Determine if the subscription is ready
+    const rdy = subscription.ready();
+    // Get the Profile documents
+    const profileI = Profiles.collection.find({}).fetch();
+    return {
+      profiles: profileI,
+      ready: rdy,
+    };
+  }, []);
+
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [fullCaptionVisible, setFullCaptionVisible] = useState(false);
   const checkLikedStatus = () => {
@@ -96,7 +114,9 @@ const PostItem = ({ post, comments }) => {
     });
   };
 
-  return (
+  const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
+
+  return (ready ? (
     <Card className="post-card">
       <Card.Header id="card-header" className="manoa-white">
         <Row>
@@ -106,7 +126,7 @@ const PostItem = ({ post, comments }) => {
             </div>
           </Col>
           <Col>
-            <strong>{ post.name }</strong>
+            <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
           </Col>
         </Row>
       </Card.Header>
@@ -157,7 +177,7 @@ const PostItem = ({ post, comments }) => {
         )}
       </Card.Footer>
     </Card>
-  );
+  ) : <LoadingSpinner />);
 };
 
 PostItem.propTypes = {
