@@ -6,7 +6,9 @@ import { Alert, Card, Col, Container, Row, Image } from 'react-bootstrap';
 import SimpleSchema from 'simpl-schema';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { AutoForm, ErrorsField, SubmitField, TextField } from 'uniforms-bootstrap5';
+import swal from 'sweetalert';
 import { ComponentIDs, PageIDs } from '../utilities/ids';
+import { Profiles } from '../../api/profile/Profile';
 
 /**
  * SignUp component is similar to signin component, but we create a new user instead.
@@ -26,7 +28,7 @@ const SignUp = ({ location }) => {
 
   /* Handle SignUp submission. Create user account and a profile entry, then redirect to the home page. */
   const submit = (doc) => {
-    const { email, password } = doc;
+    const { firstName, lastName, idNumber, email, password } = doc;
     Accounts.createUser({ email, username: email, password }, (err) => {
       if (err) {
         setError(err.reason);
@@ -35,6 +37,17 @@ const SignUp = ({ location }) => {
         setRedirectToRef(true);
       }
     });
+    // eslint-disable-next-line no-undef
+    const owner = email;
+    Profiles.collection.insert(
+      { owner, firstName, lastName, password, idNumber, email },
+      // eslint-disable-next-line no-shadow
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        }
+      },
+    );
   };
 
   /* Display the signup form. Redirect to add page after successful registration and login. */
