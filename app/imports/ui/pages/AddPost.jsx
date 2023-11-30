@@ -14,13 +14,12 @@ import { PageIDs } from '../utilities/ids';
 import UploadWidget from '../components/UploadWidget';
 import { Posts } from '../../api/post/Post';
 
-
 const AddPost = () => {
   const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' });
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
-  const [caption, setCaption] = useState(''); // State to hold the caption
+  const [caption, setCaption] = useState('');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const fRef = useRef(null); // Reference to the form
+  const fRef = useRef(null);
 
   useEffect(() => {
     setInitialValues(prevValues => ({
@@ -81,7 +80,7 @@ const AddPost = () => {
           swal('Success', 'Post added successfully', 'success');
           fRef.current?.reset();
           setIsImageUploaded(false);
-          setCaption(''); // Reset the caption state
+          setCaption('');
         }
       },
     );
@@ -91,7 +90,8 @@ const AddPost = () => {
     <div id={PageIDs.addPostPage}>
       <Container className="py-3">
         <Row className="justify-content-center">
-          <Col xs={5}>
+          {/* Form Column */}
+          <Col xs={12} md={6}>
             <h2 className="text-center">Add Post</h2>
             <AutoForm
               ref={fRef}
@@ -105,8 +105,8 @@ const AddPost = () => {
                   <UploadWidget setUrl={handleCloudinaryUrlUpdate} name="image" />
                   <TextField
                     name="caption"
-                    value={caption} // Set the value of the field to the caption state
-                    onChange={handleCaptionChange} // Set the onChange handler
+                    value={caption}
+                    onChange={handleCaptionChange}
                   />
                   <SubmitField value="Submit" />
                   <ErrorsField />
@@ -114,10 +114,9 @@ const AddPost = () => {
               </Card>
             </AutoForm>
           </Col>
-        </Row>
-        {/* Preview Section */}
-        <Row className="justify-content-center mt-3">
-          <Col xs={5}>
+
+          {/* Preview Column */}
+          <Col xs={12} md={6}>
             <h3 className="text-center">Preview</h3>
             <Card className="post-card">
               <Card.Header id="card-header" className="manoa-white">
@@ -145,14 +144,14 @@ const AddPost = () => {
                 </Card.Text>
               </Card.Body>
               <Card.Footer className="post-footer manoa-white">
-                <Container fluid> {/* Adding fluid attribute */}
+                <Container fluid>
                   <Row className="justify-content-around align-items-center">
                     <Col>
                       <strong>Edit</strong>
                     </Col>
                     <Col className="text-center">
                       <Button variant="link">
-                        <FaFlag /> {/* Flag icon for reporting */}
+                        <FaFlag />
                       </Button>
                     </Col>
                     <Col className="text-end">
