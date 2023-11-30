@@ -12,7 +12,7 @@ import PostItem from '../components/PostItem';
 
 const MyProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { ready, posts, comments } = useTracker(() => {
+  const { ready, posts, comments, profiles } = useTracker(() => {
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     const subscription2 = Meteor.subscribe(Posts.userPublicationName);
     const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
