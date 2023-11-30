@@ -4,7 +4,6 @@ import { Col, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
-import NavBar from '../components/NavBar';
 import PostItem from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
 import { Comments } from '../../api/comment/Comment';
 
@@ -31,23 +30,21 @@ const ListPosts = () => {
   }, []);
 
   return ready ? (
-    <div> <NavBar />
-      <Container className="py-3">
-        <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
-          {posts.map((post) => {
-            const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
-            return (
-              <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
-                <PostItem
-                  post={post}
-                  comments={relatedComments || []} // Pass an empty array if comments are not available
-                />
-              </div>
-            );
-          })}
-        </Col>
-      </Container>
-    </div>
+    <Container className="py-3">
+      <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+        {posts.map((post) => {
+          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+          return (
+            <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+              <PostItem
+                post={post}
+                comments={relatedComments || []} // Pass an empty array if comments are not available
+              />
+            </div>
+          );
+        })}
+      </Col>
+    </Container>
   ) : <LoadingSpinner />;
 };
 

@@ -8,7 +8,6 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { useParams } from 'react-router';
 import { Posts } from '../../api/post/Post';
 import LoadingSpinner from '../components/LoadingSpinner';
-import NavBar from '../components/NavBar';
 
 const bridge = new SimpleSchema2Bridge(Posts.schema);
 
@@ -107,32 +106,29 @@ const EditPost = () => {
   }, [_id]);
 
   return ready ? (
-    <div>
-      <NavBar />
-      <Container className="py-3">
-        <Row className="justify-content-center">
-          <Col xs={5}>
-            <Col className="text-center"><h2>Edit Post</h2></Col>
-            <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
-              <Card>
-                <Card.Body>
-                  <TextField name="name" />
-                  <TextField name="image" />
-                  <TextField name="caption" />
-                  <div className="d-flex justify-content-between">
-                    <SubmitField value="Submit" />
-                    {/* Delete Button */}
-                    <Button variant="danger" onClick={handleDelete}>Delete Post</Button>
-                  </div>
-                  <ErrorsField />
-                  <HiddenField name="owner" />
-                </Card.Body>
-              </Card>
-            </AutoForm>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <Container className="py-3">
+      <Row className="justify-content-center">
+        <Col xs={5}>
+          <Col className="text-center"><h2>Edit Post</h2></Col>
+          <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
+            <Card>
+              <Card.Body>
+                <TextField name="name" />
+                <TextField name="image" />
+                <TextField name="caption" />
+                <div className="d-flex justify-content-between">
+                  <SubmitField value="Submit" />
+                  {/* Delete Button */}
+                  <Button variant="danger" onClick={handleDelete}>Delete Post</Button>
+                </div>
+                <ErrorsField />
+                <HiddenField name="owner" />
+              </Card.Body>
+            </Card>
+          </AutoForm>
+        </Col>
+      </Row>
+    </Container>
   ) : <LoadingSpinner />;
 };
 

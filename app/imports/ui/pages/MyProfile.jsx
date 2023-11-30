@@ -9,7 +9,6 @@ import { PageIDs } from '../utilities/ids';
 import { Posts } from '../../api/post/Post';
 import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
-import NavBar from '../components/NavBar';
 
 const MyProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -33,7 +32,6 @@ const MyProfile = () => {
   const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
   return (ready ? (
     <div id={PageIDs.myProfilePage}>
-      <NavBar />
       <Container className="mb-4">
         <Row className="mt-4">
           <Col lg={4}>
