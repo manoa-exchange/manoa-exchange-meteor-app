@@ -8,8 +8,26 @@ import '../css/PostItem.css';
 import swal from 'sweetalert';
 import { Heart } from 'react-bootstrap-icons';
 import { SavedPosts } from '../../api/savepost/SavePost';
+import { Profiles } from '../../api/profile/Profile';
+import LoadingSpinner from './LoadingSpinner';
 
 const PostItem = ({ post }) => {
+
+  const { ready, profiles } = useTracker(() => {
+    // Note that this subscription will get cleaned up
+    // when your component is unmounted or deps change.
+    // Get access to Profile documents.
+    const subscription = Meteor.subscribe(Profiles.userPublicationName);
+    // Determine if the subscription is ready
+    const rdy = subscription.ready();
+    // Get the Profile documents
+    const profileI = Profiles.collection.find({}).fetch();
+    return {
+      profiles: profileI,
+      ready: rdy,
+    };
+  }, []);
+  // eslint-disable-next-line no-unused-vars
   const [submitting, setSubmitting] = useState(false);
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [fullCaptionVisible, setFullCaptionVisible] = useState(false);
@@ -85,8 +103,8 @@ const PostItem = ({ post }) => {
       swal('Error', 'All required fields must have values', 'error');
     }
   };
-
-  return (
+  const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
+  return (ready ? (
     <Card className="post-card">
       <Card.Header id="card-header" className="manoa-white">
         <Row>
@@ -97,7 +115,7 @@ const PostItem = ({ post }) => {
           </Col>
           <Col>
             {/* eslint-disable-next-line react/prop-types */}
-            <strong>{ post.name }    </strong>
+            <strong>{ userProfile.firstName } { userProfile.lastName } </strong>
             <strong>{ post.id }</strong>
           </Col>
         </Row>
@@ -130,7 +148,7 @@ const PostItem = ({ post }) => {
         <Button variant="danger" onClick={UnsavePost}>Unsave</Button>
       </Card.Footer>
     </Card>
-  );
+  ) : <LoadingSpinner />);
 };
 
 PostItem.propTypes = {
