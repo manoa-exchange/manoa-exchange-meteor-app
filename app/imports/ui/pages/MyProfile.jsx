@@ -11,6 +11,7 @@ import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
 
 const MyProfile = () => {
+  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, posts, comments } = useTracker(() => {
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     const subscription2 = Meteor.subscribe(Posts.userPublicationName);
@@ -28,8 +29,7 @@ const MyProfile = () => {
       ready: rdy,
     };
   }, []);
-  console.log('Posts array:', posts);
-
+  const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
   return (ready ? (
     <div id={PageIDs.myProfilePage}>
       <Container className="mb-4">
@@ -38,14 +38,14 @@ const MyProfile = () => {
             <Card className="mb-4 rounded border border-dark card_profile">
               <Card.Body className="text-center">
                 <Card.Img
-                /* eslint-disable-next-line max-len */
+                  /* eslint-disable-next-line max-len */
                   src="https://storage.googleapis.com/pai-images/b2ba992cecf546c0aaff913199206f97.jpeg"
                   alt="avatar"
                   className="rounded-circle border border-dark"
                   style={{ width: '150px', height: '150px' }}
                   fluid
                 />
-                <h3 className="mb-1 mt-3">Insert User Name</h3>
+                <h3 className="mb-1 mt-3">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</h3>
                 <p className="text-muted mb-4">Insert Campus/Location</p>
                 <div className="d-flex justify-content-center mb-2">
                   <Button>Follow</Button>
