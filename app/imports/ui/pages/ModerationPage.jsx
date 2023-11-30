@@ -1,42 +1,59 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container } from 'react-bootstrap';
+import { Container, Col, Row, Card } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Reports } from '../../api/report/Report';
-import PostItem from '../components/PostItem';
+import PostItemAdmin from '../components/PostItemAdmin'; // Ensure this component exists
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Comments } from '../../api/comment/Comment';
+import NavBar from '../components/NavBar';
 
 const ModerationPage = () => {
-  const { ready, posts, comments } = useTracker(() => {
+  const { ready, reportedPosts, comments } = useTracker(() => {
     const subscription = Meteor.subscribe(Reports.userPublicationName);
     const subscription2 = Meteor.subscribe(Comments.userPublicationName);
 
     const rdy = subscription.ready() && subscription2.ready();
 
+    const commentsData = Comments.collection.find({}).fetch();
+
     return {
-      posts: Reports.collection.find({}).fetch(),
+      comments: commentsData,
       ready: rdy,
     };
   }, []);
 
-  return ready ? (
-    <Container className="py-3">
-      <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
-        {posts.map((post) => {
-          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
-          return (
-            <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
-              <PostItem
-                post={post}
-                comments={relatedComments || []} // Pass an empty array if comments are not available
-              />
-            </div>
-          );
-        })}
-      </Col>
-    </Container>
-  ) : <LoadingSpinner />;
+  return (
+    <div id="moderation-page">
+      <NavBar />
+      <Container className="py-3">
+        <Row className="text-center">
+          <Col>
+            <Card className="mb-4 border border-black">
+              <Card.Header as="h3" className="text-center">Reported Posts</Card.Header>
+            </Card>
+          </Col>
+        </Row>
+        {ready ? (
+          <Container className="py-3">
+            <Col md={12}>
+              {reportedPosts.map((post) => {
+                const relatedComments = comments.filter(comment => comment.uniqueId === post._id);
+                return (
+                  <div key={post._id} className="mb-4">
+                    <PostItemAdmin
+                      post={post}
+                      comments={relatedComments}
+                    />
+                  </div>
+                );
+              })}
+            </Col>
+          </Container>
+        ) : <LoadingSpinner />}
+      </Container>
+    </div>
+  );
 };
 
 export default ModerationPage;

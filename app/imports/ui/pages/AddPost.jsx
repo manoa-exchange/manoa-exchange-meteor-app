@@ -1,8 +1,8 @@
+import { Meteor } from 'meteor/meteor';
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
-import { Meteor } from 'meteor/meteor';
 import SimpleSchema from 'simpl-schema';
 import { Random } from 'meteor/random';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -13,6 +13,7 @@ import { Heart } from 'react-bootstrap-icons';
 import { PageIDs } from '../utilities/ids';
 import UploadWidget from '../components/UploadWidget';
 import { Posts } from '../../api/post/Post';
+import NavBar from '../components/NavBar';
 
 const AddPost = () => {
   const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' });
@@ -69,6 +70,7 @@ const AddPost = () => {
     }
 
     const owner = Meteor.user().username;
+    console.log(imageUrl);
     const uniqueId = Random.id(8);
 
     Posts.collection.insert(
@@ -88,6 +90,7 @@ const AddPost = () => {
 
   return (
     <div id={PageIDs.addPostPage}>
+      <NavBar />
       <Container className="py-3">
         <Row className="justify-content-center">
           {/* Form Column */}
@@ -109,6 +112,8 @@ const AddPost = () => {
                     onChange={handleCaptionChange}
                   />
                   <SubmitField value="Submit" />
+                  <TextField id="caption-field" name="caption" />
+                  <SubmitField id="submit-post" value="Submit" />
                   <ErrorsField />
                 </Card.Body>
               </Card>
