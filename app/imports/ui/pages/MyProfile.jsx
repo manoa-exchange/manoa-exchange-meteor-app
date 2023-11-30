@@ -46,20 +46,17 @@ const MyProfile = () => {
                   fluid
                 />
                 <h3 className="mb-1 mt-3">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</h3>
-                <p className="text-muted mb-4">Insert Campus/Location</p>
-                <div className="d-flex justify-content-center mb-2">
-                  <Button>Follow</Button>
-                </div>
+                <p className="text-muted mb-4">{userProfile.idNumber}</p>
               </Card.Body>
             </Card>
-            <Card className="mb-4 mt-4 border border-dark">
+            <Card className="mb-4 mt-4 border border-dark card_profile">
               <Card.Body>
                 <Row>
                   <Col sm="3">
                     <Card.Text>Full Name</Card.Text>
                   </Col>
                   <Col sm="9">
-                    <Card.Text className="text-muted">Cao Cao</Card.Text>
+                    <Card.Text className="text-muted">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</Card.Text>
                   </Col>
                 </Row>
                 <hr />
@@ -68,45 +65,18 @@ const MyProfile = () => {
                     <Card.Text>Email</Card.Text>
                   </Col>
                   <Col sm="9">
-                    <Card.Text className="text-muted">example@example.com</Card.Text>
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col sm="3">
-                    <Card.Text>Phone</Card.Text>
-                  </Col>
-                  <Col sm="9">
-                    <Card.Text className="text-muted">(097) 234-5678</Card.Text>
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col sm="3">
-                    <Card.Text>Mobile</Card.Text>
-                  </Col>
-                  <Col sm="9">
-                    <Card.Text className="text-muted">(098) 765-4321</Card.Text>
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col sm="3">
-                    <Card.Text>Address</Card.Text>
-                  </Col>
-                  <Col sm="9">
-                    <Card.Text className="text-muted">Bay Area, San Francisco, CA</Card.Text>
+                    <Card.Text className="text-muted">{userProfile?.email || 'Insert Name'}</Card.Text>
                   </Col>
                 </Row>
               </Card.Body>
             </Card>
-            <Card className="mb-4 mb-lg-0 card border border-dark red">
+            <Card className="mb-4 mb-lg-0 card border border-dark card_profile">
               <Card.Body className="p-0 card1">
                 <ListGroup flush className="rounded-3 red">
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 red">
+                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 card_profile">
                     <Card.Text>Insert Number Of Posts Made</Card.Text>
                   </ListGroup.Item>
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 red">
+                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 card_profile">
                     <Card.Text>Insert Number Of Posts Favorited</Card.Text>
                   </ListGroup.Item>
                 </ListGroup>
@@ -114,7 +84,7 @@ const MyProfile = () => {
             </Card>
           </Col>
           <Col lg={8}>
-            <Card className="mb-4 border border-black">
+            <Card className="mb-4 border border-black card_profile">
               <Card.Header as="h3" className="text-center">Recent Posts</Card.Header>
             </Card>
             <Container className="mt-4 d-column justify-content-center text-center">
