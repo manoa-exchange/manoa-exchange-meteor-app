@@ -7,6 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import NavBar from '../components/NavBar';
 import PostItem from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
 import { Comments } from '../../api/comment/Comment';
+import { PageIDs } from '../utilities/ids';
 
 /* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
 const ListPosts = () => {
@@ -32,21 +33,23 @@ const ListPosts = () => {
 
   return ready ? (
     <div> <NavBar />
-      <Container className="py-3">
-        <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
-          {posts.map((post) => {
-            const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
-            return (
-              <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
-                <PostItem
-                  post={post}
-                  comments={relatedComments || []} // Pass an empty array if comments are not available
-                />
-              </div>
-            );
-          })}
-        </Col>
-      </Container>
+      <div id={PageIDs.homePage}>
+        <Container className="py-3">
+          <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+            {posts.map((post) => {
+              const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+              return (
+                <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+                  <PostItem
+                    post={post}
+                    comments={relatedComments || []} // Pass an empty array if comments are not available
+                  />
+                </div>
+              );
+            })}
+          </Col>
+        </Container>
+      </div>
     </div>
   ) : <LoadingSpinner />;
 };

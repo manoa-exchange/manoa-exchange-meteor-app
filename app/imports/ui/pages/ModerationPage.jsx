@@ -9,6 +9,7 @@ import { Posts } from '../../api/post/Post';
 import { Comments } from '../../api/comment/Comment';
 import { Profiles } from '../../api/profile/Profile';
 import NavBar from '../components/NavBar';
+import { PageIDs } from '../utilities/ids';
 
 const ModerationPage = () => {
   const { ready, posts, comments } = useTracker(() => {
@@ -32,7 +33,7 @@ const ModerationPage = () => {
   }, []);
 
   return ready ? (
-    <div id="moderation-page">
+    <div id={PageIDs.moderationPage}>
       <NavBar />
       <Container className="py-3">
         <Row className="text-center">

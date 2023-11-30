@@ -205,3 +205,21 @@ body {
   background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
   font-family: 'Montserrat', sans-serif;
 }
+
+#homePage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+#adminPage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+#moderationPage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
