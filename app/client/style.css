@@ -160,6 +160,10 @@ body {
   color: white !important;
 }
 
+a#navbar-current-user.dropdown-toggle.show.nav-link {
+  --bs-navbar-active-color: white;
+}
+
 .btn-primary.btn {
   font-weight: bold;
   --bs-btn-bg: transparent;
@@ -201,6 +205,24 @@ body {
 }
 
 #addPostPage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+#homePage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+#adminPage {
+  background: rgb(36, 35, 49);
+  background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
+  font-family: 'Montserrat', sans-serif;
+}
+
+#moderationPage {
   background: rgb(36, 35, 49);
   background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
   font-family: 'Montserrat', sans-serif;
