@@ -7,10 +7,13 @@ import { Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { HouseDoorFill, ChatDots, BoxArrowRight, PersonFill, PersonCircle, PersonPlusFill, Compass, Heart } from 'react-bootstrap-icons';
 
 const NavBar = () => {
-  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
-  const { currentUser } = useTracker(() => ({
-    currentUser: Meteor.user() ? Meteor.user().username : '',
+  // Using useTracker to connect Meteor data to React component.
+  const { username } = useTracker(() => ({
+    username: Meteor.user()?.username,
   }), []);
+
+  // Checking if the current user is an admin.
+  const isAdmin = Roles.userIsInRole(Meteor.userId(), 'admin');
 
   return (
     <Navbar bg="light" expand="lg" className="navbar-content bg-dark text-light navbar-expand-md">
@@ -23,33 +26,36 @@ const NavBar = () => {
             className="d-inline-block align-top"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" aria-label="Toggle navigation" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
-            {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-              <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>
-            ) : ''}
+            {isAdmin && (
+              <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin">Admin</Nav.Link>
+            )}
           </Nav>
           <Nav className="justify-content-end">
-            {currentUser ? ([
-              <Nav.Link id="home-nav" as={NavLink} to="/home" key="home">
-                <HouseDoorFill size={20} />
-              </Nav.Link>,
-              <Nav.Link id="Direct-Messages-nav" as={NavLink} to="/directMessages" key="directMessages">
-                <ChatDots size={20} />
-              </Nav.Link>,
-              <Nav.Link id="Explore-nav" as={NavLink} to="/explorePage" key="explorePage">
-                <Compass size={20} />
-              </Nav.Link>,
-              <Nav.Link id="Liked-Posts-nav" as={NavLink} to="/savedposts" key="likedPostsPage">
-                <Heart size={20} />
-              </Nav.Link>,
-              <Nav.Link id="create-nav" as={NavLink} to="/create" key="create">Create</Nav.Link>,
-              <Nav.Link id="posts-nav" as={NavLink} to="/posts" key="posts">Posts</Nav.Link>,
-              <Nav.Link id="profile-nav" as={NavLink} to="/profile" key="profiles">Profile</Nav.Link>,
-              <Nav.Link id="moderation-nav" as={NavLink} to="/moderation" key="moderation">Moderation</Nav.Link>,
-            ]) : ''}
-            {currentUser === '' ? (
+            {username ? (
+              <>
+                <Nav.Link id="home-nav" as={NavLink} to="/home">
+                  <HouseDoorFill size={20} />
+                </Nav.Link>
+                <Nav.Link id="Direct-Messages-nav" as={NavLink} to="/directMessages">
+                  <ChatDots size={20} />
+                </Nav.Link>
+                <Nav.Link id="Explore-nav" as={NavLink} to="/explorePage">
+                  <Compass size={20} />
+                </Nav.Link>
+                <Nav.Link id="Liked-Posts-nav" as={NavLink} to="/savedposts">
+                  <Heart size={20} />
+                </Nav.Link>
+                <Nav.Link id="create-nav" as={NavLink} to="/create">Create</Nav.Link>
+                <Nav.Link id="posts-nav" as={NavLink} to="/posts">Posts</Nav.Link>
+                <Nav.Link id="profile-nav" as={NavLink} to="/profile">Profile</Nav.Link>
+                {isAdmin && (
+                  <Nav.Link id="moderation-nav" as={NavLink} to="/moderation">Moderation</Nav.Link>
+                )}
+              </>
+            ) : (
               <NavDropdown id="login-dropdown" title="Sign In">
                 <NavDropdown.Item id="login-dropdown-sign-in" as={NavLink} to="/signin">
                   <PersonFill />
@@ -60,16 +66,15 @@ const NavBar = () => {
                   Register
                 </NavDropdown.Item>
               </NavDropdown>
-            ) : (
-              <NavDropdown id="navbar-current-user" title={currentUser}>
+            )}
+            {username && (
+              <NavDropdown id="navbar-current-user" title={username}>
                 <NavDropdown.Item id="navbar-profile" as={NavLink} to="/profile">
                   <PersonCircle />
-                  {' '}
                   Profile
                 </NavDropdown.Item>
                 <NavDropdown.Item id="navbar-sign-out" as={NavLink} to="/signout">
                   <BoxArrowRight />
-                  {' '}
                   Sign out
                 </NavDropdown.Item>
               </NavDropdown>

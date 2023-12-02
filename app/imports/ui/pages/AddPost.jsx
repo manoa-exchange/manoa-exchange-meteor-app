@@ -1,20 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstrap5';
-import swal from 'sweetalert';
 import { Meteor } from 'meteor/meteor';
+import swal from 'sweetalert';
 import SimpleSchema from 'simpl-schema';
-import { Random } from 'meteor/random';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
+import { useTracker } from 'meteor/react-meteor-data';
+import { Random } from 'meteor/random';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { BiChat, BiHeart } from 'react-icons/bi';
 import { FaFlag } from 'react-icons/fa';
 import { Heart } from 'react-bootstrap-icons';
-import { PageIDs } from '../utilities/ids';
 import UploadWidget from '../components/UploadWidget';
 import { Posts } from '../../api/post/Post';
+import { Profiles } from '../../api/profile/Profile';
+import { PageIDs } from '../utilities/ids';
 
 const AddPost = () => {
+  const profiles = useTracker(() => {
+    Meteor.subscribe(Profiles.userPublicationName);
+    return Profiles.collection.find({}).fetch();
+  }, []);
+
   const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' });
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [caption, setCaption] = useState('');
@@ -86,6 +93,8 @@ const AddPost = () => {
     );
   };
 
+  const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
+
   return (
     <div id={PageIDs.addPostPage}>
       <Container className="py-3">
@@ -127,7 +136,7 @@ const AddPost = () => {
                     </div>
                   </Col>
                   <Col>
-                    <strong>Name</strong>
+                    <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
                   </Col>
                 </Row>
               </Card.Header>
