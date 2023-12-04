@@ -38,9 +38,6 @@ const NavBar = () => {
               <Nav.Link id="home-nav" as={NavLink} to="/home" key="home">
                 <HouseDoorFill size={20} />
               </Nav.Link>,
-              <Nav.Link id="Liked-Posts-nav" as={NavLink} to="/savedposts" key="likedPostsPage">
-                <Heart size={20} />
-              </Nav.Link>,
               <Nav.Link id="create-nav" as={NavLink} to="/create" key="create">Create</Nav.Link>,
               <Nav.Link id="moderation-nav" as={NavLink} to="/moderation" key="moderation">Moderation</Nav.Link>,
               <Nav.Link id="create-nav" as={NavLink} to="/create" key="create">Create</Nav.Link>,
