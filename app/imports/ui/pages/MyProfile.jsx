@@ -9,6 +9,7 @@ import { PageIDs } from '../utilities/ids';
 import { Posts } from '../../api/post/Post';
 import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
+import '../css/PostItem.css';
 
 const MyProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
@@ -19,7 +20,7 @@ const MyProfile = () => {
 
     const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
     const profileData = Profiles.collection.find({}).fetch();
-    const postData = Posts.collection.find({}).fetch();
+    const postData = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
     const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
 
     return {
@@ -128,7 +129,10 @@ const MyProfile = () => {
                           const relatedComments = comments.filter(comment => comment.uniqueId === post._id);
                           return (
                             <div key={post._id} className="mb-4">
-                              <PostItem post={post} comments={relatedComments} />
+                              <PostItem
+                                post={post}
+                                comments={relatedComments || []} // Pass an empty array if comments are not available
+                              />
                             </div>
                           );
                         })}

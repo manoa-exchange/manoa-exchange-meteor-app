@@ -15,7 +15,7 @@ const ListSavedPost = () => {
     const rdy = subscription.ready() && subscription2.ready();
 
     return {
-      posts: SavedPosts.collection.find({}).fetch(),
+      posts: SavedPosts.collection.find({}, { sort: { createdAt: -1 } }).fetch(),
       ready: rdy,
     };
   }, []);

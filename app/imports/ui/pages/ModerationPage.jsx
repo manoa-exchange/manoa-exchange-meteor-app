@@ -15,7 +15,7 @@ const ModerationPage = () => {
     const rdy = subscription.ready() && subscription2.ready();
 
     return {
-      posts: Reports.collection.find({}).fetch(),
+      posts: Reports.collection.find({}, { sort: { createdAt: -1 } }).fetch(),
       ready: rdy,
     };
   }, []);

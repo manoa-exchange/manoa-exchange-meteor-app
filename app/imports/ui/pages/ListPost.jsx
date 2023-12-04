@@ -19,7 +19,7 @@ const ListPosts = () => {
     // Determine if the subscription is ready
     const rdy = subscription.ready() && subscription2.ready();
     // Get the Contact documents
-    const postItems = Posts.collection.find({}).fetch();
+    const postItems = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
     // Get the Note documents
     const commentItems = Comments.collection.find({}).fetch();
     return {
