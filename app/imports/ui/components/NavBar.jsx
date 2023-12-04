@@ -12,6 +12,10 @@ const NavBar = () => {
     currentUser: Meteor.user() ? Meteor.user().username : '',
   }), []);
 
+  const { isAdmin } = useTracker(() => ({
+    currentUser: Meteor.user() ? Meteor.user().role : 'admin',
+  }), []);
+
   return (
     <Navbar bg="light" expand="lg" className="navbar-content bg-dark text-light navbar-expand-md">
       <Container>
