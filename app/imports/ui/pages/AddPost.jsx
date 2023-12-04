@@ -15,11 +15,25 @@ import UploadWidget from '../components/UploadWidget';
 import { Posts } from '../../api/post/Post';
 import { Profiles } from '../../api/profile/Profile';
 import { PageIDs } from '../utilities/ids';
+import { Comments } from '../../api/comment/Comment';
 
 const AddPost = () => {
-  const profiles = useTracker(() => {
-    Meteor.subscribe(Profiles.userPublicationName);
-    return Profiles.collection.find({}).fetch();
+  const { profiles } = useTracker(() => {
+    const subscription = Meteor.subscribe(Profiles.userPublicationName);
+    const subscription2 = Meteor.subscribe(Posts.userPublicationName);
+    const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
+
+    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
+    const profileData = Profiles.collection.find({}).fetch();
+    const postData = Posts.collection.find({}).fetch();
+    const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
+
+    return {
+      profiles: profileData,
+      posts: postData,
+      comments: commentData,
+      ready: rdy,
+    };
   }, []);
 
   const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' });
@@ -79,7 +93,14 @@ const AddPost = () => {
     const uniqueId = Random.id(8);
 
     Posts.collection.insert(
-      { uniqueId, name, image: imageUrl, caption, owner },
+      {
+        uniqueId,
+        name,
+        image: imageUrl,
+        caption,
+        owner,
+        createdAt: new Date(), // Manually set the date
+      },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');

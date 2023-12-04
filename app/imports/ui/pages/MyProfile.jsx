@@ -46,6 +46,7 @@ const MyProfile = () => {
                   fluid
                 />
                 <h3 className="mb-1 mt-3">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</h3>
+                <p className="text-muted mb-4">{userProfile.idNumber}</p>
                 <p className="text-muted mb-4">Insert Campus/Location</p>
                 <div className="d-flex justify-content-center mb-2">
                   <Button>Follow</Button>

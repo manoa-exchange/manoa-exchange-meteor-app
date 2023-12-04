@@ -150,7 +150,7 @@ const PostItem = ({ post, comments }) => {
         <Container fluid> {/* Adding fluid attribute */}
           <Row className="justify-content-around align-items-center">
             <Col>
-              <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
+              <Link to={{ pathname: `/edit/${post._id}`, state: { post } }}>Edit</Link>
             </Col>
             <Col className="text-center">
               <Button variant="link" onClick={report}>
@@ -187,6 +187,7 @@ PostItem.propTypes = {
     likeCount: PropTypes.number,
     image: PropTypes.string,
     caption: PropTypes.string,
+    createdAt: PropTypes.instanceOf(Date),
     owner: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
