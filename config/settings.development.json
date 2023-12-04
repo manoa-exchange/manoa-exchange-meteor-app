@@ -11,7 +11,25 @@
       "owner": "john@foo.com",
       "image": "http://www2.hawaii.edu/~scottpr/images/RobertsonThumb.jpg",
       "caption": "A beautiful basket",
-      "likeCount": 0
+      "likeCount": 0,
+      "interests": [
+        "China",
+        "Philippines",
+        "Indonesia",
+        "Japan",
+        "United Kingdom",
+        "France",
+        "Italy",
+        "Spain",
+        "Australia",
+        "Argentina",
+        "Canada",
+        "Germany",
+        "New Zealand",
+        "UH Manoa (in-bound)",
+        United States (NSE)
+
+      ]
     },
     {
       "uniqueId": "267450990",
