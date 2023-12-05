@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Container } from 'react-bootstrap';
+import { Col, Row, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -8,6 +8,7 @@ import NavBar from '../components/NavBar';
 import PostItem from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
 import { Comments } from '../../api/comment/Comment';
 import { PageIDs } from '../utilities/ids';
+import Search from '../components/Search';
 
 /* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
 const ListPosts = () => {
@@ -35,19 +36,26 @@ const ListPosts = () => {
     <div> <NavBar />
       <div id={PageIDs.homePage}>
         <Container className="py-3">
-          <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
-            {posts.map((post) => {
-              const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
-              return (
-                <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
-                  <PostItem
-                    post={post}
-                    comments={relatedComments || []} // Pass an empty array if comments are not available
-                  />
-                </div>
-              );
-            })}
-          </Col>
+          <Row>
+            <Col md={8}> {/* Adjust the size (md={12}) as per your layout requirement */}
+              {posts.map((post) => {
+                const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+                return (
+                  <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+                    <PostItem
+                      post={post}
+                      comments={relatedComments || []} // Pass an empty array if comments are not available
+                    />
+                  </div>
+                );
+              })}
+            </Col>
+            <Col md={4} className="justify-content-center d-flex">
+              <Container>
+                <Search />
+              </Container>
+            </Col>
+          </Row>
         </Container>
       </div>
     </div>
