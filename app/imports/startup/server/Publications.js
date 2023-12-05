@@ -80,7 +80,7 @@ Meteor.publish(Reports.adminPublicationName, function () {
 });
 
 Meteor.publish(Comments.adminPublicationName, function () {
-  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
+  if (this.userId) {
     return Comments.collection.find();
   }
   return this.ready();
