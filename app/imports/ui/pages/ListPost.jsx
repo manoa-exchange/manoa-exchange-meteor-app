@@ -14,7 +14,7 @@ const ListPosts = () => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Posts.userPublicationName);
+    const subscription = Meteor.subscribe(Posts.adminPublicationName);
     const subscription2 = Meteor.subscribe(Comments.userPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready() && subscription2.ready();

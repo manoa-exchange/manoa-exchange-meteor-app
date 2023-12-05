@@ -21,7 +21,7 @@ const PostItem = ({ post, comments }) => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Profile documents.
-    const subscription = Meteor.subscribe(Profiles.userPublicationName);
+    const subscription = Meteor.subscribe(Profiles.adminPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready();
     // Get the Profile documents
@@ -114,7 +114,7 @@ const PostItem = ({ post, comments }) => {
     });
   };
 
-  const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
+  const userProfile = profiles.find(profile => profile.owner === post.owner);
 
   return (ready ? (
     <Card className="post-card">
