@@ -4,12 +4,25 @@ import { useTracker } from 'meteor/react-meteor-data';
 import { NavLink } from 'react-router-dom';
 import { Roles } from 'meteor/alanning:roles';
 import { Container, Image, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { HouseDoorFill, BoxArrowRight, PersonFill, PersonCircle, PersonPlusFill, Compass, Heart } from 'react-bootstrap-icons';
+import {
+  HouseDoor,
+  BoxArrowRight,
+  PersonFill,
+  PersonCircle,
+  PersonPlusFill,
+  Heart,
+  PlusCircle,
+  Flag,
+} from 'react-bootstrap-icons';
 
 const NavBar = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { currentUser } = useTracker(() => ({
     currentUser: Meteor.user() ? Meteor.user().username : '',
+  }), []);
+
+  const { isAdmin } = useTracker(() => ({
+    currentUser: Meteor.user() ? Meteor.user().role : 'admin',
   }), []);
 
   return (
@@ -25,24 +38,19 @@ const NavBar = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto justify-content-start">
+          <Nav className="ms-auto justify-content-end">
             {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
               <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>,
-              <Nav.Link id="moderation-nav" as={NavLink} to="/moderation" key="moderation">
-                Moderation
-              </Nav.Link>
-            ) : ''}
+              <Nav.Link id="moderation-nav" as={NavLink} to="/moderation" key="moderation"><Flag size={20} /></Nav.Link>
+            ) : null}
           </Nav>
           <Nav className="justify-content-end">
             {currentUser ? ([
-              <Nav.Link id="home-nav" as={NavLink} to="/home" key="home">
-                <HouseDoorFill size={20} />
-              </Nav.Link>,
-              <Nav.Link id="Explore-nav" as={NavLink} to="/explorePage" key="explorePage">
-                <Compass size={20} />
-              </Nav.Link>,
-              <Nav.Link id="create-nav" as={NavLink} to="/create" key="create">Create</Nav.Link>,
-              <Nav.Link id="profile-nav" as={NavLink} to="/profile" key="profiles">Profile</Nav.Link>,
+              <Nav.Link id="home-nav" as={NavLink} to="/home" key="home"><HouseDoor size={20} /></Nav.Link>,
+              <Nav.Link id="create-nav" as={NavLink} to="/create" key="create"><PlusCircle size={20} /></Nav.Link>,
+            ]) : ''}
+            {isAdmin ? ([
+              <Nav.Link id="moderation-nav" as={NavLink} to="/moderation" key="moderation">Moderation</Nav.Link>,
             ]) : ''}
             {currentUser === '' ? (
               <NavDropdown id="login-dropdown" title="Sign In">
