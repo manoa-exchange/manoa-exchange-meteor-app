@@ -13,7 +13,6 @@ import {
   Heart,
   PlusCircle,
   Flag,
-  HouseDoorFill
 } from 'react-bootstrap-icons';
 
 const NavBar = () => {
