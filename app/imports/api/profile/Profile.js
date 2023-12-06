@@ -17,7 +17,6 @@ class ProfileCollection {
       studentId: String,
       image: String,
       owner: String,
-      interests: String,
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);

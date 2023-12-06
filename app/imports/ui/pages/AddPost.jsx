@@ -1,24 +1,22 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
-import { AutoForm, ErrorsField, TextField, SubmitField, SelectField } from 'uniforms-bootstrap5';
+import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import SimpleSchema from 'simpl-schema';
 import { Random } from 'meteor/random';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
-import { Countries } from '../../api/interests/interests';
 import { PageIDs } from '../utilities/ids';
 import NavBar from '../components/NavBar';
 import UploadWidget from '../components/UploadWidget'; // Assuming this is the correct import for UploadWidget
-import { userTracker } from '../utilities/userTracker';
-import LoadingSpinner from '../components/LoadingSpinner';
 
 const AddPost = () => {
   const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' }); // Initial values for the form
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
+  const fRef = useRef(null); // Reference to the form
 
   useEffect(() => {
     // Generate a unique ID for the post when the component mounts
@@ -28,12 +26,10 @@ const AddPost = () => {
     }));
   }, []);
 
-  const formSchema = (allCountries) => new SimpleSchema({
+  const formSchema = new SimpleSchema({
     uniqueId: String,
     name: String,
     image: String,
-    countries: { type: Array, label: 'Countries', optional: false },
-    'countries.$': { type: String, allowedValues: allCountries },
     caption: {
       type: String,
       optional: true, // This makes the caption field optional
@@ -85,21 +81,8 @@ const AddPost = () => {
       },
     );
   };
-  const { ready, countries } = userTracker(() => {
-    const subscription = Meteor.subscribe(Countries.userPublicationName);
-    return {
-      ready: subscription.ready(),
-      countries: Countries.collection.find().fetch(),
-    };
-  }, []);
 
-  let fRef = null;
-  const allCountries = _.pluck(countries, 'name');
-  const makeSchema = formSchema(makeSchema);
-  const bridge1 = new SimpleSchema2Bridge(makeSchema);
-const transform = (label) => ` ${label}`;
-
-  return ready ? (
+  return (
     <div id={PageIDs.addPostPage}>
       <NavBar />
       <Container className="py-3">
