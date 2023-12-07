@@ -1,34 +1,50 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, Col, Container, Row, Form } from 'react-bootstrap';
+import { Button, Card, Col, Container, Image, Row, Form } from 'react-bootstrap';
 import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstrap5';
+import { Meteor } from 'meteor/meteor';
 import swal from 'sweetalert';
 import SimpleSchema from 'simpl-schema';
-import { Random } from 'meteor/random';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
-import { Meteor } from 'meteor/meteor'; // Import Meteor
 import { useTracker } from 'meteor/react-meteor-data';
-import { Posts } from '../../api/post/Post';
-import { PageIDs } from '../utilities/ids';
-import NavBar from '../components/NavBar';
+import { Random } from 'meteor/random';
+import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
+import { BiChat, BiHeart } from 'react-icons/bi';
+import { FaFlag } from 'react-icons/fa';
+import { Heart } from 'react-bootstrap-icons';
 import UploadWidget from '../components/UploadWidget';
+import { Posts } from '../../api/post/Post';
+import { Profiles } from '../../api/profile/Profile';
+import { PageIDs } from '../utilities/ids';
+import { Comments } from '../../api/comment/Comment';
 import { Tags } from '../../api/tags/Tags';
 import { PostTags } from '../../api/post/PostTags';
 
 const AddPost = () => {
-  const { tags } = useTracker(() => {
+  const { profiles, tags, postTags } = useTracker(() => {
+    const subscription = Meteor.subscribe(Profiles.userPublicationName);
+    const subscription2 = Meteor.subscribe(Posts.userPublicationName);
+    const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
     const subscription4 = Meteor.subscribe(Tags.adminPublicationName);
+    const subscription5 = Meteor.subscribe(PostTags.adminPublicationName);
+
+    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
+    const profileData = Profiles.collection.find({}).fetch();
+    const postData = Posts.collection.find({}).fetch();
+    const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
     const tagData = Tags.collection.find({}).fetch();
+    const postTagData = PostTags.collection.find({}).fetch();
+
     return {
+      profiles: profileData,
+      posts: postData,
+      comments: commentData,
       tags: tagData,
-      ready: subscription4.ready(),
+      postTags: postTagData,
+      ready: rdy,
     };
   }, []);
 
-  const [initialValues, setInitialValues] = useState({
-    name: 'Name',
-    image: 'Image Filler',
-  });
+  const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' });
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [caption, setCaption] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
@@ -36,7 +52,7 @@ const AddPost = () => {
   const fRef = useRef(null);
 
   useEffect(() => {
-    setInitialValues((prevValues) => ({
+    setInitialValues(prevValues => ({
       ...prevValues,
       uniqueId: Random.id(8),
     }));
@@ -50,12 +66,8 @@ const AddPost = () => {
       type: String,
       optional: true,
     },
-    tag: {
-      type: String,
-      optional: true,
-    },
   });
-  // Create an instance of RegExpMatcher for obscenity check
+
   const matcher = new RegExpMatcher({
     ...englishDataset.build(),
     ...englishRecommendedTransformers,
@@ -64,12 +76,17 @@ const AddPost = () => {
   const bridge = new SimpleSchema2Bridge(formSchema);
 
   const handleCloudinaryUrlUpdate = (url) => {
-    setCloudinaryUrl(url); // Correct: This updates the cloudinaryUrl state
-    setIsImageUploaded(!!url); // Sets isImageUploaded based on whether the URL is non-empty
+    setCloudinaryUrl(url);
+    setIsImageUploaded(!!url);
   };
+
+  const handleCaptionChange = (value) => {
+    setCaption(value);
+  };
+
   const submit = (data) => {
-    const { name, image, caption, tag } = data;
-    const imageUrl = cloudinaryUrl || image; // Use cloudinaryUrl if available
+    const { name, image, tag } = data;
+    const imageUrl = cloudinaryUrl || image;
 
     if (!isImageUploaded) {
       swal('Error', 'Please upload an image before submitting', 'error');
@@ -82,9 +99,7 @@ const AddPost = () => {
     }
 
     const owner = Meteor.user().username;
-    console.log(imageUrl);
     const uniqueId = Random.id(8);
-
     PostTags.collection.insert(
       {
         uniqueId,
@@ -98,7 +113,6 @@ const AddPost = () => {
         }
       },
     );
-    // Insert the post into the collection
     Posts.collection.insert(
       {
         uniqueId,
@@ -106,31 +120,30 @@ const AddPost = () => {
         image: imageUrl,
         caption,
         owner,
+        createdAt: new Date(), // Manually set the date
       },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Post added successfully', 'success');
-          fRef.current?.reset();
-          setIsImageUploaded(false);
         }
       },
     );
   };
 
+  const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
+
   return (
     <div id={PageIDs.addPostPage}>
-      <NavBar />
       <Container className="py-3">
         <Row className="justify-content-center">
+          {/* Form Column */}
           <Col xs={12} md={6}>
             <h2 className="text-center">Add Post</h2>
             <AutoForm
               ref={fRef}
               schema={bridge}
               model={initialValues}
-              onSubmit={(data) => submit(data)}
+              onSubmit={data => submit(data)}
               onChangeModel={(model) => setCaption(model.caption)}
             >
               <Card>
@@ -139,6 +152,7 @@ const AddPost = () => {
                   <TextField
                     name="caption"
                     value={caption}
+                    onChange={handleCaptionChange}
                   />
                   <Form.Select
                     aria-label="Default select example"
@@ -148,10 +162,10 @@ const AddPost = () => {
                     onChange={(e) => setSelectedTag(e.target.value)}
                   >
                     <option value="" disabled hidden>
-                      Select a tag
+                      Open this select menu
                     </option>
-                    {tags.map((tag) => (
-                      <option key={tag._id} value={tag.name}>
+                    {tags.map((tag, index) => (
+                      <option key={index} value={tag.name}>
                         {tag.name}
                       </option>
                     ))}
@@ -161,6 +175,57 @@ const AddPost = () => {
                 </Card.Body>
               </Card>
             </AutoForm>
+          </Col>
+
+          {/* Preview Column */}
+          <Col xs={12} md={6}>
+            <h3 className="text-center">Preview</h3>
+            <Card className="post-card">
+              <Card.Header id="card-header" className="manoa-white">
+                <Row>
+                  <Col xs="auto" className="profile-pic-col">
+                    <div className="profile-pic">
+                      <Image src="path_to_profile_picture.jpg" alt="Profile" className="profile-img" />
+                    </div>
+                  </Col>
+                  <Col>
+                    <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
+                  </Col>
+                </Row>
+              </Card.Header>
+              <Container className="post-image-container">
+                <Image src={cloudinaryUrl} alt="Post" fluid />
+              </Container>
+              <Card.Body id="card-body">
+                <div className="interaction-icons">
+                  <BiHeart className="like-icon" />
+                  <BiChat className="comment-icon" />
+                </div>
+                <Card.Text>
+                  {caption}
+                </Card.Text>
+              </Card.Body>
+              <Card.Footer className="post-footer manoa-white">
+                <Container fluid>
+                  <Row className="justify-content-around align-items-center">
+                    <Col>
+                      <strong>Edit</strong>
+                    </Col>
+                    <Col className="text-center">
+                      <Button variant="link">
+                        <FaFlag />
+                      </Button>
+                    </Col>
+                    <Col className="text-end">
+                      <Button type="button"><Heart /></Button>
+                    </Col>
+                    <Col>
+                      <Button variant="danger">Unsave</Button>
+                    </Col>
+                  </Row>
+                </Container>
+              </Card.Footer>
+            </Card>
           </Col>
         </Row>
       </Container>
