@@ -3,7 +3,16 @@
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
     { "email": "john@foo.com", "password": "changeme" }
   ],
-
+  "defaultTags": [
+    { "name": "China" },
+    { "name": "Germany" },
+    { "name": "South Korea" },
+    { "name": "Japan" },
+    { "name": "France" },
+    { "name": "Singapore" },
+    { "name": "Spain" },
+    { "name": "Vietnam" }
+  ],
   "defaultPosts": [
     {
       "uniqueId": "post1",
@@ -11,25 +20,7 @@
       "owner": "john@foo.com",
       "image": "http://www2.hawaii.edu/~scottpr/images/RobertsonThumb.jpg",
       "caption": "A beautiful basket",
-      "likeCount": 0,
-      "interests": [
-        "China",
-        "Philippines",
-        "Indonesia",
-        "Japan",
-        "United Kingdom",
-        "France",
-        "Italy",
-        "Spain",
-        "Australia",
-        "Argentina",
-        "Canada",
-        "Germany",
-        "New Zealand",
-        "UH Manoa (in-bound)",
-        United States (NSE)
-
-      ]
+      "likeCount": 0
     },
     {
       "uniqueId": "267450990",

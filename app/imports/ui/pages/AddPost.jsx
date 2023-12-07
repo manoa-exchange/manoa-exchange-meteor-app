@@ -10,31 +10,18 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
 import { Posts } from '../../api/post/Post';
 import { PageIDs } from '../utilities/ids';
-import NavBar from '../components/NavBar'; // Add back the Navbar component
+import NavBar from '../components/NavBar';
 import UploadWidget from '../components/UploadWidget';
 import { Tags } from '../../api/tags/Tags';
-import { Profiles } from '../../api/profile/Profile';
 import { PostTags } from '../../api/post/PostTags';
-import { Interests } from '../../api/interests/Interests'; // Import Interests collection
 
 const AddPost = () => {
-  const { profiles, tags, postTags } = useTracker(() => {
-    const subscription = Meteor.subscribe(Profiles.userPublicationName);
-    const subscription2 = Meteor.subscribe(Posts.userPublicationName);
+  const { tags } = useTracker(() => {
     const subscription4 = Meteor.subscribe(Tags.adminPublicationName);
-    const subscription5 = Meteor.subscribe(PostTags.adminPublicationName);
-
-    const rdy = subscription.ready() && subscription2.ready();
-    const profileData = Profiles.collection.find({}).fetch();
-    const postData = Posts.collection.find({}).fetch();
+    const rdy = subscription4.ready();
     const tagData = Tags.collection.find({}).fetch();
-    const postTagData = PostTags.collection.find({}).fetch();
-
     return {
-      profiles: profileData,
-      posts: postData,
       tags: tagData,
-      postTags: postTagData,
       ready: rdy,
     };
   }, []);
@@ -114,16 +101,16 @@ const AddPost = () => {
       },
     );
 
-    Interests.collection.insert(
+    Tags.collection.insert(
       {
         uniqueId,
-        interest: selectedInterest,
+        tag: selectedTag, // Assuming interests are associated with tags
       },
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
         } else {
-          swal('Success', `${selectedInterest} added successfully`, 'success');
+          swal('Success', `${selectedTag} added successfully`, 'success');
         }
       },
     );
@@ -148,14 +135,11 @@ const AddPost = () => {
     );
   };
 
-  const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
-
   return (
     <div id={PageIDs.addPostPage}>
-      <NavBar /> {/* Add back the Navbar component */}
+      <NavBar />
       <Container className="py-3">
         <Row className="justify-content-center">
-          {/* Form Column */}
           <Col xs={12} md={6}>
             <h2 className="text-center">Add Post</h2>
             <AutoForm
@@ -196,11 +180,15 @@ const AddPost = () => {
             </AutoForm>
           </Col>
 
-          {/* Preview Column */}
           <Col xs={12} md={6}>
             <h3 className="text-center">Preview</h3>
             <Card className="post-card">
-              {/* ... (rest of the preview section similar to AddPost1.jsx) */}
+              <Card.Img variant="top" src={cloudinaryUrl || initialValues.image} alt="Preview" />
+              <Card.Body>
+                <Card.Title>{initialValues.name}</Card.Title>
+                <Card.Text>{caption}</Card.Text>
+                {/* Add other post details as needed */}
+              </Card.Body>
             </Card>
           </Col>
         </Row>
