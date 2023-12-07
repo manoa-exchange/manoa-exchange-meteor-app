@@ -6,23 +6,9 @@ import { SavedPosts } from '../../api/savepost/SavePost';
 import { Profiles } from '../../api/profile/Profile';
 import { Reports } from '../../api/report/Report';
 import { Comments } from '../../api/comment/Comment.js';
-import { Tags } from '../../api/tags/Tags';
-import { PostTags } from '../../api/post/PostTags';
 
 // User-level publication.
 // If logged in, then publish documents owned by this user. Otherwise, publish nothing.
-Meteor.publish(Tags.adminPublicationName, function () {
-  if (this.userId) {
-    return Tags.collection.find();
-  }
-  return this.ready();
-});
-Meteor.publish(PostTags.adminPublicationName, function () {
-  if (this.userId) {
-    return PostTags.collection.find();
-  }
-  return this.ready();
-});
 Meteor.publish(Posts.userPublicationName, function () {
   if (this.userId) {
     const username = Meteor.users.findOne(this.userId).username;
@@ -70,7 +56,7 @@ Meteor.publish(Comments.userPublicationName, function () {
 // Admin-level publication.
 // If logged in and with admin role, then publish all documents from all users. Otherwise, publish nothing.
 Meteor.publish(Posts.adminPublicationName, function () {
-  if (this.userId) {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Posts.collection.find();
   }
   return this.ready();
@@ -78,7 +64,7 @@ Meteor.publish(Posts.adminPublicationName, function () {
 
 // Admin level publication for profile collection
 Meteor.publish(Profiles.adminPublicationName, function () {
-  if (this.userId) {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Profiles.collection.find();
   }
   return this.ready();
@@ -86,15 +72,13 @@ Meteor.publish(Profiles.adminPublicationName, function () {
 
 Meteor.publish(Reports.adminPublicationName, function () {
   if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
-    // Assuming Reports collection contains reported post IDs
-    const reportedPostsIds = Reports.collection.find({}, { fields: { uniqueId: 1 } }).fetch().map(report => report.uniqueId);
-    return Posts.collection.find({ uniqueId: { $in: reportedPostsIds } });
+    return Reports.collection.find();
   }
   return this.ready();
 });
 
 Meteor.publish(Comments.adminPublicationName, function () {
-  if (this.userId) {
+  if (this.userId && Roles.userIsInRole(this.userId, 'admin')) {
     return Comments.collection.find();
   }
   return this.ready();

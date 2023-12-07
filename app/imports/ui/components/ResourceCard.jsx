@@ -1,21 +1,24 @@
 import React from 'react';
-import { Card, Container } from 'react-bootstrap';
+import { Button, Card, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 const ResourceCard = ({ title, link }) => (
   <Container>
-    <Card style={{ height: '200px' }}>
-      <Card.Header>
-        <Card.Title>
-          <Container className="d-flex align-items-center justify-content-center text-center pt-3">
-            <h5>{title}</h5>
+    <Card className="pt-2 pb-2" style={{ height: '200px' }}>
+      <Card.Body className="d-flex flex-column justify-content-center">
+        <div style={{ minHeight: '100px' }}>
+          <Card.Title className="mb-0 text-center">
+            <Container className="d-flex align-items-center justify-content-center text-center">
+              <h5>{title}</h5>
+            </Container>
+          </Card.Title>
+        </div>
+        <div style={{ minHeight: '50px' }}>
+          <Container className="d-flex align-items-center justify-content-center">
+            <Button href={link} className="outline-dark">Visit Site →</Button>
           </Container>
-        </Card.Title>
-      </Card.Header>
-      <Card.Footer>
-        <Link to={link}><p>Visit external site →</p></Link>
-      </Card.Footer>
+        </div>
+      </Card.Body>
     </Card>
   </Container>
 );
