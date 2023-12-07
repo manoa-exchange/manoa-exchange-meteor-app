@@ -13,6 +13,7 @@ import {
   Heart,
   PlusCircle,
   Flag,
+  List,
 } from 'react-bootstrap-icons';
 
 const NavBar = () => {
@@ -36,7 +37,11 @@ const NavBar = () => {
             className="d-inline-block align-top"
           />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" id="main-nav">
+          <span className="navbar-toggler-icon">
+            <div><List size={30} color='white' /></div>
+          </span>
+        </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto justify-content-end">
             {Roles.userIsInRole(Meteor.userId(), 'admin') ? (

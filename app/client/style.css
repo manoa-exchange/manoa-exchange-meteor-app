@@ -38,6 +38,12 @@ body {
   color: white;
 }
 
+#main-nav.navbar-toggler {
+  border: 2px solid white;
+  color: white;
+}
+
+
 .navbar-nav .nav-link:hover {
   color: white;
 }
@@ -227,3 +233,4 @@ a#navbar-current-user.dropdown-toggle.show.nav-link {
   background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
   font-family: 'Montserrat', sans-serif;
 }
+

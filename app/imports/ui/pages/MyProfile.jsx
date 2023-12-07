@@ -16,7 +16,6 @@ const MyProfile = () => {
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     const subscription2 = Meteor.subscribe(Posts.userPublicationName);
     const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
-
     const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
     const profileData = Profiles.collection.find({}).fetch();
     const postData = Posts.collection.find({}).fetch();
