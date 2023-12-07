@@ -23,9 +23,11 @@ const createProfile = (firstName, lastName, owner, idNumber) => {
 };
 
 // When running app for first time, pass a settings file to set up a default user account.
-if (Meteor.settings.defaultProfiles) {
-  console.log('Creating the default Profiles');
-  Meteor.settings.defaultProfiles.forEach(({ firstName, lastName, owner, idNumber }) => createProfile(firstName, lastName, owner, idNumber));
-} else {
-  console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
+if (Profiles.collection.find().count() === 0) {
+  if (Meteor.settings.defaultProfiles) {
+    console.log('Creating the default Profiles');
+    Meteor.settings.defaultProfiles.forEach(({ firstName, lastName, owner, idNumber }) => createProfile(firstName, lastName, owner, idNumber));
+  } else {
+    console.log('Cannot initialize the database!  Please invoke meteor with a settings file.');
+  }
 }
