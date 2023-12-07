@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Image, Row, Form } from 'react-bootstrap';
 import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import swal from 'sweetalert';
@@ -16,22 +16,30 @@ import { Posts } from '../../api/post/Post';
 import { Profiles } from '../../api/profile/Profile';
 import { PageIDs } from '../utilities/ids';
 import { Comments } from '../../api/comment/Comment';
+import { Tags } from '../../api/tags/Tags';
+import { PostTags } from '../../api/post/PostTags';
 
 const AddPost = () => {
-  const { profiles } = useTracker(() => {
+  const { profiles, tags, postTags } = useTracker(() => {
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     const subscription2 = Meteor.subscribe(Posts.userPublicationName);
     const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
+    const subscription4 = Meteor.subscribe(Tags.adminPublicationName);
+    const subscription5 = Meteor.subscribe(PostTags.adminPublicationName);
 
     const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
     const profileData = Profiles.collection.find({}).fetch();
     const postData = Posts.collection.find({}).fetch();
     const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
+    const tagData = Tags.collection.find({}).fetch();
+    const postTagData = PostTags.collection.find({}).fetch();
 
     return {
       profiles: profileData,
       posts: postData,
       comments: commentData,
+      tags: tagData,
+      postTags: postTagData,
       ready: rdy,
     };
   }, []);
@@ -39,6 +47,7 @@ const AddPost = () => {
   const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' });
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [caption, setCaption] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const fRef = useRef(null);
 
@@ -76,7 +85,7 @@ const AddPost = () => {
   };
 
   const submit = (data) => {
-    const { name, image } = data;
+    const { name, image, tag } = data;
     const imageUrl = cloudinaryUrl || image;
 
     if (!isImageUploaded) {
@@ -91,7 +100,20 @@ const AddPost = () => {
 
     const owner = Meteor.user().username;
     const uniqueId = Random.id(8);
-
+    console.log('Inserting Tag');
+    PostTags.collection.insert(
+      {
+        uniqueId,
+        tag: selectedTag,
+      },
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', 'PostTag added successfully', 'success');
+        }
+      },
+    );
     Posts.collection.insert(
       {
         uniqueId,
@@ -104,11 +126,6 @@ const AddPost = () => {
       (error) => {
         if (error) {
           swal('Error', error.message, 'error');
-        } else {
-          swal('Success', 'Post added successfully', 'success');
-          fRef.current?.reset();
-          setIsImageUploaded(false);
-          setCaption('');
         }
       },
     );
@@ -138,6 +155,22 @@ const AddPost = () => {
                     value={caption}
                     onChange={handleCaptionChange}
                   />
+                  <Form.Select
+                    aria-label="Default select example"
+                    name="tag"
+                    defaultValue=""
+                    value={selectedTag} // Set the value to the state
+                    onChange={(e) => setSelectedTag(e.target.value)} // Update the state on change
+                  >
+                    <option value="" disabled hidden>
+                      Open this select menu
+                    </option>
+                    {tags.map((tag, index) => (
+                      <option key={index} value={tag.name}>
+                        {tag.name}
+                      </option>
+                    ))}
+                  </Form.Select>
                   <SubmitField value="Submit" />
                   <ErrorsField />
                 </Card.Body>

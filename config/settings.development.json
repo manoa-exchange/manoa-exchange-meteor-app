@@ -3,7 +3,16 @@
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
     { "email": "john@foo.com", "password": "changeme" }
   ],
-
+  "defaultTags": [
+    { "name": "China" },
+    { "name": "Germany" },
+    { "name": "South Korea" },
+    { "name": "Japan" },
+    { "name": "France" },
+    { "name": "Singapore" },
+    { "name": "Spain" },
+    { "name": "Vietnam" }
+  ],
   "defaultPosts": [
     {
       "uniqueId": "post1",
