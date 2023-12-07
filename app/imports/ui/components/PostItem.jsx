@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image, Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
@@ -11,31 +10,10 @@ import { FaFlag } from 'react-icons/fa';
 import { Heart } from 'react-bootstrap-icons';
 import { SavedPosts } from '../../api/savepost/SavePost';
 import { Reports } from '../../api/report/Report';
-import { PostTags } from '../../api/post/PostTags';
 import Comment from './Comment';
 import AddComment from './AddComment';
-import { Profiles } from '../../api/profile/Profile';
-import LoadingSpinner from './LoadingSpinner';
 
 const PostItem = ({ post, comments }) => {
-  const { ready, profiles, postTags } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Profile documents.
-    const subscription = Meteor.subscribe(Profiles.adminPublicationName);
-    const subscription2 = Meteor.subscribe(PostTags.adminPublicationName);
-    // Determine if the subscription is ready
-    const rdy = subscription.ready() && subscription2.ready();
-    // Get the Profile documents
-    const profileI = Profiles.collection.find({}).fetch();
-    const tagI = PostTags.collection.find({}).fetch();
-    return {
-      profiles: profileI,
-      postTags: tagI,
-      ready: rdy,
-    };
-  }, []);
-
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [fullCaptionVisible, setFullCaptionVisible] = useState(false);
   const checkLikedStatus = () => {
@@ -102,11 +80,11 @@ const PostItem = ({ post, comments }) => {
 
   const report = () => {
     const postData = {
-      owner: post.owner,
-      image: post.image,
-      name: post.name,
-      caption: post.caption,
       uniqueId: post.uniqueId,
+      name: post.name,
+      image: post.image,
+      caption: post.caption,
+      owner: post.owner,
     };
 
     Reports.collection.insert(postData, (error) => {
@@ -118,10 +96,7 @@ const PostItem = ({ post, comments }) => {
     });
   };
 
-  const userProfile = profiles.find(profile => profile.owner === post.owner);
-  const postLinkedTag = postTags.find(tag => tag.uniqueId === post.uniqueId);
-
-  return (ready ? (
+  return (
     <Card className="post-card">
       <Card.Header id="card-header" className="manoa-white">
         <Row>
@@ -131,7 +106,7 @@ const PostItem = ({ post, comments }) => {
             </div>
           </Col>
           <Col>
-            <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
+            <strong>{ post.name }</strong>
           </Col>
         </Row>
       </Card.Header>
@@ -147,7 +122,6 @@ const PostItem = ({ post, comments }) => {
           <span>{likeCount}</span>
           <BiChat className="comment-icon" onClick={toggleComments} />
         </div>
-        <Button variant="success" disabled>{postLinkedTag.tag}</Button>
         <Card.Text style={{ cursor: 'pointer', overflow: fullCaptionVisible ? 'visible' : 'hidden', textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
           {post.caption}
         </Card.Text>
@@ -156,7 +130,7 @@ const PostItem = ({ post, comments }) => {
         <Container fluid> {/* Adding fluid attribute */}
           <Row className="justify-content-around align-items-center">
             <Col>
-              <Link to={{ pathname: `/edit/${post._id}`, state: { post } }}>Edit</Link>
+              <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
             </Col>
             <Col className="text-center">
               <Button variant="link" onClick={report}>
@@ -183,7 +157,7 @@ const PostItem = ({ post, comments }) => {
         )}
       </Card.Footer>
     </Card>
-  ) : <LoadingSpinner />);
+  );
 };
 
 PostItem.propTypes = {
@@ -193,7 +167,6 @@ PostItem.propTypes = {
     likeCount: PropTypes.number,
     image: PropTypes.string,
     caption: PropTypes.string,
-    createdAt: PropTypes.instanceOf(Date),
     owner: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,
