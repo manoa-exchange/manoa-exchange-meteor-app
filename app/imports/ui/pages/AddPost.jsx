@@ -15,7 +15,6 @@ import UploadWidget from '../components/UploadWidget';
 import { Tags } from '../../api/tags/Tags';
 import { PostTags } from '../../api/post/PostTags';
 
-
 const AddPost = () => {
   const { tags } = useTracker(() => {
     const subscription4 = Meteor.subscribe(Tags.adminPublicationName);
@@ -56,7 +55,7 @@ const AddPost = () => {
       optional: true,
     },
   });
-
+  // Create an instance of RegExpMatcher for obscenity check
   const matcher = new RegExpMatcher({
     ...englishDataset.build(),
     ...englishRecommendedTransformers,
@@ -65,17 +64,12 @@ const AddPost = () => {
   const bridge = new SimpleSchema2Bridge(formSchema);
 
   const handleCloudinaryUrlUpdate = (url) => {
-    setCloudinaryUrl(url);
-    setIsImageUploaded(!!url);
+    setCloudinaryUrl(url); // Correct: This updates the cloudinaryUrl state
+    setIsImageUploaded(!!url); // Sets isImageUploaded based on whether the URL is non-empty
   };
-
-  const handleCaptionChange = (value) => {
-    setCaption(value);
-  };
-
   const submit = (data) => {
     const { name, image, caption, tag } = data;
-    const imageUrl = cloudinaryUrl || image;
+    const imageUrl = cloudinaryUrl || image; // Use cloudinaryUrl if available
 
     if (!isImageUploaded) {
       swal('Error', 'Please upload an image before submitting', 'error');
@@ -88,6 +82,7 @@ const AddPost = () => {
     }
 
     const owner = Meteor.user().username;
+    console.log(imageUrl);
     const uniqueId = Random.id(8);
 
     PostTags.collection.insert(
@@ -103,7 +98,7 @@ const AddPost = () => {
         }
       },
     );
-
+    // Insert the post into the collection
     Posts.collection.insert(
       {
         uniqueId,
@@ -144,7 +139,6 @@ const AddPost = () => {
                   <TextField
                     name="caption"
                     value={caption}
-                    onChange={handleCaptionChange}
                   />
                   <Form.Select
                     aria-label="Default select example"
