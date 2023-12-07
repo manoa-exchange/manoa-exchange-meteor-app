@@ -4,10 +4,8 @@ import { Col, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
-import NavBar from '../components/NavBar';
 import PostItem from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
 import { Comments } from '../../api/comment/Comment';
-import { PageIDs } from '../utilities/ids';
 
 /* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
 const ListPosts = () => {
@@ -16,12 +14,12 @@ const ListPosts = () => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Posts.userPublicationName);
-    const subscription2 = Meteor.subscribe(Comments.userPublicationName);
+    const subscription = Meteor.subscribe(Posts.adminPublicationName);
+    const subscription2 = Meteor.subscribe(Comments.adminPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready() && subscription2.ready();
     // Get the Contact documents
-    const postItems = Posts.collection.find({}).fetch();
+    const postItems = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
     // Get the Note documents
     const commentItems = Comments.collection.find({}).fetch();
     return {
@@ -32,25 +30,21 @@ const ListPosts = () => {
   }, []);
 
   return ready ? (
-    <div> <NavBar />
-      <div id={PageIDs.homePage}>
-        <Container className="py-3">
-          <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
-            {posts.map((post) => {
-              const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
-              return (
-                <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
-                  <PostItem
-                    post={post}
-                    comments={relatedComments || []} // Pass an empty array if comments are not available
-                  />
-                </div>
-              );
-            })}
-          </Col>
-        </Container>
-      </div>
-    </div>
+    <Container className="py-3">
+      <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+        {posts.map((post) => {
+          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+          return (
+            <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+              <PostItem
+                post={post}
+                comments={relatedComments || []} // Pass an empty array if comments are not available
+              />
+            </div>
+          );
+        })}
+      </Col>
+    </Container>
   ) : <LoadingSpinner />;
 };
 

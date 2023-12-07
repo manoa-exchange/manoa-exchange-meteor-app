@@ -6,6 +6,18 @@ import { SavedPosts } from '../../api/savepost/SavePost';
 
 /* eslint-disable no-console */
 Meteor.methods({
+  'posts.update': function (_id, updateData) {
+    check(_id, String);
+    const updateDataPattern = {
+      caption: String,
+      // Include other fields and their types as necessary
+    };
+
+    check(updateData, updateDataPattern);
+    // Ensure that updateData only contains fields that should be updated
+    return Posts.collection.update(_id, { $set: updateData });
+  },
+
   'posts.logLikeCount'(uniqueId) {
     check(uniqueId, String);
     const post = Posts.collection.findOne({ _id: uniqueId });
