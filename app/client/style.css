@@ -42,7 +42,42 @@ body {
   border: 2px solid white;
   color: white;
 }
+/* CSS for different screen sizes */
+/* Extra small devices (phones) */
+@media (max-width: 576px) {
+  .NavbarLogo {
+    /* Adjust the size for smaller screens */
+    max-height: 40px;
+    height: auto;
+  }
+}
 
+/* Small devices (tablets) */
+@media (min-width: 576px) and (max-width: 768px) {
+  .NavbarLogo {
+    /* Adjust the size for tablets */
+    max-height: 50px;
+    height: auto;
+  }
+}
+
+/* Medium devices (desktops) */
+@media (min-width: 768px) and (max-width: 992px) {
+  .NavbarLogo {
+    /* Adjust the size for medium screens */
+    max-height: 74px;
+    height: auto;
+  }
+}
+
+/* Large devices (large desktops) */
+@media (min-width: 992px) {
+  .NavbarLogo {
+    /* Default size for larger screens */
+    max-height: 76px;
+    height: auto;
+  }
+}
 
 .navbar-nav .nav-link:hover {
   color: white;
