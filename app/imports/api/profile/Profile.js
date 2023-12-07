@@ -14,8 +14,7 @@ class ProfileCollection {
     this.schema = new SimpleSchema({
       firstName: String,
       lastName: String,
-      studentId: String,
-      image: String,
+      idNumber: String,
       owner: String,
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
@@ -28,6 +27,6 @@ class ProfileCollection {
 
 /**
  * The singleton instance of the ProfileCollection.
- * @type {StuffsCollection}
+ * @type {ProfileCollection}
  */
 export const Profiles = new ProfileCollection();

@@ -18,7 +18,6 @@ import { PageIDs } from '../utilities/ids';
 import { Comments } from '../../api/comment/Comment';
 import { Tags } from '../../api/tags/Tags';
 import { PostTags } from '../../api/post/PostTags';
-import NavBar from '../components/NavBar';
 
 const AddPost = () => {
   const { profiles, tags, postTags } = useTracker(() => {
@@ -135,7 +134,6 @@ const AddPost = () => {
 
   return (
     <div id={PageIDs.addPostPage}>
-      <NavBar />
       <Container className="py-3">
         <Row className="justify-content-center">
           {/* Form Column */}
@@ -148,8 +146,8 @@ const AddPost = () => {
               onSubmit={data => submit(data)}
               onChangeModel={(model) => setCaption(model.caption)}
             >
-              <Card className="my-4" style={{ minHeight: '470px' }}>
-                <Card.Body id="preview-card">
+              <Card>
+                <Card.Body>
                   <UploadWidget setUrl={handleCloudinaryUrlUpdate} name="image" />
                   <TextField
                     name="caption"
@@ -181,7 +179,7 @@ const AddPost = () => {
 
           {/* Preview Column */}
           <Col xs={12} md={6}>
-            <h3 className="text-center my-3" id="preview-menu">Preview</h3>
+            <h3 className="text-center">Preview</h3>
             <Card className="post-card">
               <Card.Header id="card-header" className="manoa-white">
                 <Row>
