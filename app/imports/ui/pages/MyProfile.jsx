@@ -47,10 +47,7 @@ const MyProfile = () => {
                   fluid
                 />
                 <h3 className="mb-1 mt-3">Insert User Name</h3>
-                <p className="text-muted mb-4">Insert Campus/Location</p>
-                <div className="d-flex justify-content-center mb-2">
-                  <Button>Follow</Button>
-                </div>
+                <p className="text-muted mb-4">idNumber</p>
               </Card.Body>
             </Card>
             <Card className="mb-4 mt-4 border border-dark">
@@ -72,45 +69,6 @@ const MyProfile = () => {
                     <Card.Text className="text-muted">example@example.com</Card.Text>
                   </Col>
                 </Row>
-                <hr />
-                <Row>
-                  <Col sm="3">
-                    <Card.Text>Phone</Card.Text>
-                  </Col>
-                  <Col sm="9">
-                    <Card.Text className="text-muted">(097) 234-5678</Card.Text>
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col sm="3">
-                    <Card.Text>Mobile</Card.Text>
-                  </Col>
-                  <Col sm="9">
-                    <Card.Text className="text-muted">(098) 765-4321</Card.Text>
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col sm="3">
-                    <Card.Text>Address</Card.Text>
-                  </Col>
-                  <Col sm="9">
-                    <Card.Text className="text-muted">Bay Area, San Francisco, CA</Card.Text>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
-            <Card className="mb-4 mb-lg-0 card border border-dark red">
-              <Card.Body className="p-0 card1">
-                <ListGroup flush className="rounded-3 red">
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 red">
-                    <Card.Text>Insert Number Of Posts Made</Card.Text>
-                  </ListGroup.Item>
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 red">
-                    <Card.Text>Insert Number Of Posts Favorited</Card.Text>
-                  </ListGroup.Item>
-                </ListGroup>
               </Card.Body>
             </Card>
           </Col>
