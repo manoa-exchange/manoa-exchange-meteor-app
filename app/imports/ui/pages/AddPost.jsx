@@ -100,7 +100,6 @@ const AddPost = () => {
 
     const owner = Meteor.user().username;
     const uniqueId = Random.id(8);
-    console.log('Inserting Tag');
     PostTags.collection.insert(
       {
         uniqueId,
@@ -110,7 +109,7 @@ const AddPost = () => {
         if (error) {
           swal('Error', error.message, 'error');
         } else {
-          swal('Success', 'PostTag added successfully', 'success');
+          swal('Success', `${selectedTag} added successfully`, 'success');
         }
       },
     );
@@ -159,8 +158,8 @@ const AddPost = () => {
                     aria-label="Default select example"
                     name="tag"
                     defaultValue=""
-                    value={selectedTag} // Set the value to the state
-                    onChange={(e) => setSelectedTag(e.target.value)} // Update the state on change
+                    value={selectedTag}
+                    onChange={(e) => setSelectedTag(e.target.value)}
                   >
                     <option value="" disabled hidden>
                       Open this select menu
