@@ -6,7 +6,7 @@ const LandingNav = () => (
   <Navbar expand="lg" id="landing-navbar">
     <Container fluid className="px-5">
       <Navbar.Brand as={NavLink} to="/" key="landing">
-        <Image src="../images/ME-logo-white.png" alt="manoa-exchange-logo" height={75} />
+        <Image src="../images/ME-logo-white.png" alt="manoa-exchange-logo" className="NavbarLogo" />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
