@@ -11,23 +11,27 @@ import { FaFlag } from 'react-icons/fa';
 import { Heart } from 'react-bootstrap-icons';
 import { SavedPosts } from '../../api/savepost/SavePost';
 import { Reports } from '../../api/report/Report';
+import { PostTags } from '../../api/post/PostTags';
 import Comment from './Comment';
 import AddComment from './AddComment';
 import { Profiles } from '../../api/profile/Profile';
 import LoadingSpinner from './LoadingSpinner';
 
 const PostItem = ({ post, comments }) => {
-  const { ready, profiles } = useTracker(() => {
+  const { ready, profiles, postTags } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Profile documents.
     const subscription = Meteor.subscribe(Profiles.adminPublicationName);
+    const subscription2 = Meteor.subscribe(PostTags.adminPublicationName);
     // Determine if the subscription is ready
-    const rdy = subscription.ready();
+    const rdy = subscription.ready() && subscription2.ready();
     // Get the Profile documents
     const profileI = Profiles.collection.find({}).fetch();
+    const tagI = PostTags.collection.find({}).fetch();
     return {
       profiles: profileI,
+      postTags: tagI,
       ready: rdy,
     };
   }, []);
@@ -115,6 +119,7 @@ const PostItem = ({ post, comments }) => {
   };
 
   const userProfile = profiles.find(profile => profile.owner === post.owner);
+  const postLinkedTag = postTags.find(tag => tag.uniqueId === post.uniqueId);
 
   return (ready ? (
     <Card className="post-card">
@@ -142,6 +147,7 @@ const PostItem = ({ post, comments }) => {
           <span>{likeCount}</span>
           <BiChat className="comment-icon" onClick={toggleComments} />
         </div>
+        <Button variant="success" disabled>{postLinkedTag.tag}</Button>
         <Card.Text style={{ cursor: 'pointer', overflow: fullCaptionVisible ? 'visible' : 'hidden', textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
           {post.caption}
         </Card.Text>
