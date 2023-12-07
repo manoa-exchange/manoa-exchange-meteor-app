@@ -5,7 +5,6 @@ import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Profiles } from '../../api/profile/Profile';
 import { PageIDs } from '../utilities/ids';
-/** Renders a color-blocked static landing page. */
 import { Posts } from '../../api/post/Post';
 import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
