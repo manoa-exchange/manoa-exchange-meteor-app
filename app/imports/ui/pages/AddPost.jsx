@@ -1,5 +1,3 @@
-import { Meteor } from 'meteor/meteor';
-import { useTracker } from 'meteor/react-meteor-data';
 import React, { useState, useEffect, useRef } from 'react';
 import { Card, Col, Container, Row, Form } from 'react-bootstrap';
 import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstrap5';
@@ -8,6 +6,8 @@ import SimpleSchema from 'simpl-schema';
 import { Random } from 'meteor/random';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { RegExpMatcher, englishDataset, englishRecommendedTransformers } from 'obscenity';
+import { Meteor } from 'meteor/meteor'; // Import Meteor
+import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post';
 import { PageIDs } from '../utilities/ids';
 import NavBar from '../components/NavBar';
@@ -15,18 +15,21 @@ import UploadWidget from '../components/UploadWidget';
 import { Tags } from '../../api/tags/Tags';
 import { PostTags } from '../../api/post/PostTags';
 
+
 const AddPost = () => {
   const { tags } = useTracker(() => {
     const subscription4 = Meteor.subscribe(Tags.adminPublicationName);
-    const rdy = subscription4.ready();
     const tagData = Tags.collection.find({}).fetch();
     return {
       tags: tagData,
-      ready: rdy,
+      ready: subscription4.ready(),
     };
   }, []);
 
-  const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' });
+  const [initialValues, setInitialValues] = useState({
+    name: 'Name',
+    image: 'Image Filler',
+  });
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [caption, setCaption] = useState('');
   const [selectedTag, setSelectedTag] = useState('');
@@ -34,7 +37,7 @@ const AddPost = () => {
   const fRef = useRef(null);
 
   useEffect(() => {
-    setInitialValues(prevValues => ({
+    setInitialValues((prevValues) => ({
       ...prevValues,
       uniqueId: Random.id(8),
     }));
@@ -101,20 +104,6 @@ const AddPost = () => {
       },
     );
 
-    Tags.collection.insert(
-      {
-        uniqueId,
-        tag: selectedTag, // Assuming interests are associated with tags
-      },
-      (error) => {
-        if (error) {
-          swal('Error', error.message, 'error');
-        } else {
-          swal('Success', `${selectedTag} added successfully`, 'success');
-        }
-      },
-    );
-
     Posts.collection.insert(
       {
         uniqueId,
@@ -128,8 +117,8 @@ const AddPost = () => {
           swal('Error', error.message, 'error');
         } else {
           swal('Success', 'Post added successfully', 'success');
-          fRef.current?.reset(); // Reset the form
-          setIsImageUploaded(false); // Reset the image upload state
+          fRef.current?.reset();
+          setIsImageUploaded(false);
         }
       },
     );
@@ -146,7 +135,7 @@ const AddPost = () => {
               ref={fRef}
               schema={bridge}
               model={initialValues}
-              onSubmit={data => submit(data)}
+              onSubmit={(data) => submit(data)}
               onChangeModel={(model) => setCaption(model.caption)}
             >
               <Card>
@@ -165,10 +154,10 @@ const AddPost = () => {
                     onChange={(e) => setSelectedTag(e.target.value)}
                   >
                     <option value="" disabled hidden>
-                      Open this select menu
+                      Select a tag
                     </option>
-                    {tags.map((tag, index) => (
-                      <option key={index} value={tag.name}>
+                    {tags.map((tag) => (
+                      <option key={tag._id} value={tag.name}>
                         {tag.name}
                       </option>
                     ))}
@@ -178,18 +167,6 @@ const AddPost = () => {
                 </Card.Body>
               </Card>
             </AutoForm>
-          </Col>
-
-          <Col xs={12} md={6}>
-            <h3 className="text-center">Preview</h3>
-            <Card className="post-card">
-              <Card.Img variant="top" src={cloudinaryUrl || initialValues.image} alt="Preview" />
-              <Card.Body>
-                <Card.Title>{initialValues.name}</Card.Title>
-                <Card.Text>{caption}</Card.Text>
-                {/* Add other post details as needed */}
-              </Card.Body>
-            </Card>
           </Col>
         </Row>
       </Container>
