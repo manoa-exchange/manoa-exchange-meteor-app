@@ -70,18 +70,6 @@ const MyProfile = () => {
                 </Row>
               </Card.Body>
             </Card>
-            <Card className="mb-4 mb-lg-0 card border border-dark red">
-              <Card.Body className="p-0 card1">
-                <ListGroup flush className="rounded-3 red">
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 red">
-                    <Card.Text>Insert Number Of Posts Made</Card.Text>
-                  </ListGroup.Item>
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 red">
-                    <Card.Text>Insert Number Of Posts Favorited</Card.Text>
-                  </ListGroup.Item>
-                </ListGroup>
-              </Card.Body>
-            </Card>
           </Col>
           <Col lg={8}>
             <Card className="mb-4 border border-black">
