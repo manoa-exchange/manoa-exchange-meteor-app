@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Col, Container } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post.js';
 import { Tags } from '../../api/tags/Tags';
@@ -36,16 +36,17 @@ const ListPosts = () => {
 
   return ready ? (
     <Container className="py-3">
-      <Col md={1}>
-        {/* eslint-disable-next-line no-shadow */}
+      <Row className="justify-content-center">
         {tags.map((tag) => (
-          <Link to={`/filter/${tag.name}`}>
-            <Button key={tag._id} variant="success">
-              {tag.name}
-            </Button>
-          </Link>
+          <Col key={tag._id} md={2} className="mb-3">
+            <Link to={`/filter/${tag.name}`} style={{ textDecoration: 'none' }}>
+              <Button variant="success" block>
+                {tag.name}
+              </Button>
+            </Link>
+          </Col>
         ))}
-      </Col>
+      </Row>
       <Col md={11}> {/* Adjust the size (md={12}) as per your layout requirement */}
         {posts.map((post) => {
           const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
