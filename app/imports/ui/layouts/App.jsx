@@ -23,6 +23,7 @@ import ModerationPage from '../pages/ModerationPage';
 import CloudinaryPage from '../pages/CloudinaryPage';
 import ListSavedPost from '../pages/ListSavedPost';
 import UploadWidget from '../components/UploadWidget';
+import FilterPost from '../pages/FilterPost';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -51,6 +52,7 @@ const App = () => {
           <Route path="/cloudinarypage" element={<CloudinaryPage />} />
           <Route path="/uploadwidget" element={<UploadWidget />} />
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/filter/:name" element={<ProtectedRoute><FilterPost /></ProtectedRoute>} />
           <Route path="/posts" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
           <Route path="/savedposts" element={<ProtectedRoute><ListSavedPost /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
