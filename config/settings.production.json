@@ -1,0 +1,31 @@
+{
+  "public": {
+    "cloudinary": {"cloud_name": "dvnpvpx0z", "upload_preset": "wun0rd4y"}
+  },
+  "defaultAccounts": [
+    { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
+    { "email": "john@foo.com", "password": "changeme" }
+  ],
+  "defaultProfiles": [
+    { "firstName": "admin", "lastName": "foo" , "owner": "admin@foo.com", "idNumber": "123" },
+    { "firstName": "john", "lastName": "foo" , "owner": "john@foo.com", "idNumber": "1234" }
+  ],
+  "defaultTags": [
+    { "name": "China" },
+    { "name": "Germany" },
+    { "name": "South Korea" },
+    { "name": "Japan" },
+    { "name": "UK" },
+    { "name": "Italy" },
+    { "name": "Australia" },
+    { "name": "Argentina" },
+    { "name": "Canada" },
+    { "name": "New Zealand" },
+    { "name": "Indonesia" },
+    { "name": "Japan" },
+    { "name": "France" },
+    { "name": "Singapore" },
+    { "name": "Spain" },
+    { "name": "Vietnam" }
+  ]
+}
