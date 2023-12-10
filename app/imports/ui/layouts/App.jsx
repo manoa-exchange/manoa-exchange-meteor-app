@@ -52,8 +52,7 @@ const App = () => {
           <Route path="/cloudinarypage" element={<CloudinaryPage />} />
           <Route path="/uploadwidget" element={<ProfilePicture />} />
           <Route path="/idNumber" element={<UpdateIdNumber />} />
-          <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/posts" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
+          <Route path="/home" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
           <Route path="/savedposts" element={<ProtectedRoute><ListSavedPost /></ProtectedRoute>} />
 
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
