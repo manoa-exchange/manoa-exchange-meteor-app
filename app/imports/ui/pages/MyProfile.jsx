@@ -40,7 +40,7 @@ const MyProfile = () => {
               <Card.Body className="text-center">
                 <Card.Img
                   /* eslint-disable-next-line max-len */
-                  src="https://storage.googleapis.com/pai-images/b2ba992cecf546c0aaff913199206f97.jpeg"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRadJ-YmNxJTg6v9iO22fzR_65KenYJHFB5zg&usqp=CAU"
                   alt="avatar"
                   className="rounded-circle border border-dark"
                   style={{ width: '150px', height: '150px' }}
@@ -48,10 +48,6 @@ const MyProfile = () => {
                 />
                 <h3 className="mb-1 mt-3">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</h3>
                 <p className="text-muted mb-4">{userProfile.idNumber}</p>
-                <p className="text-muted mb-4">Insert Campus/Location</p>
-                <div className="d-flex justify-content-center mb-2">
-                  <Button>Follow</Button>
-                </div>
               </Card.Body>
             </Card>
             <Card className="mb-4 mt-4 border border-dark">
@@ -61,57 +57,18 @@ const MyProfile = () => {
                     <Card.Text>Full Name</Card.Text>
                   </Col>
                   <Col sm="9">
-                    <Card.Text className="text-muted">Cao Cao</Card.Text>
+                    <Card.Text className="text-muted">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</Card.Text>
                   </Col>
+
                 </Row>
-                <hr />
                 <Row>
                   <Col sm="3">
-                    <Card.Text>Email</Card.Text>
+                    <Card.Text>E-mail</Card.Text>
                   </Col>
                   <Col sm="9">
-                    <Card.Text className="text-muted">example@example.com</Card.Text>
+                    <Card.Text className="text-muted">{userProfile?.owner || 'Insert Name'} </Card.Text>
                   </Col>
                 </Row>
-                <hr />
-                <Row>
-                  <Col sm="3">
-                    <Card.Text>Phone</Card.Text>
-                  </Col>
-                  <Col sm="9">
-                    <Card.Text className="text-muted">(097) 234-5678</Card.Text>
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col sm="3">
-                    <Card.Text>Mobile</Card.Text>
-                  </Col>
-                  <Col sm="9">
-                    <Card.Text className="text-muted">(098) 765-4321</Card.Text>
-                  </Col>
-                </Row>
-                <hr />
-                <Row>
-                  <Col sm="3">
-                    <Card.Text>Address</Card.Text>
-                  </Col>
-                  <Col sm="9">
-                    <Card.Text className="text-muted">Bay Area, San Francisco, CA</Card.Text>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
-            <Card className="mb-4 mb-lg-0 card border border-dark red">
-              <Card.Body className="p-0 card1">
-                <ListGroup flush className="rounded-3 red">
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 red">
-                    <Card.Text>Insert Number Of Posts Made</Card.Text>
-                  </ListGroup.Item>
-                  <ListGroup.Item className="d-flex justify-content-between align-items-center p-3 red">
-                    <Card.Text>Insert Number Of Posts Favorited</Card.Text>
-                  </ListGroup.Item>
-                </ListGroup>
               </Card.Body>
             </Card>
           </Col>
