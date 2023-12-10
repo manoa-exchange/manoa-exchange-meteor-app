@@ -17,14 +17,14 @@ const Footer = () => (
           <br />
           Honolulu, HI 96822
         </Col>
-        <Col className="text-left col-sm-3 footer-content">
+        <Col className="text-left col-sm-12 col-md-3 mb-4 footer-content">
           An{' '}
           <a href="https://www.hawaii.edu/offices/eeo/policies/" className="footer-link">
             equal opportunity/affirmative action institution.
             {/* eslint-disable-next-line max-len */}
           </a> Use of this site implies consent with our <a href="https://www.hawaii.edu/infotech/policies/itpolicy.html" className="footer-link"> Usage Policy</a> {' '}copyright © 2023 <br /><a href="https://www.hawaii.edu" className="footer-link"> University of Hawaiʻi </a>
         </Col>
-        <Col className="text-left col-sm-3 footer-content">
+        <Col className="text-left col-sm-12 col-md-3 mb-4 footer-content">
           <a href="https://www.hawaii.edu/calendar" className="footer-link">
             Calendar
           </a>
@@ -54,7 +54,7 @@ const Footer = () => (
           </a>
           <br />
         </Col>
-        <Col className="text-left col-sm-3">
+        <Col className="text-left col-sm-12 col-md-3 mb-4">
           <div className="footer-social-icons">
             <a href="https://twitter.com" aria-label="Twitter" className="footer-link"><Twitter /></a>
             <a href="https://facebook.com" aria-label="Facebook" className="footer-link"><Facebook /></a>

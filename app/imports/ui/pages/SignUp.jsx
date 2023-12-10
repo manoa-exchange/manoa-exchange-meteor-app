@@ -94,6 +94,9 @@ const SignUp = ({ location }) => {
                       <Link to="/signin">here</Link>
                     </p>
                     <SubmitField id={ComponentIDs.signUpFormSubmit} />
+                    <Col id="signin-form-submit" className="text-center">
+                      <SubmitField />
+                    </Col>
                   </Col>
                 </Row>
               </Card.Body>

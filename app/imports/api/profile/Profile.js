@@ -28,4 +28,8 @@ class ProfileCollection {
   }
 }
 
+/**
+ * The singleton instance of the ProfileCollection.
+ * @type {ProfileCollection}
+ */
 export const Profiles = new ProfileCollection();

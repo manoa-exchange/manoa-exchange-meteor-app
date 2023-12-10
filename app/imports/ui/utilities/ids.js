@@ -50,4 +50,6 @@ export const PageIDs = {
   signUpPage: 'signUpPage',
   listPostsPage: 'listPostsPage',
   myProfilePage: 'myProfilePage',
+  adminPage: 'adminPage',
+  moderationPage: 'moderationPage',
 };
