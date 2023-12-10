@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Card, Image, Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
 import '../css/PostItem.css';
 import swal from 'sweetalert';
@@ -18,7 +18,8 @@ import { Profiles } from '../../api/profile/Profile';
 import LoadingSpinner from './LoadingSpinner';
 
 const PostItem = ({ post, comments }) => {
-  const { ready, profiles, postTags } = useTracker(() => {
+  useLocation();
+  const { ready, profiles = [], postTags = [] } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Profile documents.
@@ -34,7 +35,41 @@ const PostItem = ({ post, comments }) => {
       postTags: tagI,
       ready: rdy,
     };
-  }, []);
+  });
+
+  const UnsavePost = () => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Are you sure you want to unsave this post?',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        Promise.all([
+          new Promise((resolve, reject) => {
+            Meteor.call('saveposts.delete', post._id, (error) => {
+              if (error) {
+                swal('Error', error.message, 'error');
+                reject(error);
+              } else {
+                resolve();
+              }
+            });
+          }),
+          // Add other promises if needed
+        ]).then(() => {
+          // Show success message after all operations are completed
+          swal('Post Unsaved!', {
+            icon: 'success',
+          });
+        }).catch((error) => {
+          console.error('Error in deleting post:', error);
+          // Handle error scenario here
+        });
+      }
+    });
+  };
 
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [fullCaptionVisible, setFullCaptionVisible] = useState(false);
@@ -64,10 +99,6 @@ const PostItem = ({ post, comments }) => {
         localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
       }
     });
-  };
-
-  const UnsavePost = () => {
-    SavedPosts.collection.remove(post.uniqueId);
   };
 
   const [showComments, setShowComments] = useState(false);
