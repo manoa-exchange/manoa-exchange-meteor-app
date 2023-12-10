@@ -8,6 +8,7 @@ import PostItemAdmin from '../components/PostItemAdmin'; // Import the Contact c
 import { Comments } from '../../api/comment/Comment';
 import NavBar from '../components/NavBar';
 import { PageIDs } from '../utilities/ids';
+import Search from '../components/Search';
 
 /* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
 const ListPostsAdmin = () => {
@@ -32,8 +33,10 @@ const ListPostsAdmin = () => {
   }, []);
 
   return ready ? (
-    <div><NavBar />
+    <div>
+      <NavBar />
       <div id={PageIDs.adminPage}>
+        <Search />
         <Container className="py-3">
           <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
             {posts.map((post) => {

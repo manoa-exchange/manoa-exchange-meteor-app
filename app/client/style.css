@@ -13,7 +13,7 @@ a {
 }
 
 html body {
-  background-color: #FFFAF0;
+  background-color: #357266;
   color: #242331;
 }
 
@@ -175,7 +175,7 @@ a#navbar-current-user.dropdown-toggle.show.nav-link {
   --bs-btn-bg: transparent;
 }
 
-.outline-light.btn-primary.btn {
+a#register-button.outline-light.btn-primary.btn {
   --bs-btn-color: white;
   --bs-btn-border-color: white;
   --bs-btn-hover-color: #357266;
@@ -187,6 +187,17 @@ a#navbar-current-user.dropdown-toggle.show.nav-link {
 }
 
 .outline-dark.btn-primary.btn {
+  --bs-btn-color: black;
+  --bs-btn-border-color: black;
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-bg: black;
+  --bs-btn-hover-border-color: black;
+  --bs-btn-active-color: white;
+  --bs-btn-active-bg: black;
+  --bs-btn-active-border-color: black;
+}
+
+#signin-form-submit input.btn.btn-primary {
   --bs-btn-color: black;
   --bs-btn-border-color: black;
   --bs-btn-hover-color: white;
