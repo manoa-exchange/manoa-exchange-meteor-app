@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Image, Row, Form } from 'react-bootstrap';
 import { AutoForm, ErrorsField, TextField, SubmitField } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import swal from 'sweetalert';
@@ -16,22 +16,30 @@ import { Posts } from '../../api/post/Post';
 import { Profiles } from '../../api/profile/Profile';
 import { PageIDs } from '../utilities/ids';
 import { Comments } from '../../api/comment/Comment';
+import { Tags } from '../../api/tags/Tags';
+import { PostTags } from '../../api/post/PostTags';
 
 const AddPost = () => {
-  const { profiles } = useTracker(() => {
+  const { profiles, tags } = useTracker(() => {
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     const subscription2 = Meteor.subscribe(Posts.userPublicationName);
     const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
+    const subscription4 = Meteor.subscribe(Tags.adminPublicationName);
+    const subscription5 = Meteor.subscribe(PostTags.adminPublicationName);
 
-    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
+    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready() && subscription4.ready() && subscription5.ready();
     const profileData = Profiles.collection.find({}).fetch();
     const postData = Posts.collection.find({}).fetch();
     const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
+    const tagData = Tags.collection.find({}).fetch();
+    const postTagData = PostTags.collection.find({}).fetch();
 
     return {
       profiles: profileData,
       posts: postData,
       comments: commentData,
+      tags: tagData,
+      postTags: postTagData,
       ready: rdy,
     };
   }, []);
@@ -39,6 +47,7 @@ const AddPost = () => {
   const [initialValues, setInitialValues] = useState({ name: 'Name', image: '../public/images/default-profile.jpg' });
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [caption, setCaption] = useState('');
+  const [selectedTag, setSelectedTag] = useState('');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const fRef = useRef(null);
 
@@ -100,6 +109,7 @@ const AddPost = () => {
         caption,
         owner,
         createdAt: new Date(), // Manually set the date
+        tag: selectedTag,
       },
       (error) => {
         if (error) {
@@ -109,6 +119,7 @@ const AddPost = () => {
           fRef.current?.reset();
           setIsImageUploaded(false);
           setCaption('');
+          swal('Success', `${selectedTag} added successfully`, 'success');
         }
       },
     );
@@ -120,6 +131,7 @@ const AddPost = () => {
     <div id={PageIDs.addPostPage}>
       <Container className="py-3">
         <Row className="justify-content-center">
+
           {/* Form Column */}
           <Col xs={12} md={6}>
             <h2 className="text-center">Add Post</h2>
@@ -138,6 +150,22 @@ const AddPost = () => {
                     value={caption}
                     onChange={handleCaptionChange}
                   />
+                  <Form.Select
+                    aria-label="Default select example"
+                    name="tag"
+                    defaultValue=""
+                    value={selectedTag}
+                    onChange={(e) => setSelectedTag(e.target.value)}
+                  >
+                    <option value="" disabled hidden>
+                      Open this select menu
+                    </option>
+                    {tags.map((tag, index) => (
+                      <option key={index} value={tag.name}>
+                        {tag.name}
+                      </option>
+                    ))}
+                  </Form.Select>
                   <SubmitField value="Submit" />
                   <ErrorsField />
                 </Card.Body>
@@ -153,12 +181,10 @@ const AddPost = () => {
                 <Row>
                   <Col xs="auto" className="profile-pic-col">
                     <div className="profile-pic">
-                      {userProfile && (
-                        <Image src={userProfile.profilePicture} alt="Profile" className="profile-img" />
-                      )}
+                      <Image src={userProfile?.profilePicture} alt="Profile" className="profile-img" />
                     </div>
                   </Col>
-                  <Col className="profile-name">
+                  <Col>
                     <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
                   </Col>
                 </Row>
