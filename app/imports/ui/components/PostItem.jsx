@@ -174,15 +174,15 @@ const PostItem = ({ post, comments }) => {
         <Image src={post.image} alt="Post" fluid />
       </Container>
       <Card.Body id="card-body">
-        <dv className="interaction-icons">
+        <div className="interaction-icons">
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
           <span onClick={toggleLike}>
             <BiHeart className={`like-icon ${liked ? 'heart-filled' : ''}`} />
           </span>
           <span>{likeCount}</span>
           <BiChat className="comment-icon" onClick={toggleComments} />
-        </dv>
-        {postLinkedTag && <Button variant="success" disabled>{postLinkedTag.tag}</Button>}
+        </div>
+        <Button variant="success" disabled>{postLinkedTag.tag}</Button>
         <Card.Text style={{ cursor: 'pointer', overflow: fullCaptionVisible ? 'visible' : 'hidden', textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
           {post.caption}
         </Card.Text>

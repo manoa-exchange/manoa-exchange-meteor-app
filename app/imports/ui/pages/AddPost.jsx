@@ -100,7 +100,19 @@ const AddPost = () => {
 
     const owner = Meteor.user().username;
     const uniqueId = Random.id(8);
-
+    PostTags.collection.insert(
+      {
+        uniqueId,
+        tag: selectedTag,
+      },
+      (error) => {
+        if (error) {
+          swal('Error', error.message, 'error');
+        } else {
+          swal('Success', `${selectedTag} added successfully`, 'success');
+        }
+      },
+    );
     Posts.collection.insert(
       {
         uniqueId,
