@@ -54,15 +54,14 @@ test('Test that profile page shows up', async (testController) => {
   await navBar.gotoProfilePage(testController);
 });
 
-/* Must run in production, doesn't work with the actual build...
-  test('Test that add post works', async (testController) => {
+test('Test that add post works', async (testController) => {
   await landingNav.gotoSignInPage(testController);
   await signinPage.signin(testController, credentials.username, credentials.password);
   await landingNav.isLoggedIn(testController, credentials.username);
   await navBar.gotoAddPostPage(testController);
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
-}); */
+});
 
 test('Test that moderation page works', async (testController) => {
   await landingNav.gotoSignInPage(testController);

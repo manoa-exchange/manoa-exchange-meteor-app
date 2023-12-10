@@ -1,4 +1,7 @@
 {
+  "public": {
+    "cloudinary": {"cloud_name": "changme", "upload_preset": "changme"}
+  },
   "defaultAccounts": [
     { "email": "admin@foo.com", "password": "changeme", "role": "admin" },
     { "email": "john@foo.com", "password": "changeme" }
