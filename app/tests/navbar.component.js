@@ -62,7 +62,7 @@ class NavBar {
 
   async gotoModerationPage(testController) {
     await testController.click('#moderation-nav');
-    await testController.expect(Selector('#moderation-page').exists).ok();
+    await testController.expect(Selector('#moderationPage').exists).ok();
   }
 }
 
