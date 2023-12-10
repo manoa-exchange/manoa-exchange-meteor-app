@@ -48,17 +48,14 @@ const MyProfile = () => {
                     style={{ width: '150px', height: '150px' }}
                   />
                 </div>
-                <Link to="/uploadWidget">Profile Picture</Link>
+                <Link to="/uploadWidget"><Button className="black">Add/Edit Profile Picture</Button></Link>
                 <h3 className="mb-1 mt-3">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</h3>
-                <div className="d-flex justify-content-center mb-2">
-                  <Button>Follow</Button>
-                </div>
                 <p className="text-muted mb-4">{userProfile?.idNumber}</p>
               </Card.Body>
             </Card>
             <Card className="mb-4 mt-4 border border-dark">
               <Card.Body>
-                <Row>
+                <Row className="mb-2">
                   <Col sm="3">
                     <Card.Text>Full Name</Card.Text>
                   </Col>
