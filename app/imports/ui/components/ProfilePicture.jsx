@@ -92,27 +92,24 @@ const ProfilePicture = () => {
   };
 
   return (
-    <div>
+    <div className="centered-container">
       {updateStatus.error && <div className="error-message">{updateStatus.error}</div>}
       {updateStatus.success && <div className="success-message">Profile picture updated successfully.</div>}
       {subscriptionError && <div className="error-message">Error loading profile: {subscriptionError.message}</div>}
-      <div>
-        <div>
-          <h3>Current Profile Picture:</h3>
-          {userProfile && userProfile.profilePicture && (
-            <div className="profile-picture-preview">
-              <img
-                src={userProfile.profilePicture}
-                alt="Current Profile"
-              />
-            </div>
-          )}
-        </div>
+
+      <div className="profile-picture-section">
+        <h3>Current Profile Picture:</h3>
+        {userProfile && userProfile.profilePicture && (
+          <img src={userProfile.profilePicture} alt="Current Profile" />
+        )}
       </div>
-      <UploadWidget setUrl={setImageUrl} />
-      <button type="button" onClick={submit}>
-        Submit
-      </button>
+
+      <div className="upload-section">
+        <UploadWidget setUrl={setImageUrl} />
+        <button type="button" onClick={submit} className="submit-button">
+          Submit
+        </button>
+      </div>
     </div>
   );
 };
