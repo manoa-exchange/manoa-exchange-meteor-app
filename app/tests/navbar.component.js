@@ -54,7 +54,7 @@ class NavBar {
     await testController.expect(Selector('#myProfilePage').exists).ok();
   }
 
-  /* Must in production, doesn't work with the actual build...
+  /* Must run in production, doesn't work with the actual build...
     async gotoAddPostPage(testController) {
     await testController.click('#create-nav');
     await testController.expect(Selector('#addPostPage').exists).ok();
