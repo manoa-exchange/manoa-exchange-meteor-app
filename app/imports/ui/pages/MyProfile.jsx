@@ -1,24 +1,25 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Profiles } from '../../api/profile/Profile';
 import { PageIDs } from '../utilities/ids';
-/** Renders a color-blocked static landing page. */
 import { Posts } from '../../api/post/Post';
 import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
-import NavBar from '../components/NavBar';
+import '../css/PostItem.css';
 
 const MyProfile = () => {
-  const { ready, posts, comments } = useTracker(() => {
+  // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
+  const { ready, posts, comments, profiles } = useTracker(() => {
     const subscription = Meteor.subscribe(Profiles.userPublicationName);
     const subscription2 = Meteor.subscribe(Posts.userPublicationName);
     const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
+
     const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
     const profileData = Profiles.collection.find({}).fetch();
-    const postData = Posts.collection.find({}).fetch();
+    const postData = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
     const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
 
     return {
@@ -28,26 +29,24 @@ const MyProfile = () => {
       ready: rdy,
     };
   }, []);
-  console.log('Posts array:', posts);
-
+  const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
   return (ready ? (
     <div id={PageIDs.myProfilePage}>
-      <NavBar />
       <Container className="mb-4">
         <Row className="mt-4">
           <Col lg={4}>
-            <Card className="mb-4 rounded border border-dark card_profile">
+            <Card className="rounded border border-dark card_profile">
               <Card.Body className="text-center">
                 <Card.Img
-                /* eslint-disable-next-line max-len */
+                  /* eslint-disable-next-line max-len */
                   src="https://storage.googleapis.com/pai-images/b2ba992cecf546c0aaff913199206f97.jpeg"
                   alt="avatar"
                   className="rounded-circle border border-dark"
                   style={{ width: '150px', height: '150px' }}
                   fluid
                 />
-                <h3 className="mb-1 mt-3">Insert User Name</h3>
-                <p className="text-muted mb-4">idNumber</p>
+                <h3 className="mb-1 mt-3">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</h3>
+                <p className="text-muted mb-4">{userProfile.idNumber}</p>
               </Card.Body>
             </Card>
             <Card className="mb-4 mt-4 border border-dark">
@@ -86,7 +85,10 @@ const MyProfile = () => {
                           const relatedComments = comments.filter(comment => comment.uniqueId === post._id);
                           return (
                             <div key={post._id} className="mb-4">
-                              <PostItem post={post} comments={relatedComments} />
+                              <PostItem
+                                post={post}
+                                comments={relatedComments || []} // Pass an empty array if comments are not available
+                              />
                             </div>
                           );
                         })}
