@@ -39,14 +39,13 @@ const NavBar = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" id="main-nav">
           <span className="navbar-toggler-icon">
-            <div><List size={30} color='white' /></div>
+            <div><List size={30} color="white" /></div>
           </span>
         </Navbar.Toggle>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto justify-content-end">
             {Roles.userIsInRole(Meteor.userId(), 'admin') ? (
-              <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>,
-              <Nav.Link id="moderation-nav" as={NavLink} to="/moderation" key="moderation"><Flag size={20} /></Nav.Link>
+              <Nav.Link id="list-stuff-admin-nav" as={NavLink} to="/admin" key="admin">Admin</Nav.Link>, <Nav.Link id="moderation-nav" as={NavLink} to="/moderation" key="moderation"><Flag size={20} /></Nav.Link>
             ) : null}
           </Nav>
           <Nav className="justify-content-end">
