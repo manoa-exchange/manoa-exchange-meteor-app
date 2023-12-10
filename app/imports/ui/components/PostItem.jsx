@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { Card, Image, Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
 import '../css/PostItem.css';
 import swal from 'sweetalert';
-import { BiHeart, BiChat } from 'react-icons/bi';
+import { BiHeart, BiChat, BiDotsVerticalRounded } from 'react-icons/bi';
 import { FaFlag } from 'react-icons/fa';
 import { Heart } from 'react-bootstrap-icons';
 import { SavedPosts } from '../../api/savepost/SavePost';
@@ -18,16 +18,11 @@ import LoadingSpinner from './LoadingSpinner';
 
 const PostItem = ({ post, comments }) => {
   const { ready, profiles } = useTracker(() => {
-    // Note that this subscription will get cleaned up
-    // when your component is unmounted or deps change.
-    // Get access to Profile documents.
     const subscription = Meteor.subscribe(Profiles.adminPublicationName);
-    // Determine if the subscription is ready
     const rdy = subscription.ready();
-    // Get the Profile documents
-    const profileI = Profiles.collection.find({}).fetch();
+    const profileData = Profiles.collection.find({}, { fields: { profilePicture: 1, firstName: 1, lastName: 1, owner: 1 } }).fetch();
     return {
-      profiles: profileI,
+      profiles: profileData,
       ready: rdy,
     };
   }, []);
@@ -113,19 +108,20 @@ const PostItem = ({ post, comments }) => {
       }
     });
   };
-
+  const isOwner = Meteor.user().username === post.owner;
   const userProfile = profiles.find(profile => profile.owner === post.owner);
-
   return (ready ? (
     <Card className="post-card">
       <Card.Header id="card-header" className="manoa-white">
         <Row>
           <Col xs="auto" className="profile-pic-col">
             <div className="profile-pic">
-              <Image src="path_to_profile_picture.jpg" alt="Profile" className="profile-img" />
+              {userProfile && (
+                <Image src={userProfile.profilePicture} alt="Profile" className="profile-img" />
+              )}
             </div>
           </Col>
-          <Col>
+          <Col className="profile-name">
             <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
           </Col>
         </Row>
@@ -150,7 +146,11 @@ const PostItem = ({ post, comments }) => {
         <Container fluid> {/* Adding fluid attribute */}
           <Row className="justify-content-around align-items-center">
             <Col>
-              <Link to={{ pathname: `/edit/${post._id}`, state: { post } }}>Edit</Link>
+              {isOwner && (
+                <Link to={{ pathname: `/edit/${post._id}`, state: { post } }}>
+                  <BiDotsVerticalRounded /> {/* 3-dot icon for editing */}
+                </Link>
+              )}
             </Col>
             <Col className="text-center">
               <Button variant="link" onClick={report}>

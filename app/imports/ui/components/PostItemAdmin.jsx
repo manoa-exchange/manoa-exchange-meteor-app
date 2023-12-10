@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Meteor } from 'meteor/meteor';
+import { useTracker } from 'meteor/react-meteor-data';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image, Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
@@ -12,8 +13,20 @@ import { SavedPosts } from '../../api/savepost/SavePost';
 import { Reports } from '../../api/report/Report';
 import Comment from './Comment';
 import AddComment from './AddComment';
+import { Profiles } from '../../api/profile/Profile';
+import LoadingSpinner from './LoadingSpinner';
 
 const PostItemAdmin = ({ post, comments }) => {
+  const { ready, profiles } = useTracker(() => {
+    const subscription = Meteor.subscribe(Profiles.adminPublicationName);
+    const rdy = subscription.ready();
+    const profileData = Profiles.collection.find({}, { fields: { profilePicture: 1, firstName: 1, lastName: 1, owner: 1 } }).fetch();
+    return {
+      profiles: profileData,
+      ready: rdy,
+    };
+  }, []);
+
   const [likeCount, setLikeCount] = useState(post.likeCount || 0);
   const [fullCaptionVisible, setFullCaptionVisible] = useState(false);
   const checkLikedStatus = () => {
@@ -80,11 +93,11 @@ const PostItemAdmin = ({ post, comments }) => {
 
   const report = () => {
     const postData = {
-      uniqueId: post.uniqueId,
-      name: post.name,
-      image: post.image,
-      caption: post.caption,
       owner: post.owner,
+      image: post.image,
+      name: post.name,
+      caption: post.caption,
+      uniqueId: post.uniqueId,
     };
 
     Reports.collection.insert(postData, (error) => {
@@ -95,18 +108,25 @@ const PostItemAdmin = ({ post, comments }) => {
       }
     });
   };
-
-  return (
+  const isOwner = Meteor.user().username === post.owner;
+  const userProfile = profiles.find(profile => profile.owner === post.owner);
+  const defaultProfileImage = '../../public/images/default-profile.jpg';
+  return (ready ? (
     <Card className="post-card">
       <Card.Header id="card-header" className="manoa-white">
         <Row>
           <Col xs="auto" className="profile-pic-col">
             <div className="profile-pic">
-              <Image src="path_to_profile_picture.jpg" alt="Profile" className="profile-img" />
+              {/* Use userProfile.profilePicture or a default image */}
+              <Image
+                src={userProfile?.profilePicture || defaultProfileImage}
+                alt="Profile"
+                className="profile-img"
+              />
             </div>
           </Col>
           <Col>
-            <strong>{ post.name }</strong>
+            <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
           </Col>
         </Row>
       </Card.Header>
@@ -130,7 +150,11 @@ const PostItemAdmin = ({ post, comments }) => {
         <Container fluid> {/* Adding fluid attribute */}
           <Row className="justify-content-around align-items-center">
             <Col>
-              <Link to={`/edit/${post._id}`} className="edit-link">Edit</Link>
+              {isOwner && (
+                <Link to={{ pathname: `/edit/${post._id}`, state: { post } }}>
+                  <Button color="primary">Edit</Button>
+                </Link>
+              )}
             </Col>
             <Col className="text-center">
               <Button variant="link" onClick={report}>
@@ -157,7 +181,7 @@ const PostItemAdmin = ({ post, comments }) => {
         )}
       </Card.Footer>
     </Card>
-  );
+  ) : <LoadingSpinner />);
 };
 
 PostItemAdmin.propTypes = {
@@ -167,6 +191,7 @@ PostItemAdmin.propTypes = {
     likeCount: PropTypes.number,
     image: PropTypes.string,
     caption: PropTypes.string,
+    createdAt: PropTypes.instanceOf(Date),
     owner: PropTypes.string,
     _id: PropTypes.string,
   }).isRequired,

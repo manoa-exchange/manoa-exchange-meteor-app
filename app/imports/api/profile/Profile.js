@@ -1,32 +1,31 @@
 import { Mongo } from 'meteor/mongo';
 import SimpleSchema from 'simpl-schema';
 
-/**
- * The ProfilesCollection. It encapsulates state and variable values for Profile.
- */
+// Define the default profile picture URL or path as a constant
+const defaultProfilePicture = 'https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg';
+
 class ProfileCollection {
   constructor() {
-    // The name of this collection.
     this.name = 'ProfileCollection';
-    // Define the Mongo collection.
     this.collection = new Mongo.Collection(this.name);
-    // Define the structure of each document in the collection.
+
     this.schema = new SimpleSchema({
       firstName: String,
       lastName: String,
       idNumber: String,
       owner: String,
+      profilePicture: {
+        type: String,
+        optional: true, // Making it optional
+        defaultValue: defaultProfilePicture, // Use the constant here
+      },
     });
-    // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
+
     this.collection.attachSchema(this.schema);
-    // Define names for publications and subscriptions
+
     this.userPublicationName = `${this.name}.publication.user`;
     this.adminPublicationName = `${this.name}.publication.admin`;
   }
 }
 
-/**
- * The singleton instance of the ProfileCollection.
- * @type {ProfileCollection}
- */
 export const Profiles = new ProfileCollection();

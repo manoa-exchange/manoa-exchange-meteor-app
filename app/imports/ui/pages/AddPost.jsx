@@ -36,7 +36,7 @@ const AddPost = () => {
     };
   }, []);
 
-  const [initialValues, setInitialValues] = useState({ name: 'Name', image: 'Image Filler' });
+  const [initialValues, setInitialValues] = useState({ name: 'Name', image: '../public/images/default-profile.jpg' });
   const [cloudinaryUrl, setCloudinaryUrl] = useState('');
   const [caption, setCaption] = useState('');
   const [isImageUploaded, setIsImageUploaded] = useState(false);
@@ -153,10 +153,12 @@ const AddPost = () => {
                 <Row>
                   <Col xs="auto" className="profile-pic-col">
                     <div className="profile-pic">
-                      <Image src="path_to_profile_picture.jpg" alt="Profile" className="profile-img" />
+                      {userProfile && (
+                        <Image src={userProfile.profilePicture} alt="Profile" className="profile-img" />
+                      )}
                     </div>
                   </Col>
-                  <Col>
+                  <Col className="profile-name">
                     <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
                   </Col>
                 </Row>

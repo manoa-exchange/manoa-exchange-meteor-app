@@ -4,22 +4,22 @@ import { Col, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
-import PostItemAdmin from '../components/PostItemAdmin'; // Import the Contact component here (make sure the path is correct)
+import PostItemAdmin from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
 import { Comments } from '../../api/comment/Comment';
 
 /* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
-const ListPostsAdmin = () => {
+const ListPostAdmin = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, posts, comments } = useTracker(() => {
     // Note that this subscription will get cleaned up
     // when your component is unmounted or deps change.
     // Get access to Stuff documents.
-    const subscription = Meteor.subscribe(Posts.userPublicationName);
-    const subscription2 = Meteor.subscribe(Comments.userPublicationName);
+    const subscription = Meteor.subscribe(Posts.adminPublicationName);
+    const subscription2 = Meteor.subscribe(Comments.adminPublicationName);
     // Determine if the subscription is ready
     const rdy = subscription.ready() && subscription2.ready();
     // Get the Contact documents
-    const postItems = Posts.collection.find({}).fetch();
+    const postItems = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
     // Get the Note documents
     const commentItems = Comments.collection.find({}).fetch();
     return {
@@ -48,4 +48,4 @@ const ListPostsAdmin = () => {
   ) : <LoadingSpinner />;
 };
 
-export default ListPostsAdmin;
+export default ListPostAdmin;

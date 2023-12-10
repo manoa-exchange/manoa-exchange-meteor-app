@@ -3,9 +3,51 @@ import { check } from 'meteor/check';
 import { Posts } from '../../api/post/Post';
 import { Reports } from '../../api/report/Report';
 import { SavedPosts } from '../../api/savepost/SavePost';
+import { Profiles } from '../../api/profile/Profile';
 
 /* eslint-disable no-console */
 Meteor.methods({
+  'profiles.updateIdNumber'(newIdNumber) {
+    check(newIdNumber, String);
+
+    if (!this.userId) {
+      throw new Meteor.Error('Not authorized.');
+    }
+
+    // Get the user's email
+    const user = Meteor.user();
+    if (!user || !user.emails || user.emails.length === 0) {
+      throw new Meteor.Error('User not found.');
+    }
+    const userEmail = user.emails[0].address;
+
+    // Update the profile
+    const result = Profiles.collection.update({ owner: userEmail }, { $set: { idNumber: newIdNumber } });
+    if (result === 0) {
+      throw new Meteor.Error('ID number not updated.');
+    }
+
+    console.log('Updating ID number for user:', userEmail);
+  },
+  updateProfilePicture(imageUrl) {
+    check(imageUrl, String);
+    if (!this.userId) {
+      throw new Meteor.Error('Not authorized.');
+    }
+
+    const owner = Meteor.user().emails[0].address; // Use email as the owner
+
+    // Find the document by owner's email and update the profilePicture field
+    Profiles.collection.update(
+      { owner },
+      { $set: { profilePicture: imageUrl } },
+      (error) => {
+        if (error) {
+          throw new Meteor.Error('Update failed', error.message);
+        }
+      },
+    );
+  },
   'posts.update': function (_id, updateData) {
     check(_id, String);
     const updateDataPattern = {

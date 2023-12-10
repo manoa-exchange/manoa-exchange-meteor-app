@@ -86,6 +86,14 @@ Meteor.publish(Comments.adminPublicationName, function () {
   return this.ready();
 });
 
+Meteor.publish('userProfile', function publishUserProfile() {
+  if (!this.userId) {
+    return this.ready();
+  }
+
+  return Profiles.collection.find({ owner: this.userId });
+});
+
 // deletes post on admin level
 Meteor.methods({
   'posts.remove'(postId) {

@@ -22,7 +22,8 @@ import MyProfile from '../pages/MyProfile';
 import ModerationPage from '../pages/ModerationPage';
 import CloudinaryPage from '../pages/CloudinaryPage';
 import ListSavedPost from '../pages/ListSavedPost';
-import UploadWidget from '../components/UploadWidget';
+import ProfilePicture from '../components/ProfilePicture';
+import UpdateIdNumber from '../components/UpdateIdNumber';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -49,10 +50,12 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
           <Route path="/cloudinarypage" element={<CloudinaryPage />} />
-          <Route path="/uploadwidget" element={<UploadWidget />} />
+          <Route path="/uploadwidget" element={<ProfilePicture />} />
+          <Route path="/idNumber" element={<UpdateIdNumber />} />
           <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/posts" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
           <Route path="/savedposts" element={<ProtectedRoute><ListSavedPost /></ProtectedRoute>} />
+
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
           <Route path="/moderation" element={<ProtectedRoute><ModerationPage /></ProtectedRoute>} />

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Meteor } from 'meteor/meteor';
 import PropTypes from 'prop-types';
-import LoadingSpinner from './LoadingSpinner';
 
 const UploadWidget = ({ setUrl }) => {
   const cloudinaryRef = useRef();
@@ -13,30 +12,23 @@ const UploadWidget = ({ setUrl }) => {
         cloudName: Meteor.settings.public.cloudinary.cloud_name,
         uploadPreset: Meteor.settings.public.cloudinary.upload_preset,
       },
-      function (error, result) {
+      (error, result) => {
         if (!error && result && result.event === 'success') {
-          console.log('Done! Here is the image info: ', result.info);
           setUrl(result.info.secure_url);
-        } else {
-          console.log('Error upload image: ', error);
         }
       },
     );
   }, [setUrl]);
 
-  if (!widgetRef.current) {
-    return (
-      <LoadingSpinner />
-    );
-  }
-
-  UploadWidget.propTypes = {
-    setUrl: PropTypes.func.isRequired,
-  };
   return (
-    <button type="button" onClick={() => widgetRef.current.open()}>
-      Upload
+    <button type="button" onClick={() => widgetRef.current && widgetRef.current.open()}>
+      Upload Image
     </button>
   );
 };
+
+UploadWidget.propTypes = {
+  setUrl: PropTypes.func.isRequired,
+};
+
 export default UploadWidget;

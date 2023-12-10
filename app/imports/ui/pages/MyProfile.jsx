@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { Profiles } from '../../api/profile/Profile';
@@ -14,11 +15,12 @@ import '../css/PostItem.css';
 const MyProfile = () => {
   // useTracker connects Meteor data to React components. https://guide.meteor.com/react.html#using-withTracker
   const { ready, posts, comments, profiles } = useTracker(() => {
-    const subscription = Meteor.subscribe(Profiles.userPublicationName);
-    const subscription2 = Meteor.subscribe(Posts.userPublicationName);
-    const subscription3 = Meteor.subscribe(Comments.userPublicationName); // Example subscription, adjust as needed
+    const subscription = Meteor.subscribe(Profiles.adminPublicationName);
+    const subscription2 = Meteor.subscribe(Posts.adminPublicationName);
+    const subscription3 = Meteor.subscribe(Comments.adminPublicationName);
 
     const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
+
     const profileData = Profiles.collection.find({}).fetch();
     const postData = Posts.collection.find({}, { sort: { createdAt: -1 } }).fetch();
     const commentData = Comments.collection.find({}).fetch(); // Fetch comments, adjust as needed
@@ -30,6 +32,8 @@ const MyProfile = () => {
       ready: rdy,
     };
   }, []);
+
+
   const userProfile = profiles.find(profile => profile.owner === Meteor.user().username);
   return (ready ? (
     <div id={PageIDs.myProfilePage}>
@@ -38,17 +42,17 @@ const MyProfile = () => {
           <Col lg={4}>
             <Card className="mb-4 rounded border border-dark card_profile">
               <Card.Body className="text-center">
-                <Card.Img
-                  /* eslint-disable-next-line max-len */
-                  src="https://storage.googleapis.com/pai-images/b2ba992cecf546c0aaff913199206f97.jpeg"
-                  alt="avatar"
-                  className="rounded-circle border border-dark"
-                  style={{ width: '150px', height: '150px' }}
-                  fluid
-                />
+                <div className="d-flex justify-content-center mb-4">
+                  <Card.Img
+                    src={userProfile?.profilePicture}
+                    alt="avatar"
+                    className="rounded-circle border border-dark"
+                    style={{ width: '150px', height: '150px' }}
+                    fluid
+                  />
+                </div>
+                <Link to="/uploadWidget">Profile Picture</Link>
                 <h3 className="mb-1 mt-3">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</h3>
-                <p className="text-muted mb-4">{userProfile.idNumber}</p>
-                <p className="text-muted mb-4">Insert Campus/Location</p>
                 <div className="d-flex justify-content-center mb-2">
                   <Button>Follow</Button>
                 </div>
