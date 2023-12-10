@@ -119,7 +119,7 @@ const EditPost = () => {
                   <TextField name="name" />
                   <TextField name="image" />
                   <TextField name="caption" />
-                  <div className="d-flex justify-content-between">
+                  <div id="submit-post" className="d-flex justify-content-between">
                     <SubmitField value="Submit" />
                     {/* Delete Button */}
                     <Button variant="danger" onClick={handleDelete}>Delete Post</Button>
