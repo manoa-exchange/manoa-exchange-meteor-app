@@ -50,7 +50,7 @@ class NavBar {
     }
     await testController.expect(Selector('#navbar-current-user').exists).ok();
     await testController.click('#navbar-current-user');
-    await testController.click('#profile-nav');
+    await testController.click('#navbar-profile');
     await testController.expect(Selector('#myProfilePage').exists).ok();
   }
 
