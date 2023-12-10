@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Col, Row, Container } from 'react-bootstrap';
+import { Col, Container } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -35,27 +35,21 @@ const ListPosts = () => {
   return ready ? (
     <div> <NavBar />
       <div id={PageIDs.homePage}>
+        <Search />
         <Container className="py-3">
-          <Row>
-            <Col md={8}> {/* Adjust the size (md={12}) as per your layout requirement */}
-              {posts.map((post) => {
-                const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
-                return (
-                  <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
-                    <PostItem
-                      post={post}
-                      comments={relatedComments || []} // Pass an empty array if comments are not available
-                    />
-                  </div>
-                );
-              })}
-            </Col>
-            <Col md={4} className="justify-content-center d-flex">
-              <Container>
-                <Search />
-              </Container>
-            </Col>
-          </Row>
+          <Col md={12}>
+            {posts.map((post) => {
+              const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+              return (
+                <div key={post._id} className="mb-4">
+                  <PostItem
+                    post={post}
+                    comments={relatedComments || []} // Pass an empty array if comments are not available
+                  />
+                </div>
+              );
+            })}
+          </Col>
         </Container>
       </div>
     </div>
