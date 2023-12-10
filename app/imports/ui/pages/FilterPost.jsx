@@ -2,8 +2,8 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+
 import { Posts } from '../../api/post/Post.js';
 import { Tags } from '../../api/tags/Tags';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -36,20 +36,20 @@ const FilterPost = () => {
     const allTags = PostTags.collection.find({}).fetch();
     console.log(allTags);
     const tagColFilter = { tag: name };
-// Find documents in the PostTags collection with a specific tag
+    // Find documents in the PostTags collection with a specific tag
     const tagCol = PostTags.collection.find(tagColFilter).fetch();
     console.log(tagCol);
 
-// Extract uniqueIds from the found documents
+    // Extract uniqueIds from the found documents
     const uniqueIds = tagCol.map(tag => tag.uniqueId);
     console.log(uniqueIds);
 
-// Fetch posts based on the uniqueIds
+    // Fetch posts based on the uniqueIds
     const postItems = Posts.collection.find(
       { uniqueId: { $in: uniqueIds } },
-      { sort: { createdAt: -1 } }
+      { sort: { createdAt: -1 } },
     ).fetch();
-    console.log("showing posts");
+    console.log('showing posts');
     console.log(postItems);
     const tagLabel = Tags.collection.find({});
     const commentItems = Comments.collection.find({}).fetch();
