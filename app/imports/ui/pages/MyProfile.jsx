@@ -38,7 +38,7 @@ const MyProfile = () => {
       <Container className="mb-4">
         <Row className="mt-4">
           <Col lg={4}>
-            <Card className="mb-4 rounded border border-dark card_profile">
+            <Card className="mb-4 rounded border border-dark card_profile antw">
               <Card.Body className="text-center">
                 <div className="d-flex justify-content-center mb-4">
                   <img
@@ -53,7 +53,7 @@ const MyProfile = () => {
                 <p className="text-muted mb-4">{userProfile?.idNumber}</p>
               </Card.Body>
             </Card>
-            <Card className="mb-4 mt-4 border border-dark">
+            <Card className="mb-4 mt-4 border border-dark antw">
               <Card.Body>
                 <Row className="mb-2">
                   <Col sm="3">
@@ -75,7 +75,7 @@ const MyProfile = () => {
             </Card>
           </Col>
           <Col lg={8}>
-            <Card className="mb-4 border border-black">
+            <Card className="mb-4 border border-black antw">
               <Card.Header as="h3" className="text-center">Recent Posts</Card.Header>
             </Card>
             {posts.map((post) => {

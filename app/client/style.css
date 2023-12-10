@@ -113,6 +113,9 @@ body {
 .black{
   color:black!important;
 }
+.antw{
+  background-color: antiquewhite!important;
+}
 #signInPage {
   background: rgb(36, 35, 49);
   background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
