@@ -12,8 +12,7 @@ class ProfileCollection {
     this.schema = new SimpleSchema({
       firstName: String,
       lastName: String,
-      studentId: String,
-      image: String,
+      idNumber: String,
       owner: String,
       profilePicture: {
         type: String,
@@ -31,6 +30,6 @@ class ProfileCollection {
 
 /**
  * The singleton instance of the ProfileCollection.
- * @type {StuffsCollection}
+ * @type {ProfileCollection}
  */
 export const Profiles = new ProfileCollection();

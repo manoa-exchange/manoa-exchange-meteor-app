@@ -38,19 +38,7 @@ class PostsCollection {
         optional: true,
         defaultValue: 0,
       },
-      createdAt: {
-        type: Date,
-        // eslint-disable-next-line consistent-return
-        autoValue: function () {
-          if (this.isInsert) {
-            return new Date();
-          } if (this.isUpsert) {
-            return { $setOnInsert: new Date() };
-          }
-          this.unset(); // Prevent user from supplying their own value
-
-        },
-      },
+      createdAt: Date,
     });
     // Attach the schema to the collection, so all attempts to insert a document are checked against schema.
     this.collection.attachSchema(this.schema);
