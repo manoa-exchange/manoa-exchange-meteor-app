@@ -155,7 +155,7 @@ const PostItem = ({ post, comments }) => {
   const postLinkedTag = postTags.find(tag => tag.uniqueId === post.uniqueId);
 
   return (ready ? (
-    <Card className="post-card">
+    <Card className="post-card" style={{ boxShadow: '5px 5px 5px rgba(0,0,0,0.3)' }}>
       <Card.Header id="card-header" className="manoa-white">
         <Row>
           <Col xs="auto" className="profile-pic-col">

@@ -1,31 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import swal from 'sweetalert';
-import { Card, Col, Container, Row, Button, Image } from 'react-bootstrap';
-import { AutoForm, ErrorsField, HiddenField, TextField } from 'uniforms-bootstrap5';
+import { Card, Col, Container, Row, Button } from 'react-bootstrap';
+import { AutoForm, ErrorsField, HiddenField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
-import { useParams, useLocation } from 'react-router-dom';
-import { BiChat, BiHeart } from 'react-icons/bi';
+import { useParams } from 'react-router';
 import { Posts } from '../../api/post/Post';
+import LoadingSpinner from '../components/LoadingSpinner';
+import NavBar from '../components/NavBar';
 
 const bridge = new SimpleSchema2Bridge(Posts.schema);
 
 const EditPost = () => {
   const { _id } = useParams();
-  const location = useLocation();
-  const { post } = location.state || {};
 
   const { doc, ready } = useTracker(() => {
-    if (!post) {
-      const subscription = Meteor.subscribe(Posts.userPublicationName);
-      return {
-        doc: Posts.collection.findOne(_id),
-        ready: subscription.ready(),
-      };
-    }
-    return { doc: post, ready: true };
-  }, [_id, post]);
+    const subscription = Meteor.subscribe(Posts.userPublicationName);
+    const rdy = subscription.ready();
+    const document = Posts.collection.findOne(_id);
+    return {
+      doc: document,
+      ready: rdy,
+    };
+  }, [_id]);
+
+  const submit = (data) => {
+    const { name, image, caption } = data;
+    Posts.collection.update(_id, { $set: { name, image, caption } }, (outerError) => (outerError ?
+      swal('Error', outerError.message, 'error') :
+      swal('Success', 'Item updated successfully', 'success')));
+  };
 
   const handleDelete = () => {
     swal({
@@ -95,69 +100,40 @@ const EditPost = () => {
     });
   };
 
-  const submit = (data) => {
-    // Exclude createdAt from the update data
-    const { caption } = data;
-    Posts.collection.update(_id, { $set: { caption } }, (error) => {
-      if (error) {
-        swal('Error', error.message, 'error');
-      } else {
-        swal('Success', 'Item updated successfully', 'success');
-      }
-    });
-  };
+  useEffect(() => {
+    // Optionally, you can update the ModerationPage's state or data here
+    // Example: Fetch the updated list of reported posts and update the state in ModerationPage
+    // This is an additional step, and it's not included in this code.
+  }, [_id]);
 
   return ready ? (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={12} md={6}>
-          <h2 className="text-center">Edit Post</h2>
-          <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
-            <Card className="post-card">
-              <Card.Header className="manoa-white">
-                {/* Profile Picture and User Information */}
-              </Card.Header>
-              <Container className="post-image-container">
-                <Image src={doc?.image} alt="Post" fluid />
-              </Container>
-              <Card.Body>
-                <div className="interaction-icons">
-                  <BiHeart className="like-icon" />
-                  <BiChat className="comment-icon" />
-                </div>
-                <Card.Text>
-                  <TextField
-                    name="caption"
-                    placeholder="Enter your caption"
-                    defaultValue={doc?.caption}
-                  />
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer className="manoa-white">
-                <Container fluid> {/* Adding fluid attribute */}
-                  <Row className="justify-content-around align-items-center">
-                    <Col>
-                      <Button variant="danger" onClick={handleDelete}>Delete Post</Button>
-                    </Col>
-                    <Col className="text-center" />
-                    <Col className="text-end" />
-                    <Col>
-                      <Button variant="primary" type="submit">Update Post</Button>
-                      <ErrorsField />
-                      <HiddenField name="owner" />
-                      <HiddenField name="createdAt" />
-                    </Col>
-                  </Row>
-                </Container>
-              </Card.Footer>
-            </Card>
-          </AutoForm>
-        </Col>
-      </Row>
-    </Container>
-  ) : (
-    <div>Loading...</div>
-  );
+    <div>
+      <NavBar />
+      <Container className="py-3">
+        <Row className="justify-content-center">
+          <Col xs={5}>
+            <Col className="text-center"><h2>Edit Post</h2></Col>
+            <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
+              <Card>
+                <Card.Body>
+                  <TextField name="name" />
+                  <TextField name="image" />
+                  <TextField name="caption" />
+                  <div className="d-flex justify-content-between">
+                    <SubmitField value="Submit" />
+                    {/* Delete Button */}
+                    <Button variant="danger" onClick={handleDelete}>Delete Post</Button>
+                  </div>
+                  <ErrorsField />
+                  <HiddenField name="owner" />
+                </Card.Body>
+              </Card>
+            </AutoForm>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  ) : <LoadingSpinner />;
 };
 
 export default EditPost;
