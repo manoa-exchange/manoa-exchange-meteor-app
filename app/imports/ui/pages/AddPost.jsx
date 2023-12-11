@@ -146,7 +146,7 @@ const AddPost = () => {
 
           {/* Form Column */}
           <Col xs={12} md={6}>
-            <h2 className="text-center">Add Post</h2>
+            <h2 className="text-center" style={{ color: 'white', fontWeight: 'bold' }}>Add Post</h2>
             <AutoForm
               ref={fRef}
               schema={bridge}
@@ -154,15 +154,18 @@ const AddPost = () => {
               onSubmit={data => submit(data)}
               onChangeModel={(model) => setCaption(model.caption)}
             >
-              <Card>
+              <Card className="my-4" style={{ minHeight: '470px', boxShadow: '5px 5px 5px rgba(0,0,0,0.3)' }}>
                 <Card.Body>
                   <UploadWidget setUrl={handleCloudinaryUrlUpdate} name="image" />
                   <TextField
+                    className="my-4 py-4"
+                    rows={5}
                     name="caption"
                     value={caption}
                     onChange={handleCaptionChange}
                   />
                   <Form.Select
+                    className="my-4"
                     aria-label="Default select example"
                     name="tag"
                     defaultValue=""
@@ -189,8 +192,8 @@ const AddPost = () => {
 
           {/* Preview Column */}
           <Col xs={12} md={6}>
-            <h3 className="text-center">Preview</h3>
-            <Card className="post-card">
+            <h3 className="text-center" style={{ color: 'white', fontWeight: 'bold' }}>Preview</h3>
+            <Card className="post-card my-4" style={{ minHeight: '470px', boxShadow: '5px 5px 5px rgba(0,0,0,0.3)' }}>
               <Card.Header id="card-header" className="manoa-white">
                 <Row>
                   <Col xs="auto" className="profile-pic-col">

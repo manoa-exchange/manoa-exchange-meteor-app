@@ -61,8 +61,8 @@ const SignIn = () => {
                 </Row>
                 <Row className="offset-md-4">
                   <Col md={6} className="g-0 text-center">
-                    <TextField name="email" placeholder="UH E-mail address" style={{ marginBottom: '15px' }} label={false} />
-                    <TextField name="password" placeholder="Password" type="password" style={{ marginBottom: '15px' }} label={false} />
+                    <TextField id="signin-form-email" name="email" placeholder="UH E-mail address" style={{ marginBottom: '15px' }} label={false} />
+                    <TextField id="signin-form-password" name="password" placeholder="Password" type="password" style={{ marginBottom: '15px' }} label={false} />
                     <ErrorsField />
                     <p>Not a member?
                       {' '}
