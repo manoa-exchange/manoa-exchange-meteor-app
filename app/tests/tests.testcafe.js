@@ -59,7 +59,6 @@ test('Test that add post works', async (testController) => {
   await signinPage.signin(testController, credentials.username, credentials.password);
   await landingNav.isLoggedIn(testController, credentials.username);
   await navBar.gotoAddPostPage(testController);
-  // I need to figure out how to close the upload picture pop-up
   await navBar.logout(testController);
   await signoutPage.isDisplayed(testController);
 });

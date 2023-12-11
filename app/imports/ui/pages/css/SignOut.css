@@ -23,7 +23,7 @@
 }
 
 .strong-white-text {
-  color: white;
+  color: white!important;
   font-weight: bold;
   font-size: 70px; /* Adjust the size as needed */
 }

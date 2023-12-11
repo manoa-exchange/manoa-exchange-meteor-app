@@ -13,14 +13,17 @@ import EditPost from '../pages/EditPost';
 import NotFound from '../pages/NotFound';
 import SignUp from '../pages/SignUp';
 import SignOut from '../pages/SignOut';
+import NavBar from '../components/NavBar';
 import SignIn from '../pages/SignIn';
 import NotAuthorized from '../pages/NotAuthorized';
 import LoadingSpinner from '../components/LoadingSpinner';
 import MyProfile from '../pages/MyProfile';
-import CloudinaryPage from '../pages/CloudinaryPage';
-import UploadWidget from '../components/UploadWidget';
-import ListSavedPost from '../pages/ListSavedPost';
 import ModerationPage from '../pages/ModerationPage';
+import CloudinaryPage from '../pages/CloudinaryPage';
+import ListSavedPost from '../pages/ListSavedPost';
+import ProfilePicture from '../components/ProfilePicture';
+import UpdateIdNumber from '../components/UpdateIdNumber';
+import FilterPost from '../pages/FilterPost';
 
 /** Top-level layout component for this application. Called in imports/startup/client/startup.jsx. */
 const App = () => {
@@ -30,23 +33,33 @@ const App = () => {
       ready: rdy,
     };
   });
+
+  const currentPath = window.location.pathname;
+  const excludedPaths = ['/', '/signin', '/signup'];
+  let navbar = null;
+  if (!excludedPaths.includes(currentPath)) {
+    navbar = <NavBar />;
+  }
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
+        {navbar}
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signout" element={<SignOut />} />
           <Route path="/cloudinarypage" element={<CloudinaryPage />} />
-          <Route path="/uploadwidget" element={<UploadWidget />} />
+          <Route path="/uploadwidget" element={<ProfilePicture />} />
+          <Route path="/idNumber" element={<UpdateIdNumber />} />
           <Route path="/home" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
-          <Route path="/post" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
+          <Route path="/filter/:name" element={<ProtectedRoute><FilterPost /></ProtectedRoute>} />
+          <Route path="/home" element={<ProtectedRoute><ListPost /></ProtectedRoute>} />
           <Route path="/savedposts" element={<ProtectedRoute><ListSavedPost /></ProtectedRoute>} />
           <Route path="/create" element={<ProtectedRoute><AddPost /></ProtectedRoute>} />
           <Route path="/edit/:_id" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
+          <Route path="/moderation" element={<ProtectedRoute><ModerationPage /></ProtectedRoute>} />
           <Route path="/admin" element={<AdminProtectedRoute ready={ready}><ListPostAdmin /></AdminProtectedRoute>} />
-          <Route path="/moderation" element={<AdminProtectedRoute ready={ready}><ModerationPage /></AdminProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><MyProfile /></ProtectedRoute>} />
           <Route path="/notauthorized" element={<NotAuthorized />} />
           <Route path="*" element={<NotFound />} />
