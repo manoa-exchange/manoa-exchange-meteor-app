@@ -156,7 +156,7 @@ const PostItem = ({ post, comments }) => {
 
   return (ready ? (
     <Card className="post-card" style={{ boxShadow: '5px 5px 5px rgba(0,0,0,0.3)' }}>
-      <Card.Header id="card-header" className="manoa-white">
+      <Card.Header id="card-header">
         <Row>
           <Col xs="auto" className="profile-pic-col">
             <div className="profile-pic">

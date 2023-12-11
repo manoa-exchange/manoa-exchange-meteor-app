@@ -34,16 +34,9 @@ const App = () => {
     };
   });
 
-  const currentPath = window.location.pathname;
-  const excludedPaths = ['/', '/signin', '/signup'];
-  let navbar = null;
-  if (!excludedPaths.includes(currentPath)) {
-    navbar = <NavBar />;
-  }
   return (
     <Router>
       <div className="d-flex flex-column min-vh-100">
-        {navbar}
         <Routes>
           <Route exact path="/" element={<Landing />} />
           <Route path="/signin" element={<SignIn />} />

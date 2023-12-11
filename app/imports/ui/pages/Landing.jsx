@@ -29,7 +29,7 @@ const Landing = () => (
           <h1 id="landing-header">FEATURES</h1>
         </Row>
         <Row className="justify-content-center align-items-center text-center pt-4">
-          <Col md={2}>
+          <Col md={2} className="py-3">
             <Container id="border" className="d-flex flex-column justify-content-center align-items-center p-3">
               <div className="custom-circle">
                 <FileRichtext className="custom-icons" />
@@ -37,7 +37,7 @@ const Landing = () => (
               <h6 className="pt-4">BROWSE AND CREATE POSTS</h6>
             </Container>
           </Col>
-          <Col md={2}>
+          <Col md={2} className="py-3">
             <Container id="border" className="d-flex flex-column justify-content-center align-items-center p-3">
               <div className="custom-circle">
                 <BookmarkHeart className="custom-icons" />
@@ -45,7 +45,7 @@ const Landing = () => (
               <h6 className="pt-4">SAVE YOUR FAVORITES</h6>
             </Container>
           </Col>
-          <Col md={2}>
+          <Col md={2} className="py-3">
             <Container id="border" className="d-flex flex-column justify-content-center align-items-center p-3">
               <div className="custom-circle">
                 <Search className="custom-icons" />
@@ -53,7 +53,7 @@ const Landing = () => (
               <h6 className="pt-4">SEARCH POSTS AND USERS</h6>
             </Container>
           </Col>
-          <Col md={2}>
+          <Col md={2} className="py-3">
             <Container id="border" className="d-flex flex-column justify-content-center align-items-center p-3">
               <div className="custom-circle">
                 <GlobeAmericas className="custom-icons" />
@@ -61,7 +61,7 @@ const Landing = () => (
               <h6 className="pt-4">LEARN ABOUT STUDY ABROAD</h6>
             </Container>
           </Col>
-          <Col md={2}>
+          <Col md={2} className="py-3">
             <Container id="border" className="d-flex flex-column justify-content-center align-items-center p-3">
               <div className="custom-circle">
                 <Airplane className="custom-icons" />

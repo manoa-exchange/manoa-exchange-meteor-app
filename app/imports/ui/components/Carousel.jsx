@@ -11,6 +11,29 @@ const DynamicCarousel = () => {
     speed: 1000,
     slidesToShow: 5,
     slidesToScroll: 5,
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+        },
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 500,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const ResourceItems = [
@@ -33,7 +56,7 @@ const DynamicCarousel = () => {
 
   return (
     <div>
-      <Slider dots={settings.dots} infinite={settings.infinite} speed={settings.speed} slidesToShow={settings.slidesToShow} slidesToScroll={settings.slidesToScroll}>
+      <Slider dots={settings.dots} infinite={settings.infinite} speed={settings.speed} slidesToShow={settings.slidesToShow} slidesToScroll={settings.slidesToScroll} responsive={settings.responsive}>
         {ResourceItems.map((item, index) => (
           <ResourceCard key={index} title={item.title} description={item.description} link={item.link} image={item.image} />
         ))}

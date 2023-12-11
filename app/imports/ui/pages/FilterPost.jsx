@@ -1,8 +1,8 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Posts } from '../../api/post/Post.js';
 import { Tags } from '../../api/tags/Tags';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -10,6 +10,7 @@ import PostItem from '../components/PostItem'; // Import the Contact component h
 import { Comments } from '../../api/comment/Comment';
 import { PostTags } from '../../api/post/PostTags';
 import TagCarousel from '../components/TagCarousel';
+import NavBar from '../components/NavBar';
 
 /* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
 const FilterPost = () => {
@@ -62,24 +63,27 @@ const FilterPost = () => {
   }, [name]); // Include tag1 in the dependency array to trigger reactivity when it changes
 
   return ready ? (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <TagCarousel />
-      </Row>
-      <Col md={11}>
-        {posts.map((post) => {
-          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
-          return (
-            <div key={post._id} className="mb-4">
-              <PostItem
-                post={post}
-                comments={relatedComments || []}
-              />
-            </div>
-          );
-        })}
-      </Col>
-    </Container>
+    <div>
+      <NavBar />
+      <Container className="py-3">
+        <Row className="justify-content-center">
+          <TagCarousel />
+        </Row>
+        <Col md={11}>
+          {posts.map((post) => {
+            const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+            return (
+              <div key={post._id} className="mb-4">
+                <PostItem
+                  post={post}
+                  comments={relatedComments || []}
+                />
+              </div>
+            );
+          })}
+        </Col>
+      </Container>
+    </div>
   ) : <LoadingSpinner />;
 };
 

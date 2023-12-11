@@ -113,7 +113,7 @@ const PostItemAdmin = ({ post, comments }) => {
   const defaultProfileImage = '../../public/images/default-profile.jpg';
   return (ready ? (
     <Card className="post-card">
-      <Card.Header id="card-header" className="manoa-white">
+      <Card.Header id="card-header">
         <Row>
           <Col xs="auto" className="profile-pic-col">
             <div className="profile-pic">
@@ -146,7 +146,7 @@ const PostItemAdmin = ({ post, comments }) => {
           {post.caption}
         </Card.Text>
       </Card.Body>
-      <Card.Footer className="post-footer manoa-white">
+      <Card.Footer className="post-footer">
         <Container fluid> {/* Adding fluid attribute */}
           <Row className="justify-content-around align-items-center">
             <Col>
@@ -158,11 +158,11 @@ const PostItemAdmin = ({ post, comments }) => {
             </Col>
             <Col className="text-center">
               <Button variant="link" onClick={report}>
-                <FaFlag /> {/* Flag icon for reporting */}
+                <FaFlag color="black" /> {/* Flag icon for reporting */}
               </Button>
             </Col>
             <Col className="text-end">
-              <Button type="button" onClick={save}><Heart /></Button>
+              <Button className="custom-update-button" type="button" onClick={save}><Heart /></Button>
             </Col>
             <Col>
               <Button variant="danger" onClick={UnsavePost}>Unsave</Button>

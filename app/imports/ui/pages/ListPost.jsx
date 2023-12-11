@@ -7,6 +7,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import PostItem from '../components/PostItem';
 import { Comments } from '../../api/comment/Comment';
 import TagCarousel from '../components/TagCarousel';
+import NavBar from '../components/NavBar';
 
 const ListPosts = () => {
   const { ready, posts, comments } = useTracker(() => {
@@ -23,23 +24,26 @@ const ListPosts = () => {
   }, []);
 
   return ready ? (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <TagCarousel />
-      </Row>
-      <Row>
-        <Col md={11}> {/* Adjust the size (md={11}) as per your layout requirement */}
-          {posts.map((post) => {
-            const relatedComments = comments.filter(comment => comment.uniqueId === post._id);
-            return (
-              <div key={post._id} className="mb-4">
-                <PostItem post={post} comments={relatedComments || []} />
-              </div>
-            );
-          })}
-        </Col>
-      </Row>
-    </Container>
+    <div>
+      <NavBar />
+      <Container className="py-3">
+        <Row className="justify-content-center">
+          <TagCarousel />
+        </Row>
+        <Row>
+          <Col md={11}> {/* Adjust the size (md={11}) as per your layout requirement */}
+            {posts.map((post) => {
+              const relatedComments = comments.filter(comment => comment.uniqueId === post._id);
+              return (
+                <div key={post._id} className="mb-4">
+                  <PostItem post={post} comments={relatedComments || []} />
+                </div>
+              );
+            })}
+          </Col>
+        </Row>
+      </Container>
+    </div>
   ) : <LoadingSpinner />;
 };
 

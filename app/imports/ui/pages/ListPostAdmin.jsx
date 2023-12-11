@@ -6,6 +6,7 @@ import { Posts } from '../../api/post/Post.js';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PostItemAdmin from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
 import { Comments } from '../../api/comment/Comment';
+import NavBar from '../components/NavBar';
 
 /* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
 const ListPostAdmin = () => {
@@ -30,6 +31,8 @@ const ListPostAdmin = () => {
   }, []);
 
   return ready ? (
+    <div>
+      <NavBar />
     <Container className="py-3">
       <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
         {posts.map((post) => {
@@ -45,6 +48,7 @@ const ListPostAdmin = () => {
         })}
       </Col>
     </Container>
+    </div>
   ) : <LoadingSpinner />;
 };
 
