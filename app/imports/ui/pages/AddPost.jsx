@@ -157,16 +157,15 @@ const AddPost = () => {
               <Card className="my-4" style={{ minHeight: '470px', boxShadow: '5px 5px 5px rgba(0,0,0,0.3)' }}>
                 <Card.Body>
                   <UploadWidget setUrl={handleCloudinaryUrlUpdate} name="image" />
-                  <Form.Control
+                  <TextField
                     className="my-4 py-4"
-                    as="textarea"
                     rows={5}
                     name="caption"
                     value={caption}
                     onChange={handleCaptionChange}
                   />
                   <Form.Select
-                    className="my-4 py-4"
+                    className="my-4"
                     aria-label="Default select example"
                     name="tag"
                     defaultValue=""

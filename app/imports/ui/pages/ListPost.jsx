@@ -30,7 +30,7 @@ const ListPosts = () => {
     <Container className="py-3">
       <Row className="justify-content-center">
         {tags.map((tag) => (
-          <Col key={tag._id} md={2} className="mb-3" style={{ boxShadow: '5px 5px 5px rgba(0,0,0,0.3)' }}>
+          <Col key={tag._id} md={2} className="mb-3">
             <Link to={`/filter/${tag.name}`} style={{ textDecoration: 'none' }}>
               <Button variant="success" block>{tag.name}</Button>
             </Link>
