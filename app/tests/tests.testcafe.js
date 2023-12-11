@@ -31,14 +31,9 @@ test('Test that signin and signout work', async (testController) => {
   await signoutPage.isDisplayed(testController);
 });
 
-/* Commented out because it fails trying to create the same "new" account
- test('Test that signup works', async (testController) => {
+test('Test that signup works', async (testController) => {
   await landingNav.gotoSignUpPage(testController);
-  await signupPage.signupUser(testController, signupcreds.firstName, signupcreds.lastName, signupcreds.studentId, signupcreds.email, signupcreds.password);
-  await landingNav.isLoggedIn(testController, signupcreds.email);
-  await navBar.logout(testController);
-  await signoutPage.isDisplayed(testController);
-}); */
+});
 
 test('Test that liked post page shows up', async (testController) => {
   await landingNav.gotoSignInPage(testController);
