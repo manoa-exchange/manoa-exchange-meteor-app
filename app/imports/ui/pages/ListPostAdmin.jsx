@@ -33,21 +33,21 @@ const ListPostAdmin = () => {
   return ready ? (
     <div>
       <NavBar />
-    <Container className="py-3">
-      <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
-        {posts.map((post) => {
-          const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
-          return (
-            <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
-              <PostItemAdmin
-                post={post}
-                comments={relatedComments || []} // Pass an empty array if comments are not available
-              />
-            </div>
-          );
-        })}
-      </Col>
-    </Container>
+      <Container className="py-3">
+        <Col md={12}> {/* Adjust the size (md={12}) as per your layout requirement */}
+          {posts.map((post) => {
+            const relatedComments = comments && comments.filter(comment => comment.uniqueId === post._id);
+            return (
+              <div key={post._id} className="mb-4"> {/* Add margin-bottom for spacing between posts */}
+                <PostItemAdmin
+                  post={post}
+                  comments={relatedComments || []} // Pass an empty array if comments are not available
+                />
+              </div>
+            );
+          })}
+        </Col>
+      </Container>
     </div>
   ) : <LoadingSpinner />;
 };

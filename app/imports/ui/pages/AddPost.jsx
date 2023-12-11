@@ -18,6 +18,7 @@ import { PageIDs } from '../utilities/ids';
 import { Comments } from '../../api/comment/Comment';
 import { Tags } from '../../api/tags/Tags';
 import { PostTags } from '../../api/post/PostTags';
+import NavBar from '../components/NavBar';
 
 const AddPost = () => {
   const { profiles, tags } = useTracker(() => {
@@ -141,6 +142,7 @@ const AddPost = () => {
 
   return (
     <div id={PageIDs.addPostPage}>
+      <NavBar />
       <Container className="py-3">
         <Row className="justify-content-center">
 
@@ -170,7 +172,7 @@ const AddPost = () => {
                     onChange={(e) => setSelectedTag(e.target.value)}
                   >
                     <option value="" disabled hidden>
-                      Open this select menu
+                      Choose a tag
                     </option>
                     {tags.map((tag, index) => (
                       <option key={index} value={tag.name}>
@@ -191,7 +193,7 @@ const AddPost = () => {
           <Col xs={12} md={6}>
             <h3 className="text-center">Preview</h3>
             <Card className="post-card">
-              <Card.Header id="card-header" className="manoa-white">
+              <Card.Header id="card-header">
                 <Row>
                   <Col xs="auto" className="profile-pic-col">
                     <div className="profile-pic">
@@ -215,7 +217,7 @@ const AddPost = () => {
                   {caption}
                 </Card.Text>
               </Card.Body>
-              <Card.Footer className="post-footer manoa-white">
+              <Card.Footer className="post-footer">
                 <Container fluid>
                   <Row className="justify-content-around align-items-center">
                     <Col>
@@ -223,11 +225,11 @@ const AddPost = () => {
                     </Col>
                     <Col className="text-center">
                       <Button variant="link">
-                        <FaFlag />
+                        <FaFlag color="black" />
                       </Button>
                     </Col>
                     <Col className="text-end">
-                      <Button type="button"><Heart /></Button>
+                      <Button className="custom-update-button" type="button"><Heart /></Button>
                     </Col>
                     <Col>
                       <Button variant="danger">Unsave</Button>

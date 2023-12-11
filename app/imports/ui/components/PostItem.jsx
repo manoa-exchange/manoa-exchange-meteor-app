@@ -155,73 +155,75 @@ const PostItem = ({ post, comments }) => {
   const postLinkedTag = postTags.find(tag => tag.uniqueId === post.uniqueId);
 
   return (ready ? (
-    <Card className="post-card" style={{ boxShadow: '5px 5px 5px rgba(0,0,0,0.3)' }}>
-      <Card.Header id="card-header">
-        <Row>
-          <Col xs="auto" className="profile-pic-col">
-            <div className="profile-pic">
-              {userProfile && (
-                <Image src={userProfile.profilePicture} alt="Profile" className="profile-img" />
-              )}
-            </div>
-          </Col>
-          <Col className="d-flex align-items-center">
-            <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
-          </Col>
-        </Row>
-      </Card.Header>
-      <Container className="post-image-container">
-        <Image src={post.image} alt="Post" fluid />
-      </Container>
-      <Card.Body id="card-body">
-        <div className="interaction-icons">
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
-          <span onClick={toggleLike}>
-            <BiHeart className={`like-icon ${liked ? 'heart-filled' : ''}`} />
-          </span>
-          <span>{likeCount}</span>
-          <BiChat className="comment-icon" onClick={toggleComments} />
-        </div>
-        <Button className="tag-button" variant="success" disabled>{postLinkedTag.tag}</Button>
-        <Card.Text style={{ cursor: 'pointer', overflow: fullCaptionVisible ? 'visible' : 'hidden', textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
-          {post.caption}
-        </Card.Text>
-      </Card.Body>
-      <Card.Footer className="post-footer">
-        <Container fluid> {/* Adding fluid attribute */}
-          <Row className="justify-content-around align-items-center">
-            <Col>
-              {isOwner && (
-                <Link to={{ pathname: `/edit/${post._id}`, state: { post } }}>
-                  <BiDotsVerticalRounded color="black" /> {/* 3-dot icon for editing */}
-                </Link>
-              )}
-            </Col>
-            <Col>
-              <Button variant="link" onClick={report}>
-                <FaFlag color="black" /> {/* Flag icon for reporting */}
-              </Button>
-            </Col>
-            <Col>
-              <Button className="custom-update-button" type="button" onClick={save}><Heart /></Button>
-            </Col>
-            <Col>
-              <Button variant="danger" onClick={UnsavePost}>Unsave</Button>
-            </Col>
-          </Row>
-        </Container>
-        {showComments && (
+    <div>
+      <Card className="post-card" style={{ boxShadow: '5px 5px 5px rgba(0,0,0,0.3)' }}>
+        <Card.Header id="card-header">
           <Row>
-            <AddComment owner={post.owner} uniqueId={post._id} />
-            <div className="scrollable-comments">
-              <ListGroup variant="flush">
-                {comments.map((comment) => <Comment key={comment._id} comment={comment} />)}
-              </ListGroup>
-            </div>
+            <Col xs="auto" className="profile-pic-col">
+              <div className="profile-pic">
+                {userProfile && (
+                  <Image src={userProfile.profilePicture} alt="Profile" className="profile-img" />
+                )}
+              </div>
+            </Col>
+            <Col className="d-flex align-items-center">
+              <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
+            </Col>
           </Row>
-        )}
-      </Card.Footer>
-    </Card>
+        </Card.Header>
+        <Container className="post-image-container">
+          <Image src={post.image} alt="Post" fluid />
+        </Container>
+        <Card.Body id="card-body">
+          <div className="interaction-icons">
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions */}
+            <span onClick={toggleLike}>
+              <BiHeart className={`like-icon ${liked ? 'heart-filled' : ''}`} />
+            </span>
+            <span>{likeCount}</span>
+            <BiChat className="comment-icon" onClick={toggleComments} />
+          </div>
+          <Button className="tag-button" variant="success" disabled>{postLinkedTag.tag}</Button>
+          <Card.Text style={{ cursor: 'pointer', overflow: fullCaptionVisible ? 'visible' : 'hidden', textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
+            {post.caption}
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer className="post-footer">
+          <Container fluid> {/* Adding fluid attribute */}
+            <Row className="justify-content-around align-items-center">
+              <Col>
+                {isOwner && (
+                  <Link to={{ pathname: `/edit/${post._id}`, state: { post } }}>
+                    <BiDotsVerticalRounded color="black" /> {/* 3-dot icon for editing */}
+                  </Link>
+                )}
+              </Col>
+              <Col>
+                <Button variant="link" onClick={report}>
+                  <FaFlag color="black" /> {/* Flag icon for reporting */}
+                </Button>
+              </Col>
+              <Col>
+                <Button className="custom-update-button" type="button" onClick={save}><Heart /></Button>
+              </Col>
+              <Col>
+                <Button variant="danger" onClick={UnsavePost}>Unsave</Button>
+              </Col>
+            </Row>
+          </Container>
+          {showComments && (
+            <Row>
+              <AddComment owner={post.owner} uniqueId={post._id} />
+              <div className="scrollable-comments">
+                <ListGroup variant="flush">
+                  {comments.map((comment) => <Comment key={comment._id} comment={comment} />)}
+                </ListGroup>
+              </div>
+            </Row>
+          )}
+        </Card.Footer>
+      </Card>
+    </div>
   ) : <LoadingSpinner />);
 };
 

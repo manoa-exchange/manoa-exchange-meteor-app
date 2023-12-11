@@ -76,6 +76,7 @@ const NavBar = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item id="Liked-Posts-nav" as={NavLink} to="/savedposts" key="likedPostsPage">
                   <Heart size={20} />
+                  {' '}
                   Saved Posts
                 </NavDropdown.Item>
                 <NavDropdown.Item id="navbar-sign-out" as={NavLink} to="/signout">

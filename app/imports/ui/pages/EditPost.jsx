@@ -8,6 +8,7 @@ import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
 import { useParams, useLocation } from 'react-router-dom';
 import { BiChat, BiHeart } from 'react-icons/bi';
 import { Posts } from '../../api/post/Post';
+import NavBar from '../components/NavBar';
 
 const bridge = new SimpleSchema2Bridge(Posts.schema);
 
@@ -108,53 +109,56 @@ const EditPost = () => {
   };
 
   return ready ? (
-    <Container className="py-3">
-      <Row className="justify-content-center">
-        <Col xs={12} md={6}>
-          <h2 className="text-center">Edit Post</h2>
-          <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
-            <Card className="post-card">
-              <Card.Header className="manoa-white">
-                {/* Profile Picture and User Information */}
-              </Card.Header>
-              <Container className="post-image-container">
-                <Image src={doc?.image} alt="Post" fluid />
-              </Container>
-              <Card.Body>
-                <div className="interaction-icons">
-                  <BiHeart className="like-icon" />
-                  <BiChat className="comment-icon" />
-                </div>
-                <Card.Text>
-                  <TextField
-                    name="caption"
-                    placeholder="Enter your caption"
-                    defaultValue={doc?.caption}
-                  />
-                </Card.Text>
-              </Card.Body>
-              <Card.Footer className="manoa-white">
-                <Container fluid> {/* Adding fluid attribute */}
-                  <Row className="justify-content-around align-items-center">
-                    <Col>
-                      <Button variant="danger" onClick={handleDelete}>Delete Post</Button>
-                    </Col>
-                    <Col className="text-center" />
-                    <Col className="text-end" />
-                    <Col>
-                      <Button variant="primary" type="submit" className="custom-update-button">Update Post</Button>
-                      <ErrorsField />
-                      <HiddenField name="owner" />
-                      <HiddenField name="createdAt" />
-                    </Col>
-                  </Row>
+    <div>
+      <NavBar />
+      <Container className="py-3">
+        <Row className="justify-content-center">
+          <Col xs={12} md={6}>
+            <h2 className="text-center">Edit Post</h2>
+            <AutoForm schema={bridge} onSubmit={data => submit(data)} model={doc}>
+              <Card className="post-card">
+                <Card.Header>
+                  {/* Profile Picture and User Information */}
+                </Card.Header>
+                <Container className="post-image-container">
+                  <Image src={doc?.image} alt="Post" fluid />
                 </Container>
-              </Card.Footer>
-            </Card>
-          </AutoForm>
-        </Col>
-      </Row>
-    </Container>
+                <Card.Body>
+                  <div className="interaction-icons">
+                    <BiHeart className="like-icon" />
+                    <BiChat className="comment-icon" />
+                  </div>
+                  <Card.Text>
+                    <TextField
+                      name="caption"
+                      placeholder="Enter your caption"
+                      defaultValue={doc?.caption}
+                    />
+                  </Card.Text>
+                </Card.Body>
+                <Card.Footer>
+                  <Container fluid> {/* Adding fluid attribute */}
+                    <Row className="justify-content-around align-items-center">
+                      <Col>
+                        <Button variant="danger" onClick={handleDelete}>Delete Post</Button>
+                      </Col>
+                      <Col className="text-center" />
+                      <Col className="text-end" />
+                      <Col>
+                        <Button variant="primary" type="submit" className="custom-update-button">Update Post</Button>
+                        <ErrorsField />
+                        <HiddenField name="owner" />
+                        <HiddenField name="createdAt" />
+                      </Col>
+                    </Row>
+                  </Container>
+                </Card.Footer>
+              </Card>
+            </AutoForm>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   ) : (
     <div>Loading...</div>
   );

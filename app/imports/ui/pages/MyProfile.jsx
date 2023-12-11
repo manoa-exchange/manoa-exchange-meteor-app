@@ -10,6 +10,7 @@ import { Comments } from '../../api/comment/Comment';
 import PostItem from '../components/PostItem';
 import '../css/PostItem.css';
 import { PageIDs } from '../utilities/ids';
+import NavBar from '../components/NavBar';
 
 const MyProfile = () => {
   const { ready, posts, comments, profiles } = useTracker(() => {
@@ -35,6 +36,7 @@ const MyProfile = () => {
 
   return ready ? (
     <div id={PageIDs.myProfilePage}>
+      <NavBar />
       <Container className="mb-4">
         <Row className="mt-4">
           <Col lg={4}>
