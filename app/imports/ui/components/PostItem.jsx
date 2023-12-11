@@ -156,7 +156,7 @@ const PostItem = ({ post, comments }) => {
 
   return (ready ? (
     <Card className="post-card">
-      <Card.Header id="card-header" className="manoa-white">
+      <Card.Header id="card-header">
         <Row>
           <Col xs="auto" className="profile-pic-col">
             <div className="profile-pic">
@@ -165,7 +165,7 @@ const PostItem = ({ post, comments }) => {
               )}
             </div>
           </Col>
-          <Col>
+          <Col className="d-flex align-items-center">
             <strong>{userProfile ? `${userProfile.firstName} ${userProfile.lastName}` : 'Unknown User'}</strong>
           </Col>
         </Row>
@@ -182,28 +182,28 @@ const PostItem = ({ post, comments }) => {
           <span>{likeCount}</span>
           <BiChat className="comment-icon" onClick={toggleComments} />
         </div>
-        <Button variant="success" disabled>{postLinkedTag.tag}</Button>
+        <Button className="tag-button" variant="success" disabled>{postLinkedTag.tag}</Button>
         <Card.Text style={{ cursor: 'pointer', overflow: fullCaptionVisible ? 'visible' : 'hidden', textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
           {post.caption}
         </Card.Text>
       </Card.Body>
-      <Card.Footer className="post-footer manoa-white">
+      <Card.Footer className="post-footer">
         <Container fluid> {/* Adding fluid attribute */}
           <Row className="justify-content-around align-items-center">
             <Col>
               {isOwner && (
                 <Link to={{ pathname: `/edit/${post._id}`, state: { post } }}>
-                  <BiDotsVerticalRounded /> {/* 3-dot icon for editing */}
+                  <BiDotsVerticalRounded color="black" /> {/* 3-dot icon for editing */}
                 </Link>
               )}
             </Col>
-            <Col className="text-center">
+            <Col>
               <Button variant="link" onClick={report}>
-                <FaFlag /> {/* Flag icon for reporting */}
+                <FaFlag color="black" /> {/* Flag icon for reporting */}
               </Button>
             </Col>
-            <Col className="text-end">
-              <Button type="button" onClick={save}><Heart /></Button>
+            <Col>
+              <Button className="custom-update-button" type="button" onClick={save}><Heart /></Button>
             </Col>
             <Col>
               <Button variant="danger" onClick={UnsavePost}>Unsave</Button>

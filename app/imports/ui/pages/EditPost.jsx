@@ -142,7 +142,7 @@ const EditPost = () => {
                     <Col className="text-center" />
                     <Col className="text-end" />
                     <Col>
-                      <Button variant="primary" type="submit">Update Post</Button>
+                      <Button variant="primary" type="submit" className="custom-update-button">Update Post</Button>
                       <ErrorsField />
                       <HiddenField name="owner" />
                       <HiddenField name="createdAt" />

@@ -21,7 +21,7 @@ import MyProfile from '../pages/MyProfile';
 import ModerationPage from '../pages/ModerationPage';
 import CloudinaryPage from '../pages/CloudinaryPage';
 import ListSavedPost from '../pages/ListSavedPost';
-import ProfilePicture from '../components/ProfilePicture';
+import ProfilePicture from '../pages/ProfilePicture';
 import UpdateIdNumber from '../components/UpdateIdNumber';
 import FilterPost from '../pages/FilterPost';
 

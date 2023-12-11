@@ -4,8 +4,9 @@ import React, { useState } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { useTracker } from 'meteor/react-meteor-data';
 import swal from 'sweetalert';
+import { Container } from 'react-bootstrap';
 import { Profiles } from '../../api/profile/Profile';
-import UploadWidget from './UploadWidget';
+import UploadWidget from '../components/UploadWidget';
 
 import '../css/ProfilePicture.css'; // Import the CSS for styling
 
@@ -92,25 +93,30 @@ const ProfilePicture = () => {
   };
 
   return (
-    <div className="centered-container">
-      {updateStatus.error && <div className="error-message">{updateStatus.error}</div>}
-      {updateStatus.success && <div className="success-message">Profile picture updated successfully.</div>}
-      {subscriptionError && <div className="error-message">Error loading profile: {subscriptionError.message}</div>}
+    <Container>
+      <div className="centered-container">
+        {updateStatus.error && <div className="error-message">{updateStatus.error}</div>}
+        {updateStatus.success && <div className="success-message">Profile picture updated successfully.</div>}
+        {subscriptionError && <div className="error-message">Error loading profile: {subscriptionError.message}</div>}
 
-      <div className="profile-picture-section">
-        <h3>Current Profile Picture:</h3>
-        {userProfile && userProfile.profilePicture && (
-          <img src={userProfile.profilePicture} alt="Current Profile" />
-        )}
-      </div>
+        <div className="profile-picture-section">
+          <Container>
+            <h3>Current Profile Picture:</h3>
 
-      <div className="upload-section">
-        <UploadWidget setUrl={setImageUrl} />
-        <button type="button" onClick={submit} className="submit-button">
-          Submit
-        </button>
+            {userProfile && userProfile.profilePicture && (
+              <img height="300px" src={userProfile.profilePicture} alt="Current Profile" />
+            )}
+          </Container>
+        </div>
+
+        <div className="upload-section">
+          <UploadWidget setUrl={setImageUrl} />
+          <button type="button" onClick={submit} className="submit-button">
+            Submit
+          </button>
+        </div>
       </div>
-    </div>
+    </Container>
   );
 };
 

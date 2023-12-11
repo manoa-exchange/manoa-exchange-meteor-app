@@ -3,25 +3,24 @@ import { Meteor } from 'meteor/meteor';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useTracker } from 'meteor/react-meteor-data';
 import { useParams, Link } from 'react-router-dom';
-
 import { Posts } from '../../api/post/Post.js';
 import { Tags } from '../../api/tags/Tags';
 import LoadingSpinner from '../components/LoadingSpinner';
 import PostItem from '../components/PostItem'; // Import the Contact component here (make sure the path is correct)
 import { Comments } from '../../api/comment/Comment';
 import { PostTags } from '../../api/post/PostTags';
+import TagCarousel from '../components/TagCarousel';
 
 /* Renders a table containing all the Stuff documents. Use <StuffItem> to render each row. */
 const FilterPost = () => {
   const { name } = useParams();
 
-  const { ready, posts, comments, tags } = useTracker(() => {
+  const { ready, posts, comments } = useTracker(() => {
     const subscription = Meteor.subscribe(Posts.adminPublicationName);
     const subscription2 = Meteor.subscribe(Comments.adminPublicationName);
-    const subscription3 = Meteor.subscribe(Tags.adminPublicationName);
-    const subscription4 = Meteor.subscribe(PostTags.adminPublicationName);
+    const subscription3 = Meteor.subscribe(PostTags.adminPublicationName);
 
-    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready() && subscription4.ready();
+    const rdy = subscription.ready() && subscription2.ready() && subscription3.ready();
 
     if (!rdy) {
       // Return empty data or a loading indicator when subscriptions are not ready
@@ -65,15 +64,7 @@ const FilterPost = () => {
   return ready ? (
     <Container className="py-3">
       <Row className="justify-content-center">
-        {tags.map((tag) => (
-          <Col key={tag._id} md={2} className="mb-3">
-            <Link to={`/filter/${tag.name}`} style={{ textDecoration: 'none' }}>
-              <Button variant="success" block>
-                {tag.name}
-              </Button>
-            </Link>
-          </Col>
-        ))}
+        <TagCarousel />
       </Row>
       <Col md={11}>
         {posts.map((post) => {

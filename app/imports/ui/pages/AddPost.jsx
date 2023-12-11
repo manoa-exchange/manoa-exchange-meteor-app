@@ -178,7 +178,9 @@ const AddPost = () => {
                       </option>
                     ))}
                   </Form.Select>
-                  <SubmitField value="Submit" />
+                  <div id="submit-post" className="pt-3">
+                    <SubmitField value="Submit" />
+                  </div>
                   <ErrorsField />
                 </Card.Body>
               </Card>

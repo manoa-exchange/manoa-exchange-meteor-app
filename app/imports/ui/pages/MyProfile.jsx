@@ -48,7 +48,7 @@ const MyProfile = () => {
                     style={{ width: '150px', height: '150px' }}
                   />
                 </div>
-                <Link to="/uploadWidget"><Button className="black">Add/Edit Profile Picture</Button></Link>
+                <Link to="/uploadWidget"><Button className="custom-update-button">Add/Edit Profile Picture</Button></Link>
                 <h3 className="mb-1 mt-3">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</h3>
                 <p className="text-muted mb-4">{userProfile?.idNumber}</p>
               </Card.Body>
@@ -57,7 +57,7 @@ const MyProfile = () => {
               <Card.Body>
                 <Row className="mb-2">
                   <Col sm="3">
-                    <Card.Text>Full Name</Card.Text>
+                    <Card.Text>Name</Card.Text>
                   </Col>
                   <Col sm="9">
                     <Card.Text className="text-muted">{userProfile?.firstName || 'Insert Name'} {userProfile?.lastName || 'Insert Name'}</Card.Text>

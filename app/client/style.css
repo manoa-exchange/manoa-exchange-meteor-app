@@ -113,9 +113,25 @@ body {
 .black{
   color:black!important;
 }
+
 .antw{
-  background-color: antiquewhite!important;
+  background-color: white !important;
 }
+
+button.tag-button.btn.btn-success {
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+button.tag-button-big.btn.btn-success {
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 15px;
+  width: 125px;
+  height: 40px;
+}
+
 #signInPage {
   background: rgb(36, 35, 49);
   background: linear-gradient(0deg, rgba(36, 35, 49, 1) 0%, rgba(53, 114, 102, 1) 41%);
@@ -180,6 +196,10 @@ a#navbar-current-user.dropdown-toggle.show.nav-link {
   --bs-btn-bg: transparent;
 }
 
+.icon-black {
+  color: black;
+}
+
 a#register-button.outline-light.btn-primary.btn {
   --bs-btn-color: white;
   --bs-btn-border-color: white;
@@ -214,6 +234,17 @@ a#register-button.outline-light.btn-primary.btn {
 }
 
 #submit-post input.btn.btn-primary {
+  --bs-btn-color: black;
+  --bs-btn-border-color: black;
+  --bs-btn-hover-color: white;
+  --bs-btn-hover-bg: black;
+  --bs-btn-hover-border-color: black;
+  --bs-btn-active-color: white;
+  --bs-btn-active-bg: black;
+  --bs-btn-active-border-color: black;
+}
+
+.custom-update-button.btn.btn-primary {
   --bs-btn-color: black;
   --bs-btn-border-color: black;
   --bs-btn-hover-color: white;

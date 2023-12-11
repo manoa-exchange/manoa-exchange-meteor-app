@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import { AutoForm, ErrorsField, HiddenField, SubmitField, TextField } from 'uniforms-bootstrap5';
 import swal from 'sweetalert';
 import SimpleSchema2Bridge from 'uniforms-bridge-simple-schema-2';
@@ -43,19 +43,15 @@ const AddComment = ({ owner, uniqueId }) => {
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
-        <Col xs={10}>
+        <Col xs={12}>
           <Col className="text-center" />
           <AutoForm ref={ref => { fRef = ref; }} schema={bridge} onSubmit={data => submit(data, fRef)}>
-            <Card>
-              <Card.Body>
-                <TextField name="comment" />
-                <SubmitField />
-                <ErrorsField />
-                <HiddenField name="owner" value={owner} />
-                <HiddenField name="uniqueId" value={uniqueId} />
-                <HiddenField name="createdAt" value={new Date()} />
-              </Card.Body>
-            </Card>
+            <TextField name="comment" />
+            <SubmitField id="submit-post" />
+            <ErrorsField />
+            <HiddenField name="owner" value={owner} />
+            <HiddenField name="uniqueId" value={uniqueId} />
+            <HiddenField name="createdAt" value={new Date()} />
           </AutoForm>
         </Col>
       </Row>
