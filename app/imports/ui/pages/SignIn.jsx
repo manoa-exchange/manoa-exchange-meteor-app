@@ -69,7 +69,7 @@ const SignIn = () => {
                       Register
                       <Link to="/signup"> here</Link>
                     </p>
-                    <Col className="text-center">
+                    <Col id="signin-form-submit" className="text-center">
                       <SubmitField />
                     </Col>
                   </Col>
