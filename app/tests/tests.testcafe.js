@@ -33,6 +33,7 @@ test('Test that signin and signout work', async (testController) => {
 
 test('Test that signup works', async (testController) => {
   await landingNav.gotoSignUpPage(testController);
+  await signupPage.isDisplayed(testController);
 });
 
 test('Test that liked post page shows up', async (testController) => {
