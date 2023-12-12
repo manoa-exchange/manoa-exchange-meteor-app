@@ -7,6 +7,7 @@ import { Button, Col, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Tags } from '../../api/tags/Tags';
+import LoadingSpinner from './LoadingSpinner';
 
 const TagCarousel = () => {
   const settings = {
@@ -33,7 +34,7 @@ const TagCarousel = () => {
     ],
   };
 
-  const { tags } = useTracker(() => {
+  const { tags, ready } = useTracker(() => {
     const subscription = Meteor.subscribe(Tags.adminPublicationName);
     const rdy = subscription.ready();
     const tagLabel = Tags.collection.find({}).fetch();
@@ -43,7 +44,7 @@ const TagCarousel = () => {
     };
   }, []);
 
-  return (
+  return ready ? (
     <div>
       <Slider dots={settings.dots} infinite={settings.infinite} speed={settings.speed} slidesToShow={settings.slidesToShow} slidesToScroll={settings.slidesToScroll} responsive={settings.responsive}>
         {tags.map((tag) => (
@@ -57,7 +58,7 @@ const TagCarousel = () => {
         ))}
       </Slider>
     </div>
-  );
+  ) : <LoadingSpinner />;
 };
 
 export default TagCarousel;
