@@ -51,7 +51,7 @@ const TagCarousel = () => {
           <Col key={tag._id} md={2} className="mb-3">
             <Container className="pt-3 justify-content-center align-items-center d-flex">
               <Link to={`/filter/${tag.name}`} style={{ textDecoration: 'none' }}>
-                {postLinkedTag && <Button variant="success" disabled>{postLinkedTag.tag}</Button>}
+                <Button className="tag-button-big" variant="success" block>{tag.name}</Button>
               </Link>
             </Container>
           </Col>
