@@ -183,7 +183,9 @@ const PostItem = ({ post, comments }) => {
             <span>{likeCount}</span>
             <BiChat className="comment-icon" onClick={toggleComments} />
           </div>
-          <Button className="tag-button" variant="success" disabled>{postLinkedTag.tag}</Button>
+          <Button className="tag-button" variant="success" disabled>
+            {postLinkedTag?.tag ?? 'No Tag'}
+          </Button>
           <Card.Text style={{ cursor: 'pointer', overflow: fullCaptionVisible ? 'visible' : 'hidden', textOverflow: fullCaptionVisible ? 'clip' : 'ellipsis', whiteSpace: fullCaptionVisible ? 'normal' : 'nowrap' }} onClick={toggleCaption}>
             {post.caption}
           </Card.Text>
